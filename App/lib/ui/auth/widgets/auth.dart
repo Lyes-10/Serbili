@@ -87,23 +87,6 @@ class Sing_up extends StatelessWidget {
       margin: EdgeInsets.only(left: 20, right: 20),
       child: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: SvgPicture.asset(
-                  'asset/vector/befb2299ba304a49bdd2f9e69c5fac77-free (2) 1.svg',
-                  fit: BoxFit.fill,
-                ),
-              ),
-              Text(
-                'Serbile',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
           CommonTextField(
             hintText: 'full name',
             controller: fullName,
@@ -115,18 +98,17 @@ class Sing_up extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          // CommonTextField(
-          //   hintText: 'Family Name',
-          //   controller: email,
-          //   borderColor: Colors.grey,
-          //   fillColor: Theme.of(context).scaffoldBackgroundColor,
-          //   borderRadius: 20,
-          //   height: 90,
-          // ),
-          // SizedBox(
-          //   height: 20,
-          // ),
-
+          CommonTextField(
+            hintText: 'Family Name',
+            controller: email,
+            borderColor: Colors.grey,
+            fillColor: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: 20,
+            height: 90,
+          ),
+          SizedBox(
+            height: 20,
+          ),
           CommonTextField(
             hintText: 'Email',
             controller: email,
@@ -136,7 +118,7 @@ class Sing_up extends StatelessWidget {
             height: 90,
           ),
           SizedBox(
-            height: 20,
+            height: 40,
           ),
           Align(
               alignment: Alignment.centerRight,

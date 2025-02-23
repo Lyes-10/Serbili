@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serbili/ui/auth/widgets/Restpassword.dart';
 import 'package:serbili/ui/core/ui/Button.dart';
 import 'package:serbili/ui/core/ui/Text_style.dart';
 
@@ -158,7 +159,10 @@ class _Vierfy_codeState extends State<Vierfy_code> {
           SizedBox(height: 20),
           CommonButton(
             text: 'Verify',
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Restpassword()));
+            },
             width: MediaQuery.of(context).size.width,
           )
         ]));

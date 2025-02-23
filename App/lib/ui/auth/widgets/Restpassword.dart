@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serbili/ui/auth/widgets/Newpassword.dart';
 import 'package:serbili/ui/core/ui/Button.dart';
 import 'package:serbili/ui/core/ui/TextField.dart';
 import 'package:serbili/ui/core/ui/Text_style.dart';
@@ -107,7 +108,7 @@ class Restpassword_page extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 30,
+            height: 10,
           ),
           CommonTextField(
             hintText: 'Email or phone number',
@@ -120,7 +121,10 @@ class Restpassword_page extends StatelessWidget {
           ),
           CommonButton(
             text: 'Send Reset Password Link',
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Newpassword()));
+            },
             width: MediaQuery.of(context).size.width,
           )
         ],
