@@ -5,24 +5,22 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from 'axios';
 
-
 function SignUp(props) {
-
-  
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      familyName: "",
-      number: "",
+      firstname: "",
+      lastname: "",
+      phoneNumber: "",
+      email: "",
       password: "",
       cPassword: "",
       userType: "",
       // file: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("both name and family name are required"),
-      familyName: Yup.string().required(
+      firstname: Yup.string().required("both name and family name are required"),
+      lastname: Yup.string().required(
         "both name and family name are required"
       ),
       email: Yup.string()
@@ -34,6 +32,9 @@ function SignUp(props) {
           /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
           "Must contain 8 characters, one letter and one number"
         ),
+      phoneNumber: Yup.string()
+        .required("please enter your phone number")
+        .matches(/^(06|07|05)[0-9]{8}$/, "Enter a valid Phone Number"),
       cPassword: Yup.string()
         .required("please confirm your password")
         .oneOf([Yup.ref("password"), null], "Passwords must match"),
@@ -41,34 +42,34 @@ function SignUp(props) {
     }),
 
     onSubmit: async (values)=> {
-      const formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("familyName", values.familyName);
-    formData.append("number", values.number);
-    formData.append("password", values.password);
-    formData.append("userType", values.userType);
-    
+      const data = {
+        firstname: values.firstname,
+        lastname: values.lastname,
+        phoneNumber: values.phoneNumber,
+        email: values.email,
+        password: values.password,
+        userType: values.userType,
+        
+      };
 
-    try {
-      const response = await axios.post("http://localhost:5000/auth/register", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log("Form submitted successfully:", response.data);
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
+      try {
+        const response = await axios.post("http://localhost:5000/auth/register", data, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        console.log("Form submitted successfully:", response.data);
+      } catch (error) {
+        console.error("Error submitting form:", error);
+      }
     }
   });
+
   const handleFileChange = (event) => {
     formik.setFieldValue("file", event.currentTarget.files[0]);
   };
 
-
-  
-
-  
+  console.log(formik.values)
 
   return (
     <div className="bg-gray-100 w-screen h-screen ">
@@ -78,7 +79,7 @@ function SignUp(props) {
             <img src={logo} alt="" className="w-[60px]" />
             <h3 className="text-[#FF6F00] text-xl font-medium">Serbili Shop</h3>
           </div>
-          <div className="bg-[#F7EDE8] text-center text-gray-600 capitalize px-16 py-3 mx-10 mb-[3px]">
+          <div className="bg-[#F7EDE8] text-center text-gray-600 capitalize px-16 py-2 mx-10 mb-[3px]">
             <h3 className="text-black font-medium text-[15px] mb-[3px]">
               Welcome To Serbili Shop
             </h3>
@@ -90,42 +91,42 @@ function SignUp(props) {
           <form action="" className="px-10" onSubmit={formik.handleSubmit}>
             <div className="flex items-center gap-4 ">
               <div className="flex flex-col w-1/2">
-                <label htmlFor="name" className="text-sm">
-                  Name
+                <label htmlFor="firstname" className="text-sm">
+                  First Name
                 </label>
                 <input
                   type="text"
-                  name="name"
-                  id="name"
+                  name="firstname"
+                  id="firstname"
                   className="border-[2px] py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
-                  placeholder="Enter Your Name"
+                  placeholder="Enter Your First Name"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.name}
+                  value={formik.values.firstname}
                 />
               </div>
               <div className="flex flex-col w-1/2 ">
-                <label htmlFor="familyName" className="text-sm">
-                  Family Name
+                <label htmlFor="lastname" className="text-sm">
+                  Last Name
                 </label>
                 <input
                   type="text"
-                  name="familyName"
-                  id="familyName"
+                  name="lastname"
+                  id="lastname"
                   className="border-[2px] py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
-                  placeholder="Enter Your FamilyName"
+                  placeholder="Enter Your Last Name"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.familyName}
+                  value={formik.values.lastname}
                 />
               </div>
             </div>
-            {(formik.errors.name || formik.errors.familyName) &&
-            (formik.touched.name || formik.touched.familyName) ? (
-              <p className="text-red-700 text-[10px] ">*{formik.errors.name}</p>
+            {(formik.errors.firstname || formik.errors.lastname) &&
+            (formik.touched.firstname || formik.touched.lastname) ? (
+              <p className="text-red-700 text-[10px] ">*{formik.errors.firstname}</p>
             ) : null}
             <div className="flex flex-col ">
-              <label htmlFor="number" className="text-sm">
+              <label htmlFor="email" className="text-sm">
                 Email
               </label>
               <input
@@ -142,6 +143,26 @@ function SignUp(props) {
             {formik.errors.email && formik.touched.email ? (
               <p className="text-red-700 text-[10px]">
                 *{formik.errors.email}
+              </p>
+            ) : null}
+            <div className="flex flex-col ">
+              <label htmlFor="phoneNumber" className="text-sm">
+                Phone Number
+              </label>
+              <input
+                type="text"
+                name="phoneNumber"
+                id="phoneNumber"
+                className="border-[2px] py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
+                placeholder="Enter Your Phone Number"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.phoneNumber}
+              />
+            </div>
+            {formik.errors.phoneNumber && formik.touched.phoneNumber ? (
+              <p className="text-red-700 text-[10px]">
+                *{formik.errors.phoneNumber}
               </p>
             ) : null}
 
@@ -168,15 +189,15 @@ function SignUp(props) {
                 />
               </div>
               <div className="flex flex-col w-1/2">
-                <label htmlFor="name" className="text-sm">
-                  Comfirm Password
+                <label htmlFor="cPassword" className="text-sm">
+                  Confirm Password
                 </label>
                 <input
                   type="password"
                   name="cPassword"
                   id="cPassword"
                   className="border-[2px] py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
-                  placeholder="Comfirme Your Password"
+                  placeholder="Confirm Your Password"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.cPassword}
@@ -198,7 +219,7 @@ function SignUp(props) {
             <div>
               <select
                 name="userType"
-                id=""
+                id="userType"
                 className="w-full border-[2px] rounded-md py-2 px-3 cursor-pointer"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -206,7 +227,7 @@ function SignUp(props) {
               >
                 <option value="">Select Your Profile Type</option>
                 <option value="worker">I'm a Worker</option>
-                <option value="costumer">I'm a Costumer</option>
+                <option value="customer">I'm a Customer</option>
               </select>
               {formik.errors.userType && formik.touched.userType ? (
                 <p className="text-red-700 text-[10px]">
@@ -233,7 +254,7 @@ function SignUp(props) {
                 className="hidden"
                 onChange={handleFileChange}
                 onBlur={formik.handleBlur}
-              /> *
+              /> 
             </div>
 
             <button
