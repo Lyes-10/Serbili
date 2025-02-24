@@ -1,0 +1,14 @@
+.input input:focus ~ label, .input input.blure ~ label {
+    top: -3px;
+    background-color: #fff;
+    z-index: 100;
+    padding-inline: 5px;
+    color: #000;
+    transition: ease-in-out .1s;
+    font-size: 11px;
+}
+
+
+*{
+    font-family:"Roboto Condensed";
+}
