@@ -3,8 +3,13 @@ import logo from "../assets/icons/logo.jpg";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from 'axios';
+
 
 function SignUp(props) {
+
+  
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -12,19 +17,17 @@ function SignUp(props) {
       number: "",
       password: "",
       cPassword: "",
-      selection: "",
-      file: "",
+      userType: "",
+      // file: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("both name and family name are required"),
       familyName: Yup.string().required(
         "both name and family name are required"
       ),
-      number: Yup.string()
-        .required("please enter your phone number")
-        .matches(/\b(07|06|05)\d{8}\b/, "Please Enter a Valid Phone Number")
-        .min(10, "Must be exactly 10 digits")
-        .max(10, "Must be exactly 10 digits"),
+      email: Yup.string()
+        .required("please enter your Email")
+        .email("Please Enter a valid Email"),
       password: Yup.string()
         .required("please enter your password")
         .matches(
@@ -34,12 +37,38 @@ function SignUp(props) {
       cPassword: Yup.string()
         .required("please confirm your password")
         .oneOf([Yup.ref("password"), null], "Passwords must match"),
-      selection: Yup.string().required("please select your type of account"),
+      userType: Yup.string().required("please select your type of account"),
     }),
+
+    onSubmit: async (values)=> {
+      const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("familyName", values.familyName);
+    formData.append("number", values.number);
+    formData.append("password", values.password);
+    formData.append("userType", values.userType);
+    
+
+    try {
+      const response = await axios.post("http://localhost:5000/auth/register", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("Form submitted successfully:", response.data);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+    }
   });
   const handleFileChange = (event) => {
     formik.setFieldValue("file", event.currentTarget.files[0]);
   };
+
+
+  
+
+  
 
   return (
     <div className="bg-gray-100 w-screen h-screen ">
@@ -97,22 +126,22 @@ function SignUp(props) {
             ) : null}
             <div className="flex flex-col ">
               <label htmlFor="number" className="text-sm">
-                Phone Number
+                Email
               </label>
               <input
                 type="text"
-                name="number"
-                id="number"
+                name="email"
+                id="email"
                 className="border-[2px] py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
-                placeholder="Enter Your Phone Number"
+                placeholder="Enter Your Email"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.number}
+                value={formik.values.email}
               />
             </div>
-            {formik.errors.number && formik.touched.number ? (
+            {formik.errors.email && formik.touched.email ? (
               <p className="text-red-700 text-[10px]">
-                *{formik.errors.number}
+                *{formik.errors.email}
               </p>
             ) : null}
 
@@ -168,20 +197,20 @@ function SignUp(props) {
             ) : null}
             <div>
               <select
-                name="selection"
+                name="userType"
                 id=""
                 className="w-full border-[2px] rounded-md py-2 px-3 cursor-pointer"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.selection}
+                value={formik.values.userType}
               >
                 <option value="">Select Your Profile Type</option>
                 <option value="worker">I'm a Worker</option>
                 <option value="costumer">I'm a Costumer</option>
               </select>
-              {formik.errors.selection && formik.touched.selection ? (
+              {formik.errors.userType && formik.touched.userType ? (
                 <p className="text-red-700 text-[10px]">
-                  *{formik.errors.selection}
+                  *{formik.errors.userType}
                 </p>
               ) : null}
             </div>
@@ -196,7 +225,7 @@ function SignUp(props) {
               >
                 <span className="text-[#FF6F00] font-medium">Choose File</span>{" "}
                 Or Drop Here
-              </label>
+              </label> 
               <input
                 type="file"
                 name="file"
@@ -204,11 +233,11 @@ function SignUp(props) {
                 className="hidden"
                 onChange={handleFileChange}
                 onBlur={formik.handleBlur}
-              />
+              /> *
             </div>
 
             <button
-              type="button"
+              type="submit"
               className="w-full py-2 text-white font-medium bg-[#FF6F00] mt-3"
             >
               Sign Up
