@@ -51,7 +51,6 @@ const register = async (req, res) => {
         userType,
         isVerified: false,
     });
-    console.log(user);
     await sendOTP(user);
 
     // const accessToken = await user.generateAccessToken();
