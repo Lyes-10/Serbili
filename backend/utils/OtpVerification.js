@@ -6,7 +6,7 @@ require('dotenv').config();
 const sendOTP = async (user) => {
     const otp = crypto.randomInt(100000, 999999).toString();
     const otpExpire = Date.now() + 10 * 60 * 1000;
-    await user.update({ otp, otpExpire });
+    await user.update({ otpCode: otp, otpExpiresAt: otpExpire });
 
     const transporter = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,

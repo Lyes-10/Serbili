@@ -15,7 +15,7 @@ const verifyOTP = async (req, res) => {
         throw new UnauthenticatedError('User is already verified');
     }
 
-    if ( !user.otpCode || user.otpCode !== otpCode || new Date() > user.otpExpiresAt) {
+    if ( !user.otpCode || user.otpCode !== otp || new Date() > user.otpExpiresAt) {
         throw new UnauthenticatedError('Invalid or expired OTP');
     }
 
