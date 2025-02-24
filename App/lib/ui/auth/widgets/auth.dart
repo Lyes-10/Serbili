@@ -1,5 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:serbili/ui/auth/view_model/Authservice.dart';
+import 'package:serbili/ui/auth/view_model/user.dart';
 import 'package:serbili/ui/auth/widgets/Restpassword.dart';
 import 'package:serbili/ui/auth/widgets/verfiyuser.dart';
 import 'package:serbili/ui/core/ui/Button.dart';
@@ -56,7 +59,7 @@ class _AuthState extends State<Auth> {
                     child: TabBarView(
                       children: [
                         Center(child: Login()),
-                        Center(child: Sing_up()),
+                        Center(child: SignUp()),
                       ],
                     ),
                   ),
@@ -70,16 +73,25 @@ class _AuthState extends State<Auth> {
   }
 }
 
-class Sing_up extends StatelessWidget {
-  final TextEditingController email = TextEditingController();
-  final TextEditingController password = TextEditingController();
-  final TextEditingController passwordConfirm = TextEditingController();
-  final TextEditingController phoneNumber = TextEditingController();
-  final TextEditingController fullName = TextEditingController();
+class SignUp extends StatefulWidget {
+  SignUp({super.key});
 
-  Sing_up({
-    super.key,
-  });
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  TextEditingController email = TextEditingController();
+  TextEditingController phoneNumber = TextEditingController();
+  TextEditingController fullName = TextEditingController();
+  TextEditingController familyName = TextEditingController(); // Fixed spelling
+
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _phoneNumberFocus = FocusNode();
+  final FocusNode _fullNameFocus = FocusNode(); // Fixed variable name
+  final FocusNode _familyNameFocus = FocusNode(); // Fixed variable name
+
+  final dio = Dio();
 
   @override
   Widget build(BuildContext context) {
@@ -88,72 +100,85 @@ class Sing_up extends StatelessWidget {
       child: Column(
         children: [
           CommonTextField(
-            hintText: 'full name',
-            controller: fullName,
+            hintText: 'Full Name',
+            controller: fullName, // ✅ Correct controller
+            focusNode: _fullNameFocus, // ✅ Correct focus node
             borderColor: Colors.grey,
             fillColor: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: 20,
             height: 90,
           ),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           CommonTextField(
             hintText: 'Family Name',
-            controller: email,
+            controller: familyName, // ✅ Correct controller
+            focusNode: _familyNameFocus, // ✅ Correct focus node
             borderColor: Colors.grey,
             fillColor: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: 20,
             height: 90,
           ),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           CommonTextField(
-            hintText: 'Family Name',
-            controller: email,
+            hintText: 'Phone number',
+            controller: phoneNumber,
+            focusNode: _phoneNumberFocus,
             borderColor: Colors.grey,
             fillColor: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: 20,
             height: 90,
           ),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           CommonTextField(
             hintText: 'Email',
             controller: email,
+            focusNode: _emailFocus,
             borderColor: Colors.grey,
             fillColor: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: 20,
             height: 90,
           ),
-          SizedBox(
-            height: 40,
-          ),
+          SizedBox(height: 40),
           Align(
-              alignment: Alignment.centerRight,
-              child: CommonButton(
-                text: 'Next',
-                width: 100,
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Verfiyuser()));
-                },
-                borderRadius: 30,
-              ))
+            alignment: Alignment.centerRight,
+            child: CommonButton(
+              text: 'Next',
+              width: 100,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Verfiyuser(
+                      fullName: fullName.text, // ✅ Fixed variable
+                      phoneNumber: phoneNumber.text,
+                      email: email.text,
+                      familyname: familyName.text, // ✅ Fixed variable
+                    ),
+                  ),
+                );
+              },
+              borderRadius: 30,
+            ),
+          )
         ],
       ),
     );
   }
 }
 
-class Login extends StatelessWidget {
-  final TextEditingController email = TextEditingController();
-  final TextEditingController password = TextEditingController();
+class Login extends StatefulWidget {
   Login({
     super.key,
   });
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final TextEditingController email = TextEditingController();
+
+  final TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
