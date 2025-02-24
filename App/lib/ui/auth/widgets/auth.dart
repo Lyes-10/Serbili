@@ -110,6 +110,17 @@ class Sing_up extends StatelessWidget {
             height: 20,
           ),
           CommonTextField(
+            hintText: 'Family Name',
+            controller: email,
+            borderColor: Colors.grey,
+            fillColor: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: 20,
+            height: 90,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          CommonTextField(
             hintText: 'Email',
             controller: email,
             borderColor: Colors.grey,
