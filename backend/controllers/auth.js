@@ -35,7 +35,8 @@ const refreshToken = async (req, res) => {
     })
 }
 const register = async (req, res) => {
-    const { firstname, lastname , email , password,userType,phoneNumber } = req.body;
+    const { firstname, lastname , email , password, userType, phoneNumber } = req.body;
+    console.log(req.body);
     if (!firstname || !lastname || !email || !password || !userType || !phoneNumber) {
         throw new BadRequestError('Please fill all fields');
     }
