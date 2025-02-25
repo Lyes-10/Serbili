@@ -47,9 +47,6 @@ module.exports = (sequelize, DataTypes) => {
     userType: {
       type: DataTypes.ENUM('admin', 'worker', 'costumer'),
       allowNull: false,
-      validate: {
-        isIn: [['admin', 'worker', 'costumer']], // Extra validation
-      },
     },
     phoneNumber: {
       type: DataTypes.STRING,
@@ -73,6 +70,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Users',
+    tableName: 'Users',
     hooks: {
       beforeCreate: async (user) => {
         user.password = await bcrypt.hash(user.password, 10);
