@@ -3,6 +3,9 @@ import image from "../assets/images/Login-amico.png";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
+import axios from "axios";
+
+
 export default function Login() {
   const validationSchema = Yup.object({
     number: Yup.string()
@@ -21,9 +24,24 @@ export default function Login() {
       password: "",
     },
     validationSchema,
-    onSubmit: (values, { resetForm }) => {
-      console.log("Form values", values);
-      resetForm();
+    onSubmit: async(values) => {
+      const data = {
+        identifier: values.number,
+        password: values.password
+      }
+      try{
+      const response = await axios.post('http://localhost:3000/auth/login', data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      console.log(response)
+
+      }catch(err){
+        console.log(err);
+      }
+
+      
     },
   });
 
@@ -33,8 +51,10 @@ export default function Login() {
     formik.handleBlur(e);
   };
 
+
+
   return (
-    <div className="container flex gap-20  w-screen ">
+    <div className="container flex gap-20  w-screen 3xl:bg-red-600 ">
       <div className="flex  justify-center lg:justify-start items-center lg:gap-24 lg:ml-16 lg:mr-16 lg:w-1/2 w-full">
         <div className="">
           <div className="flex flex-col lg:w-[350px]  w-[375px]  ">
@@ -148,9 +168,9 @@ export default function Login() {
             <div className="flex justify-center items-center lg:mt-6 mt-4">
               <p className="text-center">
                 Don't have an account?{" "}
-                <Link to="/signup" className="text-[#1E4AE9]">
+                <button type="submit" className="text-[#1E4AE9]">
                   Sign up
-                </Link>
+                </button>
               </p>
             </div>
           </div>

@@ -10,7 +10,11 @@ function VerifyCode(props) {
       .matches(/^\d{6}$/, "Invalid code format")
       .required("Code is required"),
   });
-
+const verifyCode = async (values)=> {
+  const data = {
+    
+  }
+}
   return (
     <div className="flex md:items-center py-16 md:py-0 justify-center h-screen px-[10px] sm:px-[1vw] md:px-[4vw] lg:px-[6vw] xl:px-[10vw] md:bg-white bg-[#FF6F00]">
       <div className="lg:py-10 flex lg:justify-between w-full md:justify-center md:items-center items-start lg:mx-20 mx:0 ">

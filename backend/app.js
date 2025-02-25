@@ -4,7 +4,7 @@ const cors = require('cors')
 app.use(cors());
 const bodyParser = require('body-parser')
 require('dotenv').config();
-const cors = require('cors');
+
 //middlewares
 const errorHandlerMiddleware = require('./middlewares/error-handelr');
 const notFound = require('./middlewares/notFound-error')
