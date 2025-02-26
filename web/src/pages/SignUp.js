@@ -62,7 +62,9 @@ function SignUp(props) {
             "Content-Type": "application/json",
           },
         });
-        console.log("Form submitted successfully:", response.data);
+        console.log("Form submitted successfully:", response.data.user.id);
+
+        const res = await axios.post("https://localhost:3000/auth/verify-otp", response.data.user.id )
         
         
       } catch (error) {
@@ -76,7 +78,7 @@ function SignUp(props) {
     formik.setFieldValue("file", event.currentTarget.files[0]);
   };
 
-  console.log(formik.values)
+ 
 
   return (
     <div className="bg-gray-100 w-screen h-screen ">
