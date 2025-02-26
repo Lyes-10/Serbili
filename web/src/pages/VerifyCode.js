@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import axios from 'axios'
 import logo from "../assets/icons/logo2.jpg";
 import { Link } from "react-router-dom";
 
@@ -10,11 +11,9 @@ function VerifyCode(props) {
       .matches(/^\d{6}$/, "Invalid code format")
       .required("Code is required"),
   });
-const verifyCode = async (values)=> {
-  const data = {
-    
-  }
-}
+
+
+
   return (
     <div className="flex md:items-center py-16 md:py-0 justify-center h-screen px-[10px] sm:px-[1vw] md:px-[4vw] lg:px-[6vw] xl:px-[10vw] md:bg-white bg-[#FF6F00]">
       <div className="lg:py-10 flex lg:justify-between w-full md:justify-center md:items-center items-start lg:mx-20 mx:0 ">
@@ -49,13 +48,27 @@ const verifyCode = async (values)=> {
           <Formik
             initialValues={{ code: "" }}
             validationSchema={validationSchema}
-            onSubmit={(values) => {
-              console.log(values);
+            onSubmit={async(values) => {
+              try{
+                const id = localStorage.getItem("id");
+                const data = {
+                  otp: values.code,
+                  userId: id,
+                }
+                const response = await axios.post("http://localhost:3000/auth/verify-otp", data, {
+                  headers: {
+                    "Content-Type": "application/json"
+                  }
+                })
+                console.log(response);
+                }catch(err){
+                  console.log(err)
+                }
               // Handle form submission
             }}
           >
             {() => (
-              <Form>
+              <Form >
                 <label htmlFor="code" className="block mb-2 text-white">
                   Code
                 </label>
@@ -69,14 +82,14 @@ const verifyCode = async (values)=> {
                   component="div"
                   className="text-red-900 mt-1"
                 />
-                <Link to="/newpassword">
+                
                   <button
                     type="submit"
                     className="py-3 px-5 mt-6 bg-white text-[#FF6F00] font-medium rounded-md float-right"
                   >
                     Continue
                   </button>
-                </Link>
+                
               </Form>
             )}
           </Formik>

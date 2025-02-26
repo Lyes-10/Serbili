@@ -64,7 +64,7 @@ function SignUp(props) {
         });
         console.log("Form submitted successfully:", response.data.user.id);
 
-        const res = await axios.post("https://localhost:3000/auth/verify-otp", response.data.user.id )
+        localStorage.setItem("id", response.data.user.id );
         
         
       } catch (error) {

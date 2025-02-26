@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import axios from "axios";
 
-
 export default function Login() {
   const validationSchema = Yup.object({
     number: Yup.string()
@@ -24,24 +23,25 @@ export default function Login() {
       password: "",
     },
     validationSchema,
-    onSubmit: async(values) => {
+    onSubmit: async (values) => {
       const data = {
         identifier: values.number,
-        password: values.password
-      }
-      try{
-      const response = await axios.post('http://localhost:3000/auth/login', data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      console.log(response)
-
-      }catch(err){
+        password: values.password,
+      };
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/auth/login",
+          data,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log(response);
+      } catch (err) {
         console.log(err);
       }
-
-      
     },
   });
 
@@ -51,26 +51,24 @@ export default function Login() {
     formik.handleBlur(e);
   };
 
-
-
   return (
-    <div className="container flex gap-20  w-screen 3xl:bg-red-600 ">
-      <div className="flex  justify-center lg:justify-start items-center lg:gap-24 lg:ml-16 lg:mr-16 lg:w-1/2 w-full">
+    <div className="container flex gap-20 w-screen">
+      <div className="flex justify-center lg:justify-start xl:justify-start 2xl:justify-start items-center lg:gap-24 xl:gap-24 2xl:gap-24 lg:ml-16 xl:ml-16 2xl:ml-16 lg:mr-16 xl:mr-16 2xl:mr-16 lg:w-1/2 xl:w-1/2 2xl:w-1/2 w-full">
         <div className="">
-          <div className="flex flex-col lg:w-[350px]  w-[375px]  ">
-            <div className="flex flex-col  lg:mt-12 mt-16 mb-6 ">
-              <div className="lg:text-4xl text-3xl  tracking-[6px] ">
+          <div className="flex flex-col lg:w-[350px] xl:w-[350px] 2xl:w-[350px] w-[375px]">
+            <div className="flex flex-col lg:mt-12 xl:mt-12 2xl:mt-12 mt-16 mb-6">
+              <div className="lg:text-4xl xl:text-4xl 2xl:text-4xl text-3xl tracking-[6px]">
                 <h2>WELCOME </h2>
-                <div className="border-t-4 border-orange-500 lg:w-[180px] w-[160px] mt-2"></div>
+                <div className="border-t-4 border-orange-500 lg:w-[180px] xl:w-[180px] 2xl:w-[180px] w-[160px] mt-2"></div>
               </div>
-              <div className="lg:text-4xl lg:mx-48 mx-[165px] text-3xl  tracking-[6px] ">
+              <div className="lg:text-4xl xl:text-4xl 2xl:text-4xl lg:mx-48 xl:mx-48 2xl:mx-48 mx-[165px] text-3xl tracking-[6px]">
                 <h2>BACK!</h2>
-                <div className="border-t-4 border-orange-500 lg:w-[122px] w-[105px] mt-2"></div>
+                <div className="border-t-4 border-orange-500 lg:w-[122px] xl:w-[122px] 2xl:w-[122px] w-[105px] mt-2"></div>
               </div>
             </div>
             <form
               onSubmit={formik.handleSubmit}
-              className="flex flex-col lg:max-w-[397px]  max-w-full"
+              className="flex flex-col lg:max-w-[397px] xl:max-w-[397px] 2xl:max-w-[397px] max-w-full"
             >
               <div className="relative  h-10 input">
                 <input
@@ -168,23 +166,27 @@ export default function Login() {
             <div className="flex justify-center items-center lg:mt-6 mt-4">
               <p className="text-center">
                 Don't have an account?{" "}
-                <button type="submit" className="text-[#1E4AE9]">
+                <Link to="/signup" className="text-[#1E4AE9]">
                   Sign up
-                </button>
+                </Link>
               </p>
             </div>
           </div>
         </div>
-        <div className="flex justify-center items-center mt-4 ">
-          <div className="lg:flex flex-col items-center hidden">
+        <div className="flex justify-center items-center mt-4">
+          <div className="lg:flex xl:flex 2xl:flex flex-col items-center hidden">
             <div className="bg-orange-500 w-[4.5px] h-[250px]"></div>
-            <img src={logo} className="max-w-[129px]  " alt="" />
+            <img src={logo} className="max-w-[129px]" alt="" />
             <div className="bg-orange-500 w-[4.5px] h-[250px]"></div>
           </div>
         </div>
       </div>
-      <div className="lg:flex justify-center items-center w-1/2 hidden">
-        <img src={image} className="lg:w-[500px] " alt="" />
+      <div className="lg:flex xl:flex 2xl:flex justify-center items-center w-1/2 hidden">
+        <img
+          src={image}
+          className="lg:w-[500px] xl:w-[500px] 2xl:w-[500px]"
+          alt=""
+        />
       </div>
     </div>
   );
