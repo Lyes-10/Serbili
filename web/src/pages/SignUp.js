@@ -1,12 +1,16 @@
 import React from "react";
+
 import logo from "../assets/icons/logo.jpg";
-import { Link } from "react-router-dom";
-import { useFormik } from "formik";
+import { Link , useNavigation} from "react-router-dom";
+import { useFormik,  } from "formik";
 import * as Yup from "yup";
 import axios from 'axios';
 
-function SignUp(props) {
 
+function SignUp(props) {
+ 
+  
+  
   const formik = useFormik({
     initialValues: {
       firstname: "",
@@ -53,13 +57,16 @@ function SignUp(props) {
       };
 
       try {
-        const response = await axios.post("http://localhost:5000/auth/register", data, {
+        const response = await axios.post("http://localhost:3000/auth/register", data, {
           headers: {
             "Content-Type": "application/json",
           },
         });
         console.log("Form submitted successfully:", response.data);
+        
+        
       } catch (error) {
+        
         console.error("Error submitting form:", error);
       }
     }
