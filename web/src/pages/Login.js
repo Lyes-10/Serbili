@@ -166,9 +166,9 @@ export default function Login() {
             <div className="flex justify-center items-center lg:mt-6 mt-4">
               <p className="text-center">
                 Don't have an account?{" "}
-                <button type="submit" className="text-[#1E4AE9]">
+                <Link to="/signup" className="text-[#1E4AE9]">
                   Sign up
-                </button>
+                </Link>
               </p>
             </div>
           </div>
