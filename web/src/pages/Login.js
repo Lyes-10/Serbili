@@ -1,10 +1,14 @@
 import logo from "../assets/icons/logo.jpg";
 import image from "../assets/images/Login-amico.png";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+
 import axios from "axios";
+import { useState } from "react";
 export default function Login() {
+  const navigate = useNavigate();
+  const [error, setError] = useState();
   const validationSchema = Yup.object({
     number: Yup.string()
       .matches(/^(05|06|07)\d{8}$/, "phone number is not valid")
@@ -37,22 +41,32 @@ export default function Login() {
             },
           }
         );
-        console.log(response);
+        console.log(response.data);
+        navigate('/');
       } catch (err) {
-        console.log(err);
+        
+        console.log(error.response);
+        
+        
+
+        
       }
     },
   });
 
   const handleblur = (e) => {
+    if(e.target.value.length>0){
     e.target.classList.add("blure");
-    console.log(e.target.classList);
+    }else{
+      e.target.classList.remove("blure")
+    }
+    
     formik.handleBlur(e);
   };
 
   return (
-    <div className="container flex gap-20  w-screen ">
-      <div className="flex  justify-center lg:justify-start items-center lg:gap-24 lg:ml-16 lg:mr-16 lg:w-1/2 w-full">
+    <div className="container flex gap-20 2xl:gap-0  w-screen ">
+      <div className="flex  justify-center lg:justify-start items-center 2xl:justify-between lg:gap-24 lg:ml-16 lg:mr-16 2xl:mr-0  lg:w-1/2 w-full">
         <div className="">
           <div className="flex flex-col lg:w-[350px]  w-[375px]  ">
             <div className="flex flex-col  lg:mt-12 mt-16 mb-6 ">
@@ -91,6 +105,7 @@ export default function Login() {
                   {formik.errors.number}
                 </div>
               ) : null}
+              
               <div className="h-10 relative input mt-4">
                 <input
                   className="border-2 rounded-xl p-2 mt-6 w-full absolute bottom-0"
@@ -113,7 +128,9 @@ export default function Login() {
                   {formik.errors.password}
                 </div>
               ) : null}
-
+              <div className="text-red-500 text-sm mt-1">
+                  {error}
+                </div>
               <Link
                 to="/forgetpassword"
                 className="text-[#1E4AE9] flex justify-end mt-4"
@@ -123,7 +140,7 @@ export default function Login() {
 
               <button
                 type="submit"
-                className="mt-4 text-base font-small text-white bg-orange-500 h-[45px] rounded-xl w-full"
+                className={`mt-4 text-base font-small text-white  h-[45px] rounded-xl w-full ${formik.isSubmitting ? 'bg-orange-300 cursor-not-allowed' : 'bg-orange-500'}`}
               >
                 Sign in
               </button>
