@@ -1,14 +1,14 @@
 import React from "react";
 
 import logo from "../assets/icons/logo.jpg";
-import { Link , useNavigation} from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 import { useFormik,  } from "formik";
 import * as Yup from "yup";
 import axios from 'axios';
 
 
 function SignUp(props) {
- 
+ const navigate = useNavigate();
   
   
   const formik = useFormik({
@@ -65,6 +65,7 @@ function SignUp(props) {
         console.log("Form submitted successfully:", response.data.user.id);
 
         localStorage.setItem("id", response.data.user.id );
+        navigate('/login');
         
         
       } catch (error) {
@@ -268,7 +269,7 @@ function SignUp(props) {
 
             <button
               type="submit"
-              className="w-full py-2 text-white font-medium bg-[#FF6F00] mt-3"
+              className={`w-full py-2 text-white font-medium  mt-3 ${formik.isSubmitting ? 'bg-[#f7a86c] cursor-not-allowed' : 'bg-[#FF6F00]'} `}
             >
               Sign Up
             </button>
