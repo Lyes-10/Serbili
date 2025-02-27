@@ -20,7 +20,7 @@ const sendOTP = async (user) => {
         from: process.env.EMAIL_USER,
         to: user.email,
         subject: 'OTP for password reset',
-        text: `
+        html: `
         <div style="font-family: Arial, sans-serif; max-width: 500px; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
             <h2 style="color: #333;">Password Reset OTP</h2>
             <p>Hello <strong>${user.firstname}</strong>,</p>

@@ -51,19 +51,14 @@ const register = async (req, res) => {
         userType,
         isVerified: false,
     });
+
     await sendOTP(user);
-
-    // const accessToken = await user.generateAccessToken();
-
-    // const refreshToken = await db.refreshToken.generateToken(user.id)
 
     return res
       .status(201)
       .json({
         message: "User created successfully",
         user,
-        // accessToken,
-        // refreshToken: refreshToken.token,
       });
 }
 
