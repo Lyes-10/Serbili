@@ -3,6 +3,7 @@ const { BadRequestError, UnauthenticatedError,ForbiddenError , NotFoundError} = 
 
 const verifyOTP = async (req, res) => {
     const { userId, otp } = req.body;
+    console.log(req.body);
     if (!userId || !otp) {
         throw new BadRequestError('Please provide userId and otp');
     }
@@ -16,10 +17,12 @@ const verifyOTP = async (req, res) => {
     }
 
     if ( !user.otpCode || user.otpCode !== otp || new Date() > user.otpExpiresAt) {
-        throw new UnauthenticatedError('Invalid or expired OTP');
+        // throw new UnauthenticatedError('Invalid or expired OTP');
+        res.json({message: 'invalid or expired otp'});
     }
 
     await user.update({ isVerified: true, otpCode: null, otpExpiresAt: null });
+    console.log(user);
 
     const accessToken = await user.generateAccessToken();
 

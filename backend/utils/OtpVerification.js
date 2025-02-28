@@ -5,8 +5,10 @@ require('dotenv').config();
 //OTP
 const sendOTP = async (user) => {
     const otp = crypto.randomInt(100000, 999999).toString();
+    console.log(otp);
     const otpExpire = Date.now() + 10 * 60 * 1000;
     await user.update({ otpCode: otp, otpExpiresAt: otpExpire });
+    console.log(user);
 
     const transporter = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
@@ -21,6 +23,12 @@ const sendOTP = async (user) => {
         to: user.email,
         subject: 'OTP for password reset',
         html: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+
+        </head>
+        <body>
         <div style="font-family: Arial, sans-serif; max-width: 500px; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
             <h2 style="color: #333;">Password Reset OTP</h2>
             <p>Hello <strong>${user.firstname}</strong>,</p>
@@ -30,6 +38,8 @@ const sendOTP = async (user) => {
             <p>If you didn't request this, please ignore this email.</p>
             <p>Best regards,<br>Serbili Team</p>
         </div>
+        </body>
+        </html>
     `,
     })
 }
