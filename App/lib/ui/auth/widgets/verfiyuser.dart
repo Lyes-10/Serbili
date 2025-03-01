@@ -1,14 +1,15 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:serbili/ui/auth/view_model/Authservice.dart';
 import 'package:serbili/ui/auth/view_model/user.dart';
+import 'package:serbili/ui/auth/widgets/SnackbarHelper.dart';
 import 'package:serbili/ui/core/ui/Button.dart';
 import 'package:serbili/ui/core/ui/TextField.dart';
 import 'package:serbili/ui/core/ui/Text_style.dart';
-import 'package:flutter_dash/flutter_dash.dart';
+import 'package:serbili/ui/core/ui/dilago.dart';
+import 'package:serbili/ui/home/ui/widgets/home.dart';
 
 class Verfiyuser extends StatefulWidget {
   final String fullName;
@@ -30,22 +31,6 @@ class Verfiyuser extends StatefulWidget {
 class _VerfiyuserState extends State<Verfiyuser> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController userTypeController = TextEditingController();
-  Future cerateUser() async {
-    final password = passwordController.text.trim();
-    final userType = userTypeController.text.trim();
-
-    if (password.isNotEmpty && userType.isNotEmpty) {
-      final user = User(
-        fullName: 'ilyes',
-        familyname: 'nwm',
-        email: 'ch@gmail.com',
-        phoneNumber: '0793248187',
-        password: '123456',
-        userType: 'Shopper',
-      );
-      await AuthService().register(user);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,8 +76,6 @@ class _VerfiyuserState extends State<Verfiyuser> {
                       children: [
                         Center(
                             child: Virfy_user(
-                          password: passwordController,
-                          usertype: userTypeController,
                           familyname: widget.familyname,
                           email: widget.email,
                           phoneNumber: widget.phoneNumber,
@@ -114,23 +97,22 @@ class _VerfiyuserState extends State<Verfiyuser> {
 class Virfy_user extends StatefulWidget {
   const Virfy_user({
     super.key,
-    required this.password,
-    required this.usertype, required this.fullname, required this.email, required this.phoneNumber, required this.familyname,
+    required this.fullname,
+    required this.email,
+    required this.phoneNumber,
+    required this.familyname,
   });
-  final TextEditingController password;
-  final TextEditingController usertype;
+
   final String fullname;
   final String email;
   final String phoneNumber;
   final String familyname;
-  
 
   @override
   State<Virfy_user> createState() => _Virfy_userState();
 }
 
 class _Virfy_userState extends State<Virfy_user> {
-  final TextEditingController password = TextEditingController();
   final TextEditingController confirmPassword = TextEditingController();
   String selectedRole = 'Shopper';
   List<bool> isSelected = [true, false];
@@ -152,40 +134,62 @@ class _Virfy_userState extends State<Virfy_user> {
 
   final List<String> userTypes = ['Shopper', 'Warehouse'];
 
-  Future<void> register(BuildContext context) async {
-    final password = passwordController.text.trim();
-    final userType = userTypeController.text.trim();
+  register(BuildContext context) async {
+    // final password = passwordController.text.trim();
+    // final userType = userTypeController.text.trim();
+    // if (password.isNotEmpty && userType.isNotEmpty) {
+    final user = User(
+      firstname: 'ilyes',
+      email: 'ch@gmail.com',
+      phoneNumber: '0793248187',
+      password: 'password',
+      userType: 'Worker',
+      lastname: 'nemouchi',
+    );
+    //   final data = {
+    //     'firstname': 'John',
+    //     'lastname': 'Doe',
+    //     'email': 'john.doe@example.com',
+    //     'password': 'password123',
+    //     'userType': 'Worker',
+    //     'phoneNumber': '1234567890',
+    //   };
 
-   
-      final user = User(
-        fullName: widget.fullname,
-        email: widget.email,
-        phoneNumber: widget.phoneNumber,
-        password: password,
-        userType: userType,
-        familyname: widget.familyname,
+    //   // Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+    //   // SnackbarHelper.show(
+    //   //     context, 'Welcome Mr  ' + widget.fullname + " " + widget.familyname);
+    // // } else {
+    // //   showCustomDialog(
+    // //     context,
+    // //     'Error',
+    // //     'Please fill all fields with your information',
+    // //     DialogType.error,
+    // //   );
+    // // }
+     try {
+      final dio = Dio();
+
+      final response = await dio.post(
+        'http://192.168.100.46:3000/auth/register',
+        data: user.toJson(),
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
       );
 
-      try {
-        final dio = Dio();
-        final response = await dio.post(
-          'http://localhost:5000/auth/register',
-          data: user.toJson(),
-        );
-
-        if (response.statusCode == 201) {
-          Navigator.pop(context); // Go back to the previous screen
-          print('User registered successfully');
-          print(user.toJson());
-        } else {
-          print('Failed to register user');
-        }
-      } catch (e) {
-        print('Error: $e');
+      if (response.statusCode == 201) {
+        // Go back to the previous screen
+        print('User registered successfully');
+        print(user.toJson());
+      } else {
+        print('Failed to register user');
       }
-    } 
-    
-  
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -196,18 +200,14 @@ class _Virfy_userState extends State<Virfy_user> {
       ),
       child: Column(
         children: [
-          SizedBox(height: 20),
           CommonTextField(
             hintText: 'Password',
             itpasswords: true,
-            controller: widget.password,
+            controller: passwordController,
             borderColor: Colors.grey,
             fillColor: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: 20,
             height: 90,
-          ),
-          SizedBox(
-            height: 20,
           ),
           CommonTextField(
             hintText: 'confirm Password',
@@ -255,7 +255,7 @@ class _Virfy_userState extends State<Virfy_user> {
                       buttonIndex++) {
                     isSelected[buttonIndex] = buttonIndex == index;
                   }
-                  widget.usertype.text = userTypes[
+                  userTypeController.text = userTypes[
                       index]; // Update controller with selected user type
                 });
               },

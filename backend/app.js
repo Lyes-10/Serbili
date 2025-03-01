@@ -4,7 +4,7 @@ const cors = require('cors')
 app.use(cors());
 const bodyParser = require('body-parser')
 require('dotenv').config();
-const cors = require('cors');
+
 //middlewares
 const errorHandlerMiddleware = require('./middlewares/error-handelr');
 const notFound = require('./middlewares/notFound-error')
@@ -30,6 +30,6 @@ app.use(notFound);
 app.use(errorHandlerMiddleware);
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.listen(PORT, '0.0.0.0', '192.168.100.46', () => {
+  console.log(`Server is running on port ${PORT}`);
 });

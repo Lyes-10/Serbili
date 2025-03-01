@@ -132,11 +132,17 @@ class New_password extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             borderRadius: 12,
           ),
+          SizedBox(
+            height: 20,
+          ),
           CommonTextField(
             hintText: 'Confirm password',
             controller: newpassword,
             width: MediaQuery.of(context).size.width,
             borderRadius: 12,
+          ),
+          SizedBox(
+            height: 20,
           ),
           SizedBox(
             height: 20,

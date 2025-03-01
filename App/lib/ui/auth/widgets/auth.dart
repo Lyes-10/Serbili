@@ -4,10 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:serbili/ui/auth/view_model/Authservice.dart';
 import 'package:serbili/ui/auth/view_model/user.dart';
 import 'package:serbili/ui/auth/widgets/Restpassword.dart';
+import 'package:serbili/ui/auth/widgets/SnackbarHelper.dart';
 import 'package:serbili/ui/auth/widgets/verfiyuser.dart';
 import 'package:serbili/ui/core/ui/Button.dart';
 import 'package:serbili/ui/core/ui/TextField.dart';
 import 'package:serbili/ui/core/ui/Text_style.dart';
+import 'package:serbili/ui/core/ui/dilago.dart';
+import 'package:serbili/ui/home/ui/widgets/home.dart';
 
 class Auth extends StatefulWidget {
   @override
@@ -92,6 +95,57 @@ class _SignUpState extends State<SignUp> {
   final FocusNode _familyNameFocus = FocusNode(); // Fixed variable name
 
   final dio = Dio();
+  _regster1() {
+    if (email.text.isNotEmpty &&
+        phoneNumber.text.isNotEmpty &&
+        fullName.text.isNotEmpty &&
+        familyName.text.isNotEmpty) {
+      if (email.text.endsWith('@gmail.com')) {
+        if ((phoneNumber.text.startsWith('05') ||
+                phoneNumber.text.startsWith('06') ||
+                phoneNumber.text.startsWith('07')) &&
+            phoneNumber.text.length == 10) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Verfiyuser(
+                fullName: fullName.text, // ✅ Fixed variable
+                phoneNumber: phoneNumber.text,
+                email: email.text,
+                familyname: familyName.text, // ✅ Fixed variable
+              ),
+            ),
+          );
+        } else {
+          print('Invalid phone number');
+          showCustomDialog(
+            context,
+            'Error',
+            'Invalid phone number, please enter a valid one',
+            DialogType.error,
+          );
+        }
+      } else {
+        print('Please enter a valid email address');
+        showCustomDialog(
+          context,
+          'Error',
+          'Please enter a valid email address',
+          DialogType.error,
+        );
+        return;
+      }
+    } else {
+      print('Please fill in all fields');
+      showCustomDialog(
+        context,
+        'Error',
+        'Please fill all fields with your information',
+        DialogType.error,
+      );
+      return;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +182,6 @@ class _SignUpState extends State<SignUp> {
             borderRadius: 20,
             height: 90,
           ),
-          SizedBox(height: 20),
           CommonTextField(
             hintText: 'Email',
             controller: email,
@@ -138,24 +191,13 @@ class _SignUpState extends State<SignUp> {
             borderRadius: 20,
             height: 90,
           ),
-          SizedBox(height: 40),
           Align(
             alignment: Alignment.centerRight,
             child: CommonButton(
               text: 'Next',
               width: 100,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Verfiyuser(
-                      fullName: fullName.text, // ✅ Fixed variable
-                      phoneNumber: phoneNumber.text,
-                      email: email.text,
-                      familyname: familyName.text, // ✅ Fixed variable
-                    ),
-                  ),
-                );
+                _regster1();
               },
               borderRadius: 30,
             ),
@@ -176,9 +218,43 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final TextEditingController email = TextEditingController();
+  final TextEditingController phonenumber = TextEditingController();
 
   final TextEditingController password = TextEditingController();
+  bool isLoading = false;
+
+  login(BuildContext context) async {
+    final password2 = password.text.trim();
+    final idefate = phonenumber.text.trim();
+    if (phonenumber.text.isEmpty || password2.isEmpty) {
+      showCustomDialog(
+        context,
+        'Error',
+        'Please fill all fields with your information',
+        DialogType.error,
+      );
+      return;
+    }
+    if (phonenumber.text.length == 10 && phonenumber.text.startsWith('05') ||
+        phonenumber.text.startsWith('06') ||
+        phonenumber.text.startsWith('07')) {
+      final data = {
+        'username': 'emilys',
+        'password': 'emilyspass',
+      };
+
+      await AuthService().login(data);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+      SnackbarHelper.show(context, 'Welcome back Mr  ' + idefate);
+    }else {
+      showCustomDialog(
+        context,
+        'Error',
+        'Invalid phone number, please enter a valid one',
+        DialogType.error,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -187,8 +263,8 @@ class _LoginState extends State<Login> {
       child: Column(
         children: [
           CommonTextField(
-            hintText: 'Email',
-            controller: email,
+            hintText: 'Phone Number',
+            controller: phonenumber,
             borderColor: Colors.grey,
             fillColor: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: 20,
@@ -285,8 +361,7 @@ class _LoginState extends State<Login> {
           CommonButton(
             text: 'Login',
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Auth()));
+              login(context);
             },
             height: 70,
             width: MediaQuery.of(context).size.width,
