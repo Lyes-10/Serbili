@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:serbili/ui/auth/view_model/Authservice.dart';
+import 'package:serbili/ui/auth/view_model/olduser.dart';
 import 'package:serbili/ui/auth/view_model/user.dart';
 import 'package:serbili/ui/auth/widgets/Restpassword.dart';
 import 'package:serbili/ui/auth/widgets/SnackbarHelper.dart';
@@ -238,12 +239,10 @@ class _LoginState extends State<Login> {
     if (phonenumber.text.length == 10 && phonenumber.text.startsWith('05') ||
         phonenumber.text.startsWith('06') ||
         phonenumber.text.startsWith('07')) {
-      final data = {
-        'username': 'emilys',
-        'password': 'emilyspass',
-      };
+      Olduser olduser = Olduser(identifier: 'john.doe@example.com', password: 'password123');
 
-      await AuthService().login(data);
+      await AuthService().login(olduser);
+      print(olduser.toJson());
       Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
       SnackbarHelper.show(context, 'Welcome back Mr  ' + idefate);
     }else {

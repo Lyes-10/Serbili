@@ -71,6 +71,7 @@ const register = asyncWrapper(async (req, res) => {
     message: "User created successfully",
     user,
   });
+  
 });
 
 const login = asyncWrapper(async (req, res) => {

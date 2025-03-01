@@ -135,59 +135,29 @@ class _Virfy_userState extends State<Virfy_user> {
   final List<String> userTypes = ['Shopper', 'Warehouse'];
 
   register(BuildContext context) async {
-    // final password = passwordController.text.trim();
-    // final userType = userTypeController.text.trim();
-    // if (password.isNotEmpty && userType.isNotEmpty) {
-    final user = User(
-      firstname: 'ilyes',
-      email: 'ch@gmail.com',
-      phoneNumber: '0793248187',
-      password: 'password',
-      userType: 'Worker',
-      lastname: 'nemouchi',
-    );
-    //   final data = {
-    //     'firstname': 'John',
-    //     'lastname': 'Doe',
-    //     'email': 'john.doe@example.com',
-    //     'password': 'password123',
-    //     'userType': 'Worker',
-    //     'phoneNumber': '1234567890',
-    //   };
-
-    //   // Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-    //   // SnackbarHelper.show(
-    //   //     context, 'Welcome Mr  ' + widget.fullname + " " + widget.familyname);
-    // // } else {
-    // //   showCustomDialog(
-    // //     context,
-    // //     'Error',
-    // //     'Please fill all fields with your information',
-    // //     DialogType.error,
-    // //   );
-    // // }
-     try {
-      final dio = Dio();
-
-      final response = await dio.post(
-        'http://192.168.100.46:3000/auth/register',
-        data: user.toJson(),
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        ),
+    final password = passwordController.text.trim();
+    final userType = userTypeController.text.trim();
+    if (password.isNotEmpty && userType.isNotEmpty) {
+      final user = User(
+        firstname: widget.fullname,
+        email: widget.email,
+        phoneNumber: widget.phoneNumber,
+        password: password,
+        userType: 'Worker',
+        lastname: widget.familyname,
       );
+      await AuthService().register(user);
 
-      if (response.statusCode == 201) {
-        // Go back to the previous screen
-        print('User registered successfully');
-        print(user.toJson());
-      } else {
-        print('Failed to register user');
-      }
-    } catch (e) {
-      print(e);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+      SnackbarHelper.show(
+          context, 'Welcome Mr  ' + widget.fullname + " " + widget.familyname);
+    } else {
+      showCustomDialog(
+        context,
+        'Error',
+        'Please fill all fields with your information',
+        DialogType.error,
+      );
     }
   }
 
