@@ -79,11 +79,13 @@ const login = async (req, res) => {
         },
     });
     if (!user) {
+        // res.status(401).json({error: "Invalid credentials"});
         throw new UnauthenticatedError('Invalid credentials');
     }
     const isPasswordCorrect = await user.comparePassword(password);
     if (!isPasswordCorrect) {
-        throw new UnauthenticatedError('Invalid credentials');
+        res.status(401).json({error: "Invalid credentials"});
+        // throw new UnauthenticatedError('Invalid credentials');
     }
     const accessToken = await user.generateAccessToken();
     const refreshToken = await db.refreshToken.generateToken(user.id);
