@@ -1,13 +1,17 @@
 const express = require('express');
 const app = express();
+const cors = require('cors')
+app.use(cors());
 const bodyParser = require('body-parser')
 require('dotenv').config();
+const cors = require('cors');
 //middlewares
 const errorHandlerMiddleware = require('./middlewares/error-handelr');
 const notFound = require('./middlewares/notFound-error')
 const router = require('./routes/auth');
 const authentication = require('./middlewares/authentication')
 
+app.use(cors());
 app.use(bodyParser.urlencoded({
   extended: true
 }));

@@ -20,7 +20,17 @@ const sendOTP = async (user) => {
         from: process.env.EMAIL_USER,
         to: user.email,
         subject: 'OTP for password reset',
-        text: `Your OTP is ${otp}. It will expire in 10 minutes.`,
+        text: `
+        <div style="font-family: Arial, sans-serif; max-width: 500px; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+            <h2 style="color: #333;">Password Reset OTP</h2>
+            <p>Hello <strong>${user.firstname}</strong>,</p>
+            <p>Your One-Time Password (OTP) for resetting your password is:</p>
+            <h3 style="text-align: center; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">${otp}</h3>
+            <p>This OTP will expire in <strong>10 minutes</strong>.</p>
+            <p>If you didn't request this, please ignore this email.</p>
+            <p>Best regards,<br>Serbili Team</p>
+        </div>
+    `,
     })
 }
 
