@@ -6,8 +6,11 @@ const {
   NotFoundError,
 } = require("../errors");
 const asyncWrapper = require("../middlewares/async");
+const bcrypt = require('bcrypt');
 const { sendOTP } = require("../utils/OtpVerification");
+const { StatusCodes } = require("http-status-codes");
 require("dotenv").config();
+
 
 const refreshToken = asyncWrapper(async (req, res) => {
   const { tokenRefresh } = req.body;
@@ -129,4 +132,37 @@ const logout = asyncWrapper(async (req, res) => {
   return res.status(200).json({ message: "User logged out successfully" });
 });
 
-module.exports = { register, refreshToken, login, logout };
+const requestOtpReset = asyncWrapper(async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    throw new BadRequestError("Please provide an email address");
+  }
+  const user = await db.Users.findOne({ where: { email } });
+  if (!user) {
+    throw new NotFoundError("User not found");
+  }
+  await sendOTP(user);
+  return res.status(200).json({ message: "Reset password OTP sent" });
+});
+
+const resetPassword = asyncWrapper(async (req, res) => {
+  const { email, otp , newPassword} = req.body;
+  if ( !email || !otp || !newPassword) {
+    throw BadRequestError('Please provide email, otp and new password');
+  }
+  const user = await db.Users.findOne({ where: { email } });
+
+  if ( !user || !user.otpCode || user.otpCode !== otp || new Date() > user.otpExpiresAt) {
+    throw new BadRequestError('Invalid or expired OTP');
+  }
+
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  await user.update({ password: hashedPassword, otpCode:null, otpExpiresAt: null });
+
+  res.status(StatusCodes.OK).json({ message: 'Password reset successfully' });
+
+})
+
+
+module.exports = { register, refreshToken, login, logout, requestOtpReset, resetPassword };
