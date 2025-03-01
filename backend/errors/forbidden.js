@@ -7,3 +7,4 @@ class ForbiddenError extends CustomAPIError {
     this.statusCode = StatusCodes.FORBIDDEN;
   }
 }
+module.exports = ForbiddenError;

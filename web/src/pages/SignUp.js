@@ -1,12 +1,16 @@
 import React from "react";
+
 import logo from "../assets/icons/logo.jpg";
-import { Link } from "react-router-dom";
-import { useFormik } from "formik";
+import { Link , useNavigate} from "react-router-dom";
+import { useFormik,  } from "formik";
 import * as Yup from "yup";
 import axios from 'axios';
 
-function SignUp(props) {
 
+function SignUp(props) {
+ const navigate = useNavigate();
+  
+  
   const formik = useFormik({
     initialValues: {
       firstname: "",
@@ -53,13 +57,19 @@ function SignUp(props) {
       };
 
       try {
-        const response = await axios.post("http://localhost:5000/auth/register", data, {
+        const response = await axios.post("http://localhost:3000/auth/register", data, {
           headers: {
             "Content-Type": "application/json",
           },
         });
-        console.log("Form submitted successfully:", response.data);
+        console.log("Form submitted successfully:", response.data.user.id);
+
+        localStorage.setItem("id", response.data.user.id );
+        navigate('/login');
+        
+        
       } catch (error) {
+        
         console.error("Error submitting form:", error);
       }
     }
@@ -69,7 +79,7 @@ function SignUp(props) {
     formik.setFieldValue("file", event.currentTarget.files[0]);
   };
 
-  console.log(formik.values)
+ 
 
   return (
     <div className="bg-gray-100 w-screen h-screen ">
@@ -259,7 +269,7 @@ function SignUp(props) {
 
             <button
               type="submit"
-              className="w-full py-2 text-white font-medium bg-[#FF6F00] mt-3"
+              className={`w-full py-2 text-white font-medium  mt-3 ${formik.isSubmitting ? 'bg-[#f7a86c] cursor-not-allowed' : 'bg-[#FF6F00]'} `}
             >
               Sign Up
             </button>

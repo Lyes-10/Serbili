@@ -1,9 +1,14 @@
 import logo from "../assets/icons/logo.jpg";
 import image from "../assets/images/Login-amico.png";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+
+import axios from "axios";
+import { useState } from "react";
 export default function Login() {
+  const navigate = useNavigate();
+  const [error, setError] = useState();
   const validationSchema = Yup.object({
     number: Yup.string()
       .matches(/^(05|06|07)\d{8}$/, "phone number is not valid")
@@ -21,21 +26,47 @@ export default function Login() {
       password: "",
     },
     validationSchema,
-    onSubmit: (values, { resetForm }) => {
-      console.log("Form values", values);
-      resetForm();
+    onSubmit: async (values) => {
+      const data = {
+        identifier: values.number,
+        password: values.password,
+      };
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/auth/login",
+          data,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log(response.data);
+        navigate('/');
+      } catch (err) {
+        
+        console.log(error.response);
+        
+        
+
+        
+      }
     },
   });
 
   const handleblur = (e) => {
+    if(e.target.value.length>0){
     e.target.classList.add("blure");
-    console.log(e.target.classList);
+    }else{
+      e.target.classList.remove("blure")
+    }
+    
     formik.handleBlur(e);
   };
 
   return (
-    <div className="container flex gap-20  w-screen ">
-      <div className="flex  justify-center lg:justify-start items-center lg:gap-24 lg:ml-16 lg:mr-16 lg:w-1/2 w-full">
+    <div className="container flex gap-20 2xl:gap-0  w-screen ">
+      <div className="flex  justify-center lg:justify-start items-center 2xl:justify-between lg:gap-24 lg:ml-16 lg:mr-16 2xl:mr-0  lg:w-1/2 w-full">
         <div className="">
           <div className="flex flex-col lg:w-[350px]  w-[375px]  ">
             <div className="flex flex-col  lg:mt-12 mt-16 mb-6 ">
@@ -74,6 +105,7 @@ export default function Login() {
                   {formik.errors.number}
                 </div>
               ) : null}
+              
               <div className="h-10 relative input mt-4">
                 <input
                   className="border-2 rounded-xl p-2 mt-6 w-full absolute bottom-0"
@@ -96,7 +128,9 @@ export default function Login() {
                   {formik.errors.password}
                 </div>
               ) : null}
-
+              <div className="text-red-500 text-sm mt-1">
+                  {error}
+                </div>
               <Link
                 to="/forgetpassword"
                 className="text-[#1E4AE9] flex justify-end mt-4"
@@ -106,7 +140,7 @@ export default function Login() {
 
               <button
                 type="submit"
-                className="mt-4 text-base font-small text-white bg-orange-500 h-[45px] rounded-xl w-full"
+                className={`mt-4 text-base font-small text-white  h-[45px] rounded-xl w-full ${formik.isSubmitting ? 'bg-orange-300 cursor-not-allowed' : 'bg-orange-500'}`}
               >
                 Sign in
               </button>
@@ -145,7 +179,29 @@ export default function Login() {
                 Sign in with Google{" "}
               </button>
             </div>
-            <div className="flex justify-center items-center lg:mt-6 mt-4">
+            <div className="mt-6 flex flex-col gap-y-4">
+              <button className=" bg-orange-500 w-full h-[50px] rounded-xl text-base text-white flex justify-center items-center gap-1.5 ">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  x="0px"
+                  y="0px"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 48 48"
+                >
+                  <path
+                    fill="#1877F2"
+                    d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"
+                  ></path>
+                  <path
+                    fill="#fff"
+                    d="M26.572,29.036h4.917l0.772-4.995h-5.69v-2.73c0-2.075,0.678-3.915,2.619-3.915h3.119v-4.359c-0.548-0.074-1.707-0.236-3.897-0.236c-4.573,0-7.254,2.415-7.254,7.917v3.323h-4.701v4.995h4.701v13.729C22.089,42.905,23.032,43,24,43c0.875,0,1.729-0.08,2.572-0.194V29.036z"
+                  ></path>
+                </svg>
+                Sign in with Facebook
+              </button>
+            </div>
+            <div className="flex justify-center items-center lg:mt-2 mt-6">
               <p className="text-center">
                 Don't have an account?{" "}
                 <Link to="/signup" className="text-[#1E4AE9]">
