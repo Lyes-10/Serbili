@@ -8,7 +8,7 @@ function CreateNewCode(props) {
   const validationSchema = Yup.object({
     password: Yup.string()
       .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8}$/,
         "Password must be at least 8 characters including letters and numbers"
       )
       .required("Password is required"),

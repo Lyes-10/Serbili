@@ -67,7 +67,7 @@ function ForgetPassword(props) {
                   component="div"
                   className="text-red-900 mt-1"
                 />
-                <Link to="/verfiycode">
+                <Link to="/verifycode">
                   <button
                     type="submit"
                     className="py-3 px-5 mt-6 bg-white text-[#FF6F00] font-medium rounded-md float-right"
