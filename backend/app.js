@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser')
+const cookieParser = require("cookie-parser");
+
 require('dotenv').config();
 const cors = require('cors');
 //middlewares
@@ -9,6 +11,7 @@ const notFound = require('./middlewares/notFound-error')
 const router = require('./routes/auth');
 const authentication = require('./middlewares/authentication')
 
+app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.urlencoded({
   extended: true
