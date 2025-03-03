@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:serbili/ui/core/ui/Button.dart';
+import 'package:serbili/ui/profile/widget/detile.dart';
+import 'package:serbili/ui/profile/widget/pyment.dart';
+import 'package:serbili/ui/profile/widget/sttings.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -193,35 +196,27 @@ class _ProfileState extends State<Profile> {
                                 color: Color(0xff101010),
                               ), // Change to any icon you prefer
                               onPressed: () {
-                            //         Widget page;
-                            // // switch (item.key) {
-                            // //   // case 'Profile':
-                            // //   //   page = Profiledetl();
-                            // //   //   break;
-                            // //   // case 'Settings':
-                            // //   //   page = Settings();
-                            // //   //   break;
-                            // //   // case 'Pyment Method':
-                            // //   //   page = Pyment();
-                            // //   // case 'About':
-                            // //   //   page = About();
-                            // //   // case 'Help':
-                            // //   //   page = Hlep();
-                            // //   // case 'Logout':
-                            // //   //   ScaffoldMessenger(
-                            // //   //     child: Text('log out'),
-                            // //   //   );
-                            // //     page = Profile();
+                                Widget page;
 
-                            //   default:
-                            //     page = Profile();
-                            // }
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context) => page),
-                            // );
+                                switch (key) {
+                                  case 'Personal Data':
+                                    page = Detile();
+                                    break;
+                                  case 'Settings':
+                                    page = Sttings();
+                                    break;
+                                  case 'Pyement':
+                                    page = Pyment();
+
+                                  default:
+                                    page = Profile();
+                                }
+                                Navigator.push(
+                                  context,
+                                  createFadeRoute(
+                                      page), // Use the custom transition
+                                );
                                 // Define what happens when the icon button is pressed
-                          
                               },
                             ));
                       } else {
@@ -310,4 +305,16 @@ class _ProfileImageWithCameraState extends State<ProfileImageWithCamera> {
       ],
     );
   }
+}
+
+Route createFadeRoute(Widget page) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => page,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return FadeTransition(
+        opacity: animation,
+        child: child,
+      );
+    },
+  );
 }
