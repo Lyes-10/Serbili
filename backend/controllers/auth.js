@@ -106,7 +106,7 @@ const login = async (req, res) => {
         accessToken,
         refreshToken: refreshToken.token,
     });
-  }
+
 const logout = asyncWrapper(async (req, res) => {
   const { tokenRefresh } = req.body;
   if (!tokenRefresh) {
