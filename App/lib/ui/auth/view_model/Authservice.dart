@@ -10,12 +10,33 @@ class AuthService {
     // 3 seconds
   ));
   final FlutterSecureStorage secureStorage = FlutterSecureStorage();
+  Future<void> refreshToken() async {
+    try {
+      String? tokenRefresh = await secureStorage.read(key: 'refreshToken');
+      if (tokenRefresh == null) {
+        throw Exception('No refresh token found');
+      }
+
+      final response = await dio.post(
+        'http://localhost:3000/auth/refresh-token',
+        data: {'tokenRefresh': tokenRefresh},
+      );
+
+      if (response.statusCode == 200) {
+        final data = response.data;
+        await secureStorage.write(key: 'accessToken', value: data['accessToken']);
+        await secureStorage.write(key: 'refreshToken', value: data['refreshToken']);
+      }
+    } catch (e) {
+      print('Error refreshing token: $e');
+    }
+  }
 
   Future<void> register(User user) async {
     try {
       final dio = Dio(BaseOptions(
         connectTimeout: Duration(seconds: 10),
-         // 10 seconds
+        // 10 seconds
         receiveTimeout: Duration(seconds: 5), // 5 seconds
       ));
 
@@ -55,6 +76,8 @@ class AuthService {
         // Go back to the previous screen
         print('User registered successfully');
         print(data);
+         await secureStorage.write(key: 'accessToken', value: data['accessToken']);
+        await secureStorage.write(key: 'refreshToken', value: data['refreshToken']);
       } else {
         print('Failed to register user');
       }

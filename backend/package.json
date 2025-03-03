@@ -23,7 +23,7 @@
     "nodemon": "^3.1.7",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
-    "pg": "^8.13.1",
+    "pg": "^8.13.3",
     "sequelize": "^6.37.5",
     "sqlite3": "^5.1.7"
   },

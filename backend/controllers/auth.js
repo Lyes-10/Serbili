@@ -40,18 +40,13 @@ const refreshToken = asyncWrapper(async (req, res) => {
     refreshToken: newRefreshToken.token,
   });
 });
+const db = require('../db'); // Adjust the path to your db file
+
 const register = asyncWrapper(async (req, res) => {
-  const { firstname, lastname, email, password, userType, phoneNumber } =
-    req.body;
+  const { firstname, lastname, email, password, userType, phoneNumber } = req.body;
   console.log(req.body);
-  if (
-    !firstname ||
-    !lastname ||
-    !email ||
-    !password ||
-    !userType ||
-    !phoneNumber
-  ) {
+
+  if (!firstname || !lastname || !email || !password || !userType || !phoneNumber) {
     throw new BadRequestError("Please fill all fields");
   }
 
@@ -71,8 +66,12 @@ const register = asyncWrapper(async (req, res) => {
     message: "User created successfully",
     user,
   });
-  
 });
+
+module.exports = {
+  register,
+  // Add other functions (refreshToken, login, logout) as needed
+};
 
 const login = asyncWrapper(async (req, res) => {
   const { identifier, password } = req.body;

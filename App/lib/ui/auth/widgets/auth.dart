@@ -150,62 +150,66 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(left: 20, right: 20),
-      child: Column(
-        children: [
-          CommonTextField(
-            hintText: 'Full Name',
-            controller: fullName, // ✅ Correct controller
-            focusNode: _fullNameFocus, // ✅ Correct focus node
-            borderColor: Colors.grey,
-            fillColor: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: 20,
-            height: 90,
+    return LayoutBuilder(builder: (context, constraints) {
+      return SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              CommonTextField(
+                hintText: 'Full Name',
+                controller: fullName, // ✅ Correct controller
+                focusNode: _fullNameFocus, // ✅ Correct focus node
+                borderColor: Colors.grey,
+                fillColor: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: 20,
+                height: 90,
+              ),
+              SizedBox(height: 20),
+              CommonTextField(
+                hintText: 'Family Name',
+                controller: familyName, // ✅ Correct controller
+                focusNode: _familyNameFocus, // ✅ Correct focus node
+                borderColor: Colors.grey,
+                fillColor: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: 20,
+                height: 90,
+              ),
+              SizedBox(height: 20),
+              CommonTextField(
+                hintText: 'Phone number',
+                controller: phoneNumber,
+                focusNode: _phoneNumberFocus,
+                borderColor: Colors.grey,
+                fillColor: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: 20,
+                height: 90,
+              ),
+              CommonTextField(
+                hintText: 'Email',
+                controller: email,
+                focusNode: _emailFocus,
+                borderColor: Colors.grey,
+                fillColor: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: 20,
+                height: 90,
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: CommonButton(
+                  text: 'Next',
+                  width: 100,
+                  onPressed: () {
+                    _regster1();
+                  },
+                  borderRadius: 30,
+                ),
+              )
+            ],
           ),
-          SizedBox(height: 20),
-          CommonTextField(
-            hintText: 'Family Name',
-            controller: familyName, // ✅ Correct controller
-            focusNode: _familyNameFocus, // ✅ Correct focus node
-            borderColor: Colors.grey,
-            fillColor: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: 20,
-            height: 90,
-          ),
-          SizedBox(height: 20),
-          CommonTextField(
-            hintText: 'Phone number',
-            controller: phoneNumber,
-            focusNode: _phoneNumberFocus,
-            borderColor: Colors.grey,
-            fillColor: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: 20,
-            height: 90,
-          ),
-          CommonTextField(
-            hintText: 'Email',
-            controller: email,
-            focusNode: _emailFocus,
-            borderColor: Colors.grey,
-            fillColor: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: 20,
-            height: 90,
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: CommonButton(
-              text: 'Next',
-              width: 100,
-              onPressed: () {
-                _regster1();
-              },
-              borderRadius: 30,
-            ),
-          )
-        ],
-      ),
-    );
+        ),
+      );
+    });
   }
 }
 
@@ -239,13 +243,14 @@ class _LoginState extends State<Login> {
     if (phonenumber.text.length == 10 && phonenumber.text.startsWith('05') ||
         phonenumber.text.startsWith('06') ||
         phonenumber.text.startsWith('07')) {
-      Olduser olduser = Olduser(identifier: 'john.doe@example.com', password: 'password123');
+      Olduser olduser =
+          Olduser(identifier: 'john.doe@example.com', password: 'password123');
 
       await AuthService().login(olduser);
       print(olduser.toJson());
       Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
       SnackbarHelper.show(context, 'Welcome back Mr  ' + idefate);
-    }else {
+    } else {
       showCustomDialog(
         context,
         'Error',
@@ -257,117 +262,126 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(left: 30, right: 30, top: 40),
-      child: Column(
-        children: [
-          CommonTextField(
-            hintText: 'Phone Number',
-            controller: phonenumber,
-            borderColor: Colors.grey,
-            fillColor: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: 20,
-            height: 90,
+    return LayoutBuilder(builder: (context, constraints) {
+      return SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.only(
+            left: 30,
+            right: 30,
           ),
-          SizedBox(height: 20),
-          CommonTextField(
-            hintText: 'Password',
-            itpasswords: true,
-            controller: password,
-            borderColor: Colors.grey,
-            fillColor: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: 20,
-            height: 90,
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Restpassword()));
-              },
-              child: Text(
-                'Forget password?',
-                style: TextStyle(
-                    color: Color(0xffFA4A0C),
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                    height: 20.29 / 17,
-                    fontFamily: 'SF Pro Text'),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Row(
+          child: Column(
             children: [
-              Expanded(
-                child: Divider(
-                  color: Colors.grey, // Line color
-                  thickness: 3, // Line thickness
-                  indent: 20, // Start padding
-                  endIndent: 20, // End padding
+              CommonTextField(
+                hintText: 'Phone Number',
+                controller: phonenumber,
+                borderColor: Colors.grey,
+                fillColor: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: 20,
+                height: 90,
+              ),
+              SizedBox(height: 20),
+              CommonTextField(
+                hintText: 'Password',
+                itpasswords: true,
+                controller: password,
+                borderColor: Colors.grey,
+                fillColor: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: 20,
+                height: 90,
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Restpassword()));
+                  },
+                  child: Text(
+                    'Forget password?',
+                    style: TextStyle(
+                        color: Color(0xffFA4A0C),
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        height: 20.29 / 17,
+                        fontFamily: 'SF Pro Text'),
+                  ),
                 ),
               ),
               SizedBox(
-                width: 3,
+                height: 30,
               ),
-              Text(
-                'Or',
+              Row(
+                children: [
+                  Expanded(
+                    child: Divider(
+                      color: Colors.grey, // Line color
+                      thickness: 3, // Line thickness
+                      indent: 20, // Start padding
+                      endIndent: 20, // End padding
+                    ),
+                  ),
+                  SizedBox(
+                    width: 3,
+                  ),
+                  Text(
+                    'Or',
+                  ),
+                  SizedBox(
+                    width: 3,
+                  ),
+                  Expanded(
+                    child: Divider(
+                      color: Colors.grey, // Line color
+                      thickness: 3, // Line thickness
+                      indent: 20, // Start padding
+                      endIndent: 20, // End padding
+                    ),
+                  )
+                ],
               ),
               SizedBox(
-                width: 3,
+                height: 15,
               ),
-              Expanded(
-                child: Divider(
-                  color: Colors.grey, // Line color
-                  thickness: 3, // Line thickness
-                  indent: 20, // Start padding
-                  endIndent: 20, // End padding
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SvgPicture.asset(
+                      'asset/icons/Button.svg',
+                      width: 52,
+                      height: 42,
+                      fit: BoxFit.cover,
+                    ),
+                    SvgPicture.asset(
+                      'asset/icons/Button2.svg',
+                      width: 52,
+                      height: 42,
+                      fit: BoxFit.cover,
+                    ),
+                  ],
                 ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              CommonButton(
+                text: 'Login',
+                onPressed: () {
+                  login(context);
+                },
+                height: 70,
+                width: MediaQuery.of(context).size.width,
+                borderRadius: 30,
               )
             ],
           ),
-          SizedBox(
-            height: 15,
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SvgPicture.asset(
-                  'asset/icons/Button.svg',
-                  width: 52,
-                  height: 42,
-                  fit: BoxFit.cover,
-                ),
-                SvgPicture.asset(
-                  'asset/icons/Button2.svg',
-                  width: 52,
-                  height: 42,
-                  fit: BoxFit.cover,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          CommonButton(
-            text: 'Login',
-            onPressed: () {
-              login(context);
-            },
-            height: 70,
-            width: MediaQuery.of(context).size.width,
-            borderRadius: 30,
-          )
-        ],
-      ),
-    );
+        ),
+      );
+    });
   }
 }
