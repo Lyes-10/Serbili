@@ -28,25 +28,34 @@ const refreshToken = asyncWrapper(async (req, res) => {
   if (!user) {
     throw new NotFoundError("User not found");
   }
-  //delete the old one
-  await db.refreshToken.deleteToken(tokenRefresh, user.id);
+
   //generate the new access token
   const newAccessToken = await user.generateAccessToken();
   //generate the new refresh token
-  const newRefreshToken = await db.refreshToken.generateToken(user.id);
-
+  res.cookie('accessToken', newAccessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'Strict',
+    maxAge: process.env.COOKIE_AGE, // 15 minutes
+  });
   return res.status(200).json({
-    accessToken: newAccessToken,
-    refreshToken: newRefreshToken.token,
+    msg: "Token refreshed successfully",
   });
 });
 const db = require('../db'); // Adjust the path to your db file
 
 const register = asyncWrapper(async (req, res) => {
-  const { firstname, lastname, email, password, userType, phoneNumber } = req.body;
+  const { firstname, lastname, email, password, userType, phoneNumber } =
+    req.body;
   console.log(req.body);
-
-  if (!firstname || !lastname || !email || !password || !userType || !phoneNumber) {
+  if (
+    !firstname ||
+    !lastname ||
+    !email ||
+    !password ||
+    !userType ||
+    !phoneNumber
+  ) {
     throw new BadRequestError("Please fill all fields");
   }
 
@@ -75,7 +84,6 @@ module.exports = {
 
 const login = asyncWrapper(async (req, res) => {
   const { identifier, password } = req.body;
-  console.log(req.body);
   if (!identifier || !password) {
     throw new BadRequestError("Please provide phone or email and password");
   }
@@ -96,10 +104,15 @@ const login = asyncWrapper(async (req, res) => {
   }
   const accessToken = await user.generateAccessToken();
   const refreshToken = await db.refreshToken.generateToken(user.id);
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+    sameSite: "Strict",
+    maxAge: process.env.COOKIE_AGE, // 15 minutes (same as access token expiration)
+  });
   return res.status(200).json({
     message: "User logged in successfully",
     user,
-    accessToken,
     refreshToken: refreshToken.token,
   });
 });
@@ -114,6 +127,12 @@ const logout = asyncWrapper(async (req, res) => {
     throw new ForbiddenError("Invalid or expired refresh token");
   }
   await db.refreshToken.deleteToken(tokenRefresh, storedToken.userId);
+
+  res.clearCookie("accessToken", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "Strict",
+  });
 
   return res.status(200).json({ message: "User logged out successfully" });
 });

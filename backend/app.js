@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser')
+require('dotenv').config();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const pool = require('./db'); // Adjust the path to your connection file
@@ -11,6 +13,7 @@ const notFound = require('./middlewares/notFound-error');
 const router = require('./routes/auth'); // Adjust the path to your router file
 const authentication = require('./middlewares/authentication');
 
+app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());

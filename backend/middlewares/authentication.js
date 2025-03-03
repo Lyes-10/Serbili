@@ -4,12 +4,19 @@ const {UnauthenticatedError} = require('../errors');
 const { StatusCodes } = require('http-status-codes');
 require("dotenv").config();
 const authentication = async (req, res, next) => {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return res.status(401).json({ msg: "no token provided" });
-    }
+    console.log("Cookies received:", req.cookies); // ✅ Debugging
 
-    const token = authHeader.split(' ')[1];
+    let token;
+    if ( req.cookies?.accessToken) {
+        token = req.cookies.accessToken;
+    }
+    else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+        token = req.headers.authorization.split(' ')[1];
+    }
+    if (!token) {
+        return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'No token provided' });
+    }
+    
     try {
 
         const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
@@ -42,9 +49,3 @@ const authentication = async (req, res, next) => {
 
 module.exports = authentication;
 
-/*
-complete the authentication middleware function and export it
-complete sign in and signup controller functions
-complete the refresh token controller function
-understand how the refresh token works
-*/ 
