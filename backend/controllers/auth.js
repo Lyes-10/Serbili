@@ -6,8 +6,11 @@ const {
   NotFoundError,
 } = require("../errors");
 const asyncWrapper = require("../middlewares/async");
+const bcrypt = require('bcrypt');
 const { sendOTP } = require("../utils/OtpVerification");
+const { StatusCodes } = require("http-status-codes");
 require("dotenv").config();
+
 
 const refreshToken = asyncWrapper(async (req, res) => {
   const { tokenRefresh } = req.body;
@@ -77,45 +80,32 @@ const register = asyncWrapper(async (req, res) => {
   });
 });
 
-module.exports = {
-  register,
-  // Add other functions (refreshToken, login, logout) as needed
-};
-
-const login = asyncWrapper(async (req, res) => {
-  const { identifier, password } = req.body;
-  if (!identifier || !password) {
-    throw new BadRequestError("Please provide phone or email and password");
-  }
-  const user = await db.Users.findOne({
-    where: {
-      [db.Sequelize.Op.or]: [
-        { email: identifier },
-        { phoneNumber: identifier },
-      ],
-    },
-  });
-  if (!user) {
-    throw new UnauthenticatedError("Invalid credentials");
-  }
-  const isPasswordCorrect = await user.comparePassword(password);
-  if (!isPasswordCorrect) {
-    throw new UnauthenticatedError("Invalid credentials");
-  }
-  const accessToken = await user.generateAccessToken();
-  const refreshToken = await db.refreshToken.generateToken(user.id);
-  res.cookie("accessToken", accessToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // Use secure cookies in production
-    sameSite: "Strict",
-    maxAge: process.env.COOKIE_AGE, // 15 minutes (same as access token expiration)
-  });
-  return res.status(200).json({
-    message: "User logged in successfully",
-    user,
-    refreshToken: refreshToken.token,
-  });
-});
+const login = async (req, res) => {
+    const { identifier, password } = req.body;
+    console.log(req.body);
+    if (!identifier || !password) {
+        throw new BadRequestError('Please provide phone or email and password');
+    }
+    const user = await db.Users.findOne({
+        where: {
+          [db.Sequelize.Op.or]: [{ email: identifier }, { phoneNumber: identifier }],
+        },
+    });
+    if (!user) {
+        throw new UnauthenticatedError('Invalid credentials');
+    }
+    const isPasswordCorrect = await user.comparePassword(password);
+    if (!isPasswordCorrect) {
+        throw new UnauthenticatedError('Invalid credentials');
+    }
+    const accessToken = await user.generateAccessToken();
+    const refreshToken = await db.refreshToken.generateToken(user.id);
+    return res.status(200).json({
+        message: "User logged in successfully",
+        user,
+        accessToken,
+        refreshToken: refreshToken.token,
+    });
 
 const logout = asyncWrapper(async (req, res) => {
   const { tokenRefresh } = req.body;
@@ -137,4 +127,37 @@ const logout = asyncWrapper(async (req, res) => {
   return res.status(200).json({ message: "User logged out successfully" });
 });
 
-module.exports = { register, refreshToken, login, logout };
+const requestOtpReset = asyncWrapper(async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    throw new BadRequestError("Please provide an email address");
+  }
+  const user = await db.Users.findOne({ where: { email } });
+  if (!user) {
+    throw new NotFoundError("User not found");
+  }
+  await sendOTP(user);
+  return res.status(200).json({ message: "Reset password OTP sent" });
+});
+
+const resetPassword = asyncWrapper(async (req, res) => {
+  const { email, otp , newPassword} = req.body;
+  if ( !email || !otp || !newPassword) {
+    throw BadRequestError('Please provide email, otp and new password');
+  }
+  const user = await db.Users.findOne({ where: { email } });
+
+  if ( !user || !user.otpCode || user.otpCode !== otp || new Date() > user.otpExpiresAt) {
+    throw new BadRequestError('Invalid or expired OTP');
+  }
+
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  await user.update({ password: hashedPassword, otpCode:null, otpExpiresAt: null });
+
+  res.status(StatusCodes.OK).json({ message: 'Password reset successfully' });
+
+})
+
+
+module.exports = { register, refreshToken, login, logout, requestOtpReset, resetPassword };
