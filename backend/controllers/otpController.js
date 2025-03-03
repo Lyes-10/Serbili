@@ -1,7 +1,8 @@
 const db = require("../db/models/index")
 const { BadRequestError, UnauthenticatedError,ForbiddenError , NotFoundError} = require('../errors');
 require('dotenv').config();
-const verifyOTP = async (req, res) => {
+const asyncWrapper = require("../middlewares/async")
+const verifyOTP = asyncWrapper(async (req, res) => {
     const { userId, otp } = req.body;
     if (!userId || !otp) {
         throw new BadRequestError('Please provide userId and otp');
@@ -38,7 +39,7 @@ const verifyOTP = async (req, res) => {
         refreshToken: refreshToken.token,
     });
 
-};
+});
 module.exports = { verifyOTP };
 
 
