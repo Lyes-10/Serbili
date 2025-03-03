@@ -43,9 +43,10 @@ export default function Login() {
         );
         console.log(response.data);
         navigate('/');
-      } catch (err) {
+      } catch (error) {
         
         console.log(error.response);
+        
         
         
 
