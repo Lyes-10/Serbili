@@ -106,7 +106,7 @@ const login = async (req, res) => {
         accessToken,
         refreshToken: refreshToken.token,
     });
-
+  }
 const logout = asyncWrapper(async (req, res) => {
   const { tokenRefresh } = req.body;
   if (!tokenRefresh) {
@@ -160,4 +160,11 @@ const resetPassword = asyncWrapper(async (req, res) => {
 })
 
 
-module.exports = { register, refreshToken, login, logout, requestOtpReset, resetPassword };
+module.exports = {
+  register,
+  refreshToken,
+  login,
+  logout,
+  requestOtpReset,
+  resetPassword,
+};

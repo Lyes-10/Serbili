@@ -38,6 +38,8 @@ dependencies:
   flutter_dash: ^1.0.0
   dio: ^5.8.0+1
   flutter_secure_storage: ^9.2.4
+  font_awesome_flutter: ^10.1.0
+
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +74,7 @@ flutter:
      - asset\icons\Button.svg
      - asset\icons\Button2.svg
      - asset\vector\befb2299ba304a49bdd2f9e69c5fac77-free (2) 1.svg
+     - asset\images\Rectangle 5621.png
 
      
   #   - images/a_dot_ham.jpeg

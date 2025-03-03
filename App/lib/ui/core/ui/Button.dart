@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:serbili/ui/core/ui/Text_style.dart';
 
 class CommonButton extends StatelessWidget {
   final String text;
@@ -9,6 +8,9 @@ class CommonButton extends StatelessWidget {
   final double? height;
   final double? width;
   final double? borderRadius;
+  final Color? background;
+  final Color? borderColor; // Add border color property
+  final Widget? icon;
 
   CommonButton({
     required this.text,
@@ -18,6 +20,9 @@ class CommonButton extends StatelessWidget {
     this.height,
     this.width,
     this.borderRadius,
+    this.background,
+    this.borderColor, // Add border color to constructor
+    this.icon,
   });
 
   @override
@@ -28,22 +33,36 @@ class CommonButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           foregroundColor: textColor,
-          backgroundColor: Color(0xffFF6F00),
+          backgroundColor: background ?? Color(0xffFF6F00),
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           textStyle: TextStyle(fontSize: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
+            side: BorderSide(
+              color: borderColor ?? Colors.transparent, // Set border color
+              width: 2.0, // Adjust border width
+            ),
           ),
         ),
         onPressed: onPressed,
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: color ?? Colors.white,
-            letterSpacing: 0.5,
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (icon != null) icon!,
+            SizedBox(
+              width: 8,
+            ),
+            Text(
+              text,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: color ?? Colors.white,
+                letterSpacing: 0.5,
+              ),
+            ),
+          ],
         ),
       ),
     );

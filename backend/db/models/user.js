@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     }
     static associate(models) {
       // Define association here
-      User.hasMany(models.RefreshToken, { foreignKey: 'userId', as: 'refreshTokens' });
+      User.hasMany(models.refreshToken, { foreignKey: 'userId', as: 'refreshTokens' });
     }
   }
 

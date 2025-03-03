@@ -5,6 +5,7 @@ import 'package:serbili/ui/auth/widgets/auth.dart';
 import 'package:serbili/ui/auth/widgets/verfiyuser.dart';
 import 'package:serbili/ui/auth/widgets/vierfycode.dart';
 import 'package:serbili/ui/intro/splash.dart';
+import 'package:serbili/ui/profile/widget/profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: Auth(),
+      home: Profile(),
     );
   }
 }
