@@ -25,7 +25,7 @@ sequelize
   });
 
 // Import the User model
-const UserModel = require('./models/user')(sequelize, Sequelize.DataTypes);
+const UserModel = require('./db/models/user')(sequelize, Sequelize.DataTypes); // Corrected path
 
 // Export the sequelize instance and models
 const db = {};

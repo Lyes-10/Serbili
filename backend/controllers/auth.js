@@ -42,7 +42,7 @@ const refreshToken = asyncWrapper(async (req, res) => {
     msg: "Token refreshed successfully",
   });
 });
-const db = require('../db'); // Adjust the path to your db file
+// Adjust the path to your db file
 
 const register = asyncWrapper(async (req, res) => {
   const { firstname, lastname, email, password, userType, phoneNumber } =
