@@ -77,32 +77,40 @@ const register = asyncWrapper(async (req, res) => {
   });
 });
 
-const login = async (req, res) => {
-    const { identifier, password } = req.body;
-    console.log(req.body);
-    if (!identifier || !password) {
-        throw new BadRequestError('Please provide phone or email and password');
-    }
-    const user = await db.Users.findOne({
-        where: {
-          [db.Sequelize.Op.or]: [{ email: identifier }, { phoneNumber: identifier }],
-        },
-    });
-    if (!user) {
-        throw new UnauthenticatedError('Invalid credentials');
-    }
-    const isPasswordCorrect = await user.comparePassword(password);
-    if (!isPasswordCorrect) {
-        throw new UnauthenticatedError('Invalid credentials');
-    }
-    const accessToken = await user.generateAccessToken();
-    const refreshToken = await db.refreshToken.generateToken(user.id);
-    return res.status(200).json({
-        message: "User logged in successfully",
-        user,
-        accessToken,
-        refreshToken: refreshToken.token,
-    });
+const login = asyncWrapper(async (req, res) => {
+  const { identifier, password } = req.body;
+  if (!identifier || !password) {
+    throw new BadRequestError("Please provide phone or email and password");
+  }
+  const user = await db.Users.findOne({
+    where: {
+      [db.Sequelize.Op.or]: [
+        { email: identifier },
+        { phoneNumber: identifier },
+      ],
+    },
+  });
+  if (!user) {
+    throw new UnauthenticatedError("Invalid credentials");
+  }
+  const isPasswordCorrect = await user.comparePassword(password);
+  if (!isPasswordCorrect) {
+    throw new UnauthenticatedError("Invalid credentials");
+  }
+  const accessToken = await user.generateAccessToken();
+  const refreshToken = await db.refreshToken.generateToken(user.id);
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+    sameSite: "Strict",
+    maxAge: process.env.COOKIE_AGE, // 15 minutes (same as access token expiration)
+  });
+  return res.status(200).json({
+    message: "User logged in successfully",
+    user,
+    refreshToken: refreshToken.token,
+  });
+});
 
 const logout = asyncWrapper(async (req, res) => {
   const { tokenRefresh } = req.body;
