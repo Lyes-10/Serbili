@@ -2,9 +2,10 @@ import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import logo from "../assets/icons/logo2.jpg";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function CreateNewCode(props) {
+  const navigate =useNavigate()
   const validationSchema = Yup.object({
     password: Yup.string()
       .matches(
@@ -57,6 +58,7 @@ function CreateNewCode(props) {
             validationSchema={validationSchema}
             onSubmit={(values) => {
               console.log(values);
+              navigate("/login")
               // Handle form submission
             }}
           >
@@ -96,14 +98,12 @@ function CreateNewCode(props) {
                   component="div"
                   className="text-red-900 "
                 />
-                <Link to="/login">
                   <button
                     type="submit"
                     className="py-3 px-5 mt-6 bg-white text-[#FF6F00] font-medium rounded-md float-right"
                   >
                     Continue
                   </button>
-                </Link>
               </Form>
             )}
           </Formik>
