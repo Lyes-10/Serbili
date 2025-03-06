@@ -39,6 +39,7 @@ dependencies:
   dio: ^5.8.0+1
   flutter_secure_storage: ^9.2.4
   font_awesome_flutter: ^10.1.0
+  flutter_svg: ^2.0.17
 
 
 dev_dependencies:
@@ -51,7 +52,6 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
-  flutter_svg: ^2.0.17
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -75,6 +75,16 @@ flutter:
      - asset\icons\Button2.svg
      - asset\vector\befb2299ba304a49bdd2f9e69c5fac77-free (2) 1.svg
      - asset\images\Rectangle 5621.png
+     - asset\icons\Group.svg
+     - asset\icons\Vector.svg
+     - asset\icons\walking.svg
+     - asset\icons\Icon.svg
+     - asset\icons\Vector4.svg
+     - asset\images\Frame 1321315056.png
+     - asset\images\Image.png
+     - asset\images\DB257E4F-2BDA-4C35-8769-3FC7BD8DA148.png
+     - asset\images\unsplash_NoVnXXmDNi0.png
+     - asset\icons\Group2.svg
 
      
   #   - images/a_dot_ham.jpeg

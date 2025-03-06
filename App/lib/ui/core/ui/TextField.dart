@@ -3,7 +3,7 @@ import 'package:serbili/ui/core/ui/Text_style.dart';
 
 class CommonTextField extends StatefulWidget {
   final String hintText;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final FocusNode? focusNode;
   final Color? fillColor;
   final Color? borderColor;
@@ -14,7 +14,7 @@ class CommonTextField extends StatefulWidget {
 
   CommonTextField({
     required this.hintText,
-    required this.controller,
+   this.controller,
     this.fillColor,
     this.borderColor,
     this.focusNode,
