@@ -2,14 +2,19 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser')
 const cookieParser = require("cookie-parser");
+const {sequelize} = require('sequelize')
 
 require('dotenv').config();
 const cors = require('cors');
 //middlewares
 const errorHandlerMiddleware = require('./middlewares/error-handelr');
 const notFound = require('./middlewares/notFound-error')
-const router = require('./routes/auth');
 const authentication = require('./middlewares/authentication')
+//routes
+const authRouter = require('./routes/auth');
+const productsRouter = require('./routes/product');
+const cartRouter = require('./routes/cart');
+const orderRouter = require('./routes/order');
 
 app.use(cookieParser());
 app.use(cors());
@@ -18,10 +23,14 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(express.json());
-
-app.use('/auth', router);
+//routes
+app.use('/products',authentication, productsRouter);
+app.use('/cart',authentication, cartRouter);
+app.use('/auth', authRouter);
+app.use('/order',authentication, orderRouter);
 app.get('/', (req, res) => {
   res.send('Hello World');
+  
 });
 app.get('/about', authentication ,(req, res) => {
   res.json({msg: 'Welcome to the about page'});

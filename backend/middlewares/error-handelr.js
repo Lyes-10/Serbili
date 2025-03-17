@@ -19,6 +19,8 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     }
 
     if (err instanceof DatabaseError) {
+        console.log(err);
+        
         customError.msg = 'Database error occurred';
         customError.statusCode = 500;
     }
