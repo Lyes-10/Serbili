@@ -2,22 +2,22 @@ import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import logo from "../assets/icons/logo2.jpg";
-import axios from 'axios';
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function ForgetPassword(props) {
+  const navigate = useNavigate();
   const validationSchema = Yup.object({
     number: Yup.string()
       .matches(/^(05|06|07)\d{8}$/, "Invalid phone number format")
       .required("Number is required"),
   });
-  
 
   return (
     <div className="flex md:items-center py-16 md:py-0 justify-center h-screen px-[10px] sm:px-[1vw] md:px-[4vw] lg:px-[6vw] xl:px-[10vw] md:bg-white bg-[#FF6F00]">
       <div className="lg:py-10 flex lg:justify-between w-full md:justify-center md:items-center items-start lg:mx-20 mx:0 ">
-        <div className="hidden lg:block">
-          <h3 className="font-medium mb-2">Important Information</h3>
+        <div className="hidden lg:block text-[#727272]">
+          <h3 className="font-bold mb-2">Important Information</h3>
           <p className="mb-14">
             Please <span className="font-bold">read </span> the information
             below and then <br /> kindly{" "}
@@ -48,7 +48,7 @@ function ForgetPassword(props) {
             validationSchema={validationSchema}
             onSubmit={(values) => {
               console.log(values);
-
+              navigate("/verifycode");
               // Handle form submission
             }}
           >
@@ -67,14 +67,13 @@ function ForgetPassword(props) {
                   component="div"
                   className="text-red-900 mt-1"
                 />
-                <Link to="/verfiycode">
-                  <button
-                    type="submit"
-                    className="py-3 px-5 mt-6 bg-white text-[#FF6F00] font-medium rounded-md float-right"
-                  >
-                    Continue
-                  </button>
-                </Link>
+
+                <button
+                  type="submit"
+                  className="py-3 px-5 mt-6 bg-white text-[#FF6F00] font-medium rounded-md float-right"
+                >
+                  Continue
+                </button>
               </Form>
             )}
           </Formik>
