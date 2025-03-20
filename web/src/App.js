@@ -5,6 +5,8 @@ import SignUp from "./pages/SignUp";
 import ForgetPassword from "./pages/ForgetPassword";
 import VerifyCode from "./pages/VerifyCode";
 import CreateNewCode from "./pages/CreateNewPassword";
+import Home from "./pages/Home";
+import Notfound from "./pages/Notfound";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path = '/forgetpassword' element = {<ForgetPassword />} />
         <Route path='/verifycode' element={<VerifyCode/>}/>
         <Route path='/newpassword' element={<CreateNewCode/>}/>
+        <Route path='/' element={<Home/>}/>
+        <Route path="*" element={<Notfound />} />
       </Routes>
     </div>
   );
