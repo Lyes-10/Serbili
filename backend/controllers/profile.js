@@ -1,7 +1,8 @@
-const asyncWrapper = require('../middleware/async');
+const asyncWrapper = require('../middlewares/async');
 const db = require('../db/models');
 const { StatusCodes } = require('http-status-codes');
 const { NotFoundError } = require('../errors');
+const { where, col } = require('sequelize');
 
 const getProfile = asyncWrapper(async (req, res)=> {
     const user = await db.Users.findOne({
@@ -15,8 +16,57 @@ const getProfile = asyncWrapper(async (req, res)=> {
         throw new NotFoundError('User not found');
     } 
     return res.status(StatusCodes.OK).json({user}) 
+});
+
+const dashboardStats = asyncWrapper(async (req, res) => {
+    const { id: userId } = req.user;
+    const netSales = await db.Order.sum('totalAmount', {
+        where: { userId }
+    });
+    
+    const delivredOrders = await db.Order.count({
+        where: { userId, status: 'DELIVERED' }
+    });
+
+    // if (!delivredOrders) {
+    //     throw new NotFoundError('No delivered orders found');
+    // }
+
+    const nOrders = await db.Order.count({
+        where: { userId }
+    });
+
+    const nCustomers = await db.Order.count({
+        distinct: true,
+        where: { userId },
+        col: 'userId'
+    });
+
+    const salesTrends = await db.Order.findAll({
+    where: {
+        userId,
+        createdAt: {
+            [db.Sequelize.Op.gte]: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) // Last 7 days
+        }
+    },
+    attributes: [
+        [db.Sequelize.fn('DATE', db.Sequelize.col('createdAt')), 'date'],
+        [db.Sequelize.fn('SUM', db.Sequelize.col('totalAmount')), 'totalSales']
+    ],
+    group: ['date'],
+    order: [['date', 'ASC']]
+});
+
+    return res.status(StatusCodes.OK).json({
+        netSales,
+        delivredOrders,
+        nOrders,
+        nCustomers,
+        salesTrends
+    });
 })
 
 module.exports = {
-    getProfile
+    getProfile,
+    dashboardStats
 }

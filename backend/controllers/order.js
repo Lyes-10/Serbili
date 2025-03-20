@@ -29,7 +29,6 @@ const placeOrder = asyncWrapper(async (req, res) => {
 
     await db.CartItem.update({ orderId: order.id }, { where: { cartId: cart.id } });
 
-    // await db.CartItem.destroy({ where : { cartId: cart.id } });
 
     res.status(StatusCodes.CREATED).json({ order });
 })

@@ -15,7 +15,7 @@ const authRouter = require('./routes/auth');
 const productsRouter = require('./routes/product');
 const cartRouter = require('./routes/cart');
 const orderRouter = require('./routes/order');
-
+const dashboardRouter = require('./routes/dashboard');
 app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.urlencoded({
@@ -28,6 +28,9 @@ app.use('/products',authentication, productsRouter);
 app.use('/cart',authentication, cartRouter);
 app.use('/auth', authRouter);
 app.use('/order',authentication, orderRouter);
+app.use('/dashboard',authentication, dashboardRouter);
+
+
 app.get('/', (req, res) => {
   res.send('Hello World');
   
