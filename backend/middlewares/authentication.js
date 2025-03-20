@@ -4,7 +4,7 @@ const {UnauthenticatedError} = require('../errors');
 const { StatusCodes } = require('http-status-codes');
 require("dotenv").config();
 const authentication = async (req, res, next) => {
-    console.log("Cookies received:", req.cookies); // ✅ Debugging
+
 
     let token;
     if ( req.cookies?.accessToken) {

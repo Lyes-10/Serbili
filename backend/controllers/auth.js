@@ -105,6 +105,7 @@ const login = asyncWrapper(async (req, res) => {
     sameSite: "Strict",
     maxAge: process.env.COOKIE_AGE, // 15 minutes (same as access token expiration)
   });
+  
   return res.status(200).json({
     message: "User logged in successfully",
     user,

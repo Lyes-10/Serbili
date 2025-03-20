@@ -82,7 +82,7 @@ function SignUp(props) {
  
 
   return (
-    <div className="bg-gray-100 w-screen h-screen ">
+    <div className="bg-gray-100 w-screen h-screen  ">
       <div className="container flex items-center justify-center h-full">
         <div className="w-[600px] bg-white rounded-sm pb-3 mb-[1px] ">
           <div className="flex items-center gap-2 justify-center ">
@@ -108,7 +108,7 @@ function SignUp(props) {
                   type="text"
                   name="firstname"
                   id="firstname"
-                  className="border-[2px] py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
+                  className="border border-[#ccc]  py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
                   placeholder="Enter Your First Name"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -123,7 +123,7 @@ function SignUp(props) {
                   type="text"
                   name="lastname"
                   id="lastname"
-                  className="border-[2px] py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
+                  className="border border-[#ccc] py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
                   placeholder="Enter Your Last Name"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -143,7 +143,7 @@ function SignUp(props) {
                 type="text"
                 name="email"
                 id="email"
-                className="border-[2px] py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
+                className="border border-[#ccc] py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
                 placeholder="Enter Your Email"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -163,7 +163,7 @@ function SignUp(props) {
                 type="text"
                 name="phoneNumber"
                 id="phoneNumber"
-                className="border-[2px] py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
+                className="border border-[#ccc] py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
                 placeholder="Enter Your Phone Number"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -191,7 +191,7 @@ function SignUp(props) {
                   type="password"
                   name="password"
                   id="password"
-                  className="border-[2px] py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
+                  className="border border-[#ccc] py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
                   placeholder="Enter Your Password"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -206,7 +206,7 @@ function SignUp(props) {
                   type="password"
                   name="cPassword"
                   id="cPassword"
-                  className="border-[2px] py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
+                  className="border border-[#ccc] py-2 rounded-md px-2 mt-[2px] placeholder:text-sm"
                   placeholder="Confirm Your Password"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}

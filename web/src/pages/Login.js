@@ -84,9 +84,9 @@ export default function Login() {
               onSubmit={formik.handleSubmit}
               className="flex flex-col lg:max-w-[397px]  max-w-full"
             >
-              <div className="relative  h-10 input">
+              <div className="relative number h-10 input">
                 <input
-                  className="border-2 rounded-xl p-2 mt-10 bg-transparent w-full h-full absolute bottom-0"
+                  className=" border-2 focus:border-none border-gray-300 rounded-xl p-2 mt-10 bg-transparent w-full h-full absolute bottom-0"
                   type="text"
                   name="number"
                   value={formik.values.number}
@@ -107,9 +107,9 @@ export default function Login() {
                 </div>
               ) : null}
               
-              <div className="h-10 relative input mt-4">
+              <div className="h-10 password relative input mt-4">
                 <input
-                  className="border-2 rounded-xl p-2 mt-6 w-full absolute bottom-0"
+                  className=" border-2 focus:border-none border-gray-300  rounded-xl p-2 mt-6 w-full absolute bottom-0"
                   type="password"
                   name="password"
                   value={formik.values.password}

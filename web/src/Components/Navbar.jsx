@@ -9,7 +9,7 @@ import down from "../assets/icons/down.svg"
 
 const Navbar = () => {
   return (
-    <div className='flex justify-between items-center mx-4 py-[6px] '>
+    <div className='flex justify-between items-center mx-4 py-[6px] nav'>
      <div className='flex items-center gap-4 ' >
       <button>
                 <img src={menu} alt="" />

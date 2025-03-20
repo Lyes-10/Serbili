@@ -65,6 +65,18 @@ module.exports = (sequelize, DataTypes) => {
     isVerified: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
+    },
+    address:{
+      type: DataTypes.STRING,
+      allowNull:true,
+    },
+    profileImage:{
+      type: DataTypes.STRING,
+      allowNull:true,
+    },
+    emergencyContact:{
+      type: DataTypes.STRING,
+      allowNull:true,
     }
     
   }, {
