@@ -1,0 +1,11 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g opacity="0.8">
+<rect width="32" height="32" fill="url(#pattern0_1043_6040)"/>
+</g>
+<defs>
+<pattern id="pattern0_1043_6040" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_1043_6040" transform="scale(0.0208333)"/>
+</pattern>
+<image id="image0_1043_6040" width="48" height="48" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAABBdJREFUaEPtmVmoT1scxz8HIVNdydjlRdwbIjKVIU+SPJheEHULT4Y88IAX04NQeDE8yFjmMhQlhDLdm+HB+IJrLJFQSFjf0/prn23vvdb6772PTp1V/07/s35rre93/cb1+9fQwEdNA8dPI4HfrcGiNdAFmACMArrZT2dL8gWgz1PgAnDcfs91B0UQaG6AzAWmAcMC0VwF9gJbgS+Ba2vF8xDQWoFeDXTPsdd34AmwFNgH6Lv3qJbAn8AhYHAO4EkgrwOTgf99GVRDYDhwFOjke0ig3CtgInDZZ10oganAbqCFz+Y5ZD4DM4EDrj1CCOjmz9UD+ApmkRjj0oQvAdm87LMss0m7aJmT/CzVJ3wINAGu2I2SDnpvYv9/1pkVRos2r2s2PCdGJx8CCpWK1UnjIjAJeG0n59iY7jLd0PkZaRhcBJSkHto4Hz9U6u0bAa95ySvbtg9F6JB/DPQG5Bd1hovAPANmU8rmi4F1CYlnPbCoYALabj6wOZSAbH9oCpi/gXsJcz2t1ormICyKhN4a6Ao8y0DRMkmlVv6UCX9ji2YACJNM9OfIMiGXQ7YFPqSAXAksK4GAMG33JbDHmML0DBADTMq/lTCvwk45o2MJBBQNFZG8NHDWZsI0HLphVaLR0dqCl3+UMc7HMWWZ0H1T3vbKQKESWPPR0DYEUI1f1nhgw6mXBt4B7RxIkkJbWQ4sKMr6dTBlaUAOKpPIGtqwT6xW0bPyRkl1UxCBR0APD1u4ZKrU0cC3iKxM6QygSFXkCDKhf83De5Dn6auA5TFZJZ2TwB8pe6g8eAmIrIarKpBMkBPr4VInZDnIzAJ2xWSUlfX07B/7v8APNOXBG0DheAkwBWjmOCMojLoSWfysr/Y9eyw2oQJvoQWpIu+TNTnlimiJLLLSoqrfNCLqfmyL7p+ltr+Au54mVBETCWltf2ydzmllcsR4QL4VBx8V32LbNElHB5US2kDRRCoOHTKJtSmLRCardZJWAQQXczo/1IyimE+bYnB2SIvELk6LflWV08oDyrjVPlAUtzea5LMBeOuhRnUidibIyemV9X/p3vmErjxaqGBRUlQE2ZFQagiDHH2B+bsGaJpAQH6V2LXzISAZNWNHeNygS6TSRtR+yjOqo3Sz6salJU3VVsopVT/qBWpFQqJygS1ivpC2ioDcMaGxrBI5jWhhjS1l0ZtFXGfAHpXW4kFXt9rHB8p6HqbxKby5q86DejLx8dGj3A649FonlWOrJlLo9houDcTNR6XFYVug3baJSg6et2eqOF/KDxwyn3HAEQtcz8z4ULL7x35Cy47Sf2JqA8hUsmqXaG2jSKV8MdIQ7mffAh3sY0f9nOe216Q8cMJ+9zKVNCGXCeXavD4WNxKoj1vOOqNRA40ayHkDPwAz6MMx1oga0wAAAABJRU5ErkJggg=="/>
+</defs>
+</svg>

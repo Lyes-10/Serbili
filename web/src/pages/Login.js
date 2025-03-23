@@ -67,7 +67,7 @@ export default function Login() {
 
   return (
     <div className="container flex gap-20 2xl:gap-0  w-screen ">
-      <div className="flex  justify-center lg:justify-start items-center 2xl:justify-between lg:gap-24 lg:ml-16 lg:mr-16 2xl:mr-0  lg:w-1/2 w-full">
+      <div className="flex  justify-center  items-center 2xl:justify-between lg:gap-24 lg:ml-16 lg:mr-16 2xl:mr-0  lg:w-1/2 w-full">
         <div className="">
           <div className="flex flex-col lg:w-[350px]  w-[375px]  ">
             <div className="flex flex-col  lg:mt-12 mt-16 mb-6 ">
@@ -84,9 +84,9 @@ export default function Login() {
               onSubmit={formik.handleSubmit}
               className="flex flex-col lg:max-w-[397px]  max-w-full"
             >
-              <div className="relative  h-10 input">
+              <div className="relative number h-10 input">
                 <input
-                  className="border-2 rounded-xl p-2 mt-10 bg-transparent w-full h-full absolute bottom-0"
+                  className=" border-2 focus:border-none border-gray-300 rounded-xl p-2 mt-10 bg-transparent w-full h-full absolute bottom-0"
                   type="text"
                   name="number"
                   value={formik.values.number}
@@ -107,9 +107,9 @@ export default function Login() {
                 </div>
               ) : null}
               
-              <div className="h-10 relative input mt-4">
+              <div className="h-10 password relative input mt-4">
                 <input
-                  className="border-2 rounded-xl p-2 mt-6 w-full absolute bottom-0"
+                  className=" border-2 focus:border-none border-gray-300  rounded-xl p-2 mt-6 w-full absolute bottom-0"
                   type="password"
                   name="password"
                   value={formik.values.password}
@@ -180,29 +180,8 @@ export default function Login() {
                 Sign in with Google{" "}
               </button>
             </div>
-            <div className="mt-6 flex flex-col gap-y-4">
-              <button className=" bg-orange-500 w-full h-[50px] rounded-xl text-base text-white flex justify-center items-center gap-1.5 ">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  x="0px"
-                  y="0px"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 48 48"
-                >
-                  <path
-                    fill="#1877F2"
-                    d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"
-                  ></path>
-                  <path
-                    fill="#fff"
-                    d="M26.572,29.036h4.917l0.772-4.995h-5.69v-2.73c0-2.075,0.678-3.915,2.619-3.915h3.119v-4.359c-0.548-0.074-1.707-0.236-3.897-0.236c-4.573,0-7.254,2.415-7.254,7.917v3.323h-4.701v4.995h4.701v13.729C22.089,42.905,23.032,43,24,43c0.875,0,1.729-0.08,2.572-0.194V29.036z"
-                  ></path>
-                </svg>
-                Sign in with Facebook
-              </button>
-            </div>
-            <div className="flex justify-center items-center lg:mt-2 mt-6">
+            
+            <div className="flex justify-center items-center lg:mt-4 mt-6">
               <p className="text-center">
                 Don't have an account?{" "}
                 <Link to="/signup" className="text-[#1E4AE9]">
@@ -221,7 +200,7 @@ export default function Login() {
         </div>
       </div>
       <div className="lg:flex justify-center items-center w-1/2 hidden">
-        <img src={image} className="lg:w-[500px] " alt="" />
+        <img src={image} className="w-[500px] " alt="" />
       </div>
     </div>
   );

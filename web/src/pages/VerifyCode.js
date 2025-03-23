@@ -3,9 +3,10 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from 'axios'
 import logo from "../assets/icons/logo2.jpg";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function VerifyCode(props) {
+  const navigate = useNavigate();
   const validationSchema = Yup.object({
     code: Yup.string()
       .matches(/^\d{6}$/, "Invalid code format")
@@ -17,8 +18,8 @@ function VerifyCode(props) {
   return (
     <div className="flex md:items-center py-16 md:py-0 justify-center h-screen px-[10px] sm:px-[1vw] md:px-[4vw] lg:px-[6vw] xl:px-[10vw] md:bg-white bg-[#FF6F00]">
       <div className="lg:py-10 flex lg:justify-between w-full md:justify-center md:items-center items-start lg:mx-20 mx:0 ">
-        <div className="hidden lg:block">
-          <h3 className="font-medium mb-2">Important Information</h3>
+        <div className="hidden lg:block text-[#727272]">
+          <h3 className="font-bold mb-2">Important Information</h3>
           <p className="mb-14">
             Please <span className="font-bold">read </span> the information
             below and then <br /> kindly{" "}
@@ -64,6 +65,7 @@ function VerifyCode(props) {
                 }catch(err){
                   console.log(err)
                 }
+                navigate("/newpassword")
               // Handle form submission
             }}
           >

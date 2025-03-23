@@ -16,6 +16,13 @@ app.use(cookieParser()); // Use cookie-parser middleware
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+//routes
+app.use('/products',authentication, productsRouter);
+app.use('/cart',authentication, cartRouter);
+app.use('/auth', authRouter);
+app.use('/order',authentication, orderRouter);
+app.use('/dashboard',authentication, dashboardRouter);
+
 
 // Test database connection
 app.get('/test-db', async (req, res) => {
@@ -31,6 +38,7 @@ app.get('/test-db', async (req, res) => {
 app.use('/auth', router); // Use the router
 app.get('/', (req, res) => {
   res.send('Hello World');
+  
 });
 app.get('/about', authentication, (req, res) => {
   res.json({ msg: 'Welcome to the about page' });
