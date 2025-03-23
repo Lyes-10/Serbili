@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../Components/Navbar";
 import location from "../assets/icons/location.svg";
 import loc from "../assets/icons/SVG.svg";
@@ -22,13 +22,27 @@ import cotex from "../assets/images/cotex.svg";
 import baridi from "../assets/images/baridi.svg";
 import condor from "../assets/images/condor.svg";
 import sonatrach from "../assets/images/sonatrach.svg";
-
+import { Link, useNavigate } from "react-router-dom";
+import Sidebar from "../Components/Sidebar";
 const Home = () => {
+  const navigate = useNavigate()
+  const [sidebarToggle,setSidebarToggle] = useState(true)
   return (
-    <div className="h-screen w-screen ">
-      <Navbar />
+    <div className="h-screen w-screen flex ">
+      <div>
+        <Sidebar sidebarToggle={sidebarToggle}
+        setSidebarToggle={setSidebarToggle}
+        />
+      </div>
+      <div 
+      
+      >
+      <Navbar 
+      sidebarToggle={sidebarToggle}
+      setSidebarToggle={setSidebarToggle} />
       <div className="bg-[#FF6F00] h-[375px] w-full flex flex-col justify-center items-center">
-        <div className="flex justify-center items-center">
+        <div className="flex flex-col  gap-6 items-center">
+          <p className="text-[#FFFFFF] lg:text-5xl md:text-4xl text-[24px] text-center ">with <b className="text-[#FFFFFF] lg:text-5xl md:text-4xl text-[24px] text-center">serbili</b> you have what you need</p>
           <div className="flex bg-white rounded-sm sm:w-[670px] max-w-[620px] min-w-[300px] position">
             <img
               src={location}
@@ -50,7 +64,9 @@ const Home = () => {
             </button>
           </div>
           <div className="flex items-center gap-1 underline text-[#FFFFFF] cursor-pointer">
+            <Link to={"/login"}>
             <p className="font-medium">Log in</p>
+            </Link>
             <p className="text-[#FFFFFF] text-[14px] mt-1">
               to see your recent address
             </p>
@@ -88,8 +104,8 @@ const Home = () => {
           search what you need
         </p>
         <div className="box grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 place-items-center lg:gap-3">
-          <div className="flex flex-col justify-center gap-6 items-center bg-[#04D3D1] h-[200px] w-[300px] rounded-3xl">
-            <div className="mt-6">
+          <div className="flex flex-col justify-center gap-6 items-center bg-[#04D3D1] h-[200px] w-[300px] rounded-3xl ">
+            <div className="mt-6 ">
               <img src={tech} alt="" />
             </div>
             <div className="bg-white h-full  w-full">
@@ -156,7 +172,7 @@ const Home = () => {
               Discover the advantages of our <br /> partners in 20 wiliaya who
               are already <br /> working <br /> with Serbili.
             </p>
-            <button className="bg-[#E9FCF2] px-32 py-3 mt-5 text-[#003366] font-bold">
+            <button className="bg-[#E9FCF2] px-32 py-3 mt-5 text-[#003366] font-bold" onClick={()=> navigate("/login")}>
               Sign in
             </button>
           </div>
@@ -168,7 +184,7 @@ const Home = () => {
               Access millions of serbili users and <br />
               benefit from immediate logistics without <br /> leave your store.
             </p>
-            <button className="bg-[#E9FCF2] px-32 py-3 mt-5 text-[#003366] font-bold">
+            <button className="bg-[#E9FCF2] px-32 py-3 mt-5 text-[#003366] font-bold" onClick={()=> navigate("/login")}>
               Sign in
             </button>
           </div>
@@ -239,6 +255,8 @@ const Home = () => {
         </p>
       </div>
       <Footer />
+      </div>
+      
     </div>
   );
 };
