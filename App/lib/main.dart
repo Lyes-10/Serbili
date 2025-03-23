@@ -5,6 +5,7 @@ import 'package:serbili/ui/auth/widgets/auth.dart';
 import 'package:serbili/ui/auth/widgets/verfiyuser.dart';
 import 'package:serbili/ui/auth/widgets/vierfycode.dart';
 import 'package:serbili/ui/home/ui/widgets/home.dart';
+import 'package:serbili/ui/home/ui/widgets/notifction.dart';
 import 'package:serbili/ui/intro/splash.dart';
 import 'package:serbili/ui/order/widget/order.dart';
 import 'package:serbili/ui/order/widget/vidorder.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: Videorder(),
+      home: Notifction(),
     );
   }
 }

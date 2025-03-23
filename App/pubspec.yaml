@@ -85,6 +85,11 @@ flutter:
      - asset\images\DB257E4F-2BDA-4C35-8769-3FC7BD8DA148.png
      - asset\images\unsplash_NoVnXXmDNi0.png
      - asset\icons\Group2.svg
+     - asset\vector\Exclude.svg
+     - asset\vector\Icon.svg
+     - asset\vector\Icon2.svg
+     - asset\vector\Icon3.svg
+     - asset\vector\Icon4.svg
 
      
   #   - images/a_dot_ham.jpeg
