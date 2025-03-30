@@ -67,3 +67,10 @@ select:focus{
 .sign input:focus{
     outline: auto;
 }
+
+a:-webkit-any-link:focus-visible {
+    outline:none;
+}
+div :focus-visible {
+    outline: none;
+}
