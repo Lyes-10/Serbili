@@ -74,3 +74,8 @@ a:-webkit-any-link:focus-visible {
 div :focus-visible {
     outline: none;
 }
+.store .date input:focus {
+    border-color: #ccc !important;
+    border-width: 2px;
+    box-shadow: none !important;
+}
