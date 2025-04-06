@@ -17,11 +17,11 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 //routes
-app.use('/products',authentication, productsRouter);
-app.use('/cart',authentication, cartRouter);
-app.use('/auth', authRouter);
-app.use('/order',authentication, orderRouter);
-app.use('/dashboard',authentication, dashboardRouter);
+// // app.use('/products',authentication, productsRouter);
+// // app.use('/cart',authentication, cartRouter);
+// app.use('/auth', authRouter);
+// app.use('/order',authentication, orderRouter);
+// app.use('/dashboard',authentication, dashboardRouter);
 
 
 // Test database connection

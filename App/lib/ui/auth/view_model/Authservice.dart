@@ -24,8 +24,10 @@ class AuthService {
 
       if (response.statusCode == 200) {
         final data = response.data;
-        await secureStorage.write(key: 'accessToken', value: data['accessToken']);
-        await secureStorage.write(key: 'refreshToken', value: data['refreshToken']);
+        await secureStorage.write(
+            key: 'accessToken', value: data['accessToken']);
+        await secureStorage.write(
+            key: 'refreshToken', value: data['refreshToken']);
       }
     } catch (e) {
       print('Error refreshing token: $e');
@@ -76,13 +78,52 @@ class AuthService {
         // Go back to the previous screen
         print('User registered successfully');
         print(data);
-         await secureStorage.write(key: 'accessToken', value: data['accessToken']);
-        await secureStorage.write(key: 'refreshToken', value: data['refreshToken']);
+        await secureStorage.write(
+            key: 'accessToken', value: data['accessToken']);
+        await secureStorage.write(
+            key: 'refreshToken', value: data['refreshToken']);
       } else {
         print('Failed to register user');
       }
     } catch (e) {
       print('Error: $e');
     }
+  }
+
+  final DioClient dioClient = DioClient();
+
+  Future<Map<String, dynamic>> verifyOTP(String userId, String otp) async {
+    try {
+      Response response = await dioClient.dio.post(
+        "http://192.168.100.8:5000/auth/verify-otp", // Replace with your actual endpoint
+        data: {
+          "userId": userId,
+          "otp": otp,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return response.data; // Successful response
+      } else {
+        return {"error": response.data['message'] ?? "Error occurred"};
+      }
+    } on DioException catch (e) {
+      return {
+        "error": e.response?.data['message'] ?? "Connection failed",
+      };
+    }
+  }
+}
+
+class DioClient {
+  final Dio _dio = Dio();
+
+  Dio get dio {
+    _dio.options.baseUrl =
+        "http://your-server-url"; // Replace with your backend URL
+    _dio.options.headers = {
+      'Content-Type': 'application/json',
+    };
+    return _dio;
   }
 }

@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:serbili/ui/auth/view_model/Authservice.dart';
 import 'package:serbili/ui/auth/view_model/user.dart';
 import 'package:serbili/ui/auth/widgets/SnackbarHelper.dart';
+import 'package:serbili/ui/auth/widgets/vierfycode.dart';
 import 'package:serbili/ui/core/ui/Button.dart';
 import 'package:serbili/ui/core/ui/TextField.dart';
 import 'package:serbili/ui/core/ui/Text_style.dart';
@@ -148,7 +149,8 @@ class _Virfy_userState extends State<Virfy_user> {
       );
       await AuthService().register(user);
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Vierfycode()));
       SnackbarHelper.show(
           context, 'Welcome Mr  ' + widget.fullname + " " + widget.familyname);
     } else {

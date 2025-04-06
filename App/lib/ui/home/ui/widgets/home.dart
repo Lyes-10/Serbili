@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:serbili/ui/core/ui/Text_style.dart';
+import 'package:serbili/ui/home/ui/widgets/notifction.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -82,7 +83,15 @@ class _HomeState extends State<Home> {
                             SizedBox(
                               width: 5,
                             ),
-                            SvgPicture.asset('asset/icons/Icon.svg'),
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Notifction()));
+                                },
+                                child:
+                                    SvgPicture.asset('asset/icons/Icon.svg')),
                             IconButton(
                               onPressed: () {},
                               icon: Icon(
