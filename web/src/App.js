@@ -7,6 +7,12 @@ import VerifyCode from "./pages/VerifyCode";
 import CreateNewCode from "./pages/CreateNewPassword";
 import Home from "./pages/Home";
 import Notfound from "./pages/Notfound";
+import User from "./pages/Dashbord/User";
+import Settings from "./pages/Dashbord/Settings";
+import Orders from "./pages/Dashbord/Orders"
+import ManageUsers from "./pages/Dashbord/ManageUsers.jsx"
+import Store from "./pages/Dashbord/Store.jsx"
+import Main from "./pages/Dashbord/Main.jsx";
 
 function App() {
   return (
@@ -18,6 +24,12 @@ function App() {
         <Route path='/verifycode' element={<VerifyCode/>}/>
         <Route path='/newpassword' element={<CreateNewCode/>}/>
         <Route path='/' element={<Home/>}/>
+        <Route path="/dashboard" element={<Main/>}/>
+        <Route path="/dashboard/userinformation" element={<User/>}/>
+        <Route path="/dashboard/orders" element={<Orders/>} />
+        <Route path="/dashboard/users" element={<ManageUsers/>}/>
+        <Route path="/dashboard/store" element={<Store/>}/>
+        <Route path="/dashboard/settings" element={<Settings/>}/>
         <Route path="*" element={<Notfound />} />
       </Routes>
     </div>
