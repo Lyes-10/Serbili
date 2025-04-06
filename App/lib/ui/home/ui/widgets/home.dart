@@ -151,26 +151,42 @@ class _HomeState extends State<Home> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'ALL Categories',
-                    style: AppStyles.light,
-                  ),
+                  Text('Categories',
+                      style: TextStyle(
+                        fontSize: 21,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700,
+                      )),
                   SizedBox(
                     width: 10,
                   ),
                   Row(
                     children: [
-                      Text(
-                        'See All ',
-                        style: AppStyles.light,
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          size: 20,
-                          color: Color(0xffA0A5BA),
+                      Text('See All ',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 0.5,
+                          )),
+                      Container(
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                            color: Color(0xff004CFF),
+                            borderRadius: BorderRadius.circular(60)),
+                        child: Center(
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.arrow_forward,
+                              size: 15,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
+                        padding: EdgeInsets.zero, // Remove padding
+                        constraints: BoxConstraints(),
                       )
                     ],
                   )
@@ -187,33 +203,36 @@ class _HomeState extends State<Home> {
                             child: Container(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 8),
-                              margin: EdgeInsets.only(left: 10),
+                              margin: EdgeInsets.symmetric(horizontal: 10),
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: Colors.white),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
-                                    width: 44,
-                                    height: 44,
+                                    width: 50,
+                                    height: 50,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(50),
-                                      color: Color.fromARGB(255, 183, 195, 207),
+                                      color: Color(0xffFF6F00),
                                     ),
                                     child: Icon(
                                       category['icon'],
-                                      color: Colors.blue,
+                                      color: Colors.white,
+                                      size: 30,
                                     ),
                                   ),
-                                  SizedBox(width: 8),
+                                  SizedBox(height: 8),
                                   Container(
-                                    margin: EdgeInsets.only(right: 20),
                                     child: Text(
                                       category['label'],
                                       style: TextStyle(
-                                          fontSize: 16, color: Colors.black),
+                                        fontSize: 17,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -223,7 +242,7 @@ class _HomeState extends State<Home> {
                         );
                       }).toList(),
                     ),
-                  ))
+                  )),
             ],
           ),
         ),
