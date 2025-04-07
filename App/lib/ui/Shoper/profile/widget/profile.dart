@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:serbili/ui/Shoper/profile/widget/detile.dart';
+import 'package:serbili/ui/Shoper/profile/widget/pyment.dart';
+import 'package:serbili/ui/Shoper/profile/widget/sttings.dart';
 import 'package:serbili/ui/core/ui/Button.dart';
-import 'package:serbili/ui/profile/widget/detile.dart';
-import 'package:serbili/ui/profile/widget/pyment.dart';
-import 'package:serbili/ui/profile/widget/sttings.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -137,10 +137,6 @@ class _ProfileState extends State<Profile> {
                             ));
                       }
                     })),
-            Padding(
-              padding: EdgeInsets.only(bottom: 90),
-              child: Text('ilyes'),
-            )
           ],
         ),
       ),

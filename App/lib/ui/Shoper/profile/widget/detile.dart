@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
+import 'package:serbili/ui/Shoper/profile/widget/profile.dart';
 import 'package:serbili/ui/auth/widgets/verfiyuser.dart';
+
 import 'package:serbili/ui/core/ui/Button.dart';
 import 'package:serbili/ui/core/ui/TextField.dart';
 import 'package:serbili/ui/core/ui/Text_style.dart';
-import 'package:serbili/ui/profile/widget/profile.dart';
+
 
 class Detile extends StatefulWidget {
   @override

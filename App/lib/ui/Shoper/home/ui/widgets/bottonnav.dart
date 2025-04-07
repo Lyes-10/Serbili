@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:serbili/ui/home/ui/widgets/home.dart';
-import 'package:serbili/ui/order/widget/order.dart';
-import 'package:serbili/ui/profile/widget/profile.dart';
+import 'package:serbili/ui/Shoper/home/ui/widgets/home.dart';
+import 'package:serbili/ui/Shoper/order/widget/order.dart';
+import 'package:serbili/ui/Shoper/profile/widget/profile.dart';
+
 
 class BottomNavExample extends StatefulWidget {
   @override

@@ -1,17 +1,21 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:serbili/ui/auth/view_model/Authservice.dart';
+
+
+import 'package:serbili/ui/Shoper/home/ui/widgets/home.dart';
 import 'package:serbili/ui/auth/view_model/olduser.dart';
-import 'package:serbili/ui/auth/view_model/user.dart';
 import 'package:serbili/ui/auth/widgets/Restpassword.dart';
 import 'package:serbili/ui/auth/widgets/SnackbarHelper.dart';
 import 'package:serbili/ui/auth/widgets/verfiyuser.dart';
+
 import 'package:serbili/ui/core/ui/Button.dart';
 import 'package:serbili/ui/core/ui/TextField.dart';
 import 'package:serbili/ui/core/ui/Text_style.dart';
 import 'package:serbili/ui/core/ui/dilago.dart';
-import 'package:serbili/ui/home/ui/widgets/home.dart';
+
+
+import '../view_model/Authservice.dart';
 
 class Auth extends StatefulWidget {
   @override
@@ -198,11 +202,11 @@ class _SignUpState extends State<SignUp> {
                 alignment: Alignment.centerRight,
                 child: CommonButton(
                   text: 'Next',
-                  width: 100,
+                  width: 120,
                   onPressed: () {
                     _regster1();
                   },
-                  borderRadius: 30,
+                  borderRadius: 20,
                 ),
               )
             ],

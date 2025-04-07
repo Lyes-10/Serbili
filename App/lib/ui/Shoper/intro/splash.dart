@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:serbili/ui/auth/widgets/auth.dart';
+
 
 class Splash extends StatefulWidget {
   @override

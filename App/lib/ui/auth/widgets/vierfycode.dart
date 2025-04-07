@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:serbili/ui/auth/view_model/Authservice.dart';
-import 'package:serbili/ui/auth/widgets/Restpassword.dart';
+import 'package:serbili/ui/auth/widgets/location.dart';
+
 import 'package:serbili/ui/core/ui/Button.dart';
 import 'package:serbili/ui/core/ui/Text_style.dart';
 
@@ -78,7 +80,7 @@ class Vierfy_code extends StatefulWidget {
 class _Vierfy_codeState extends State<Vierfy_code> {
   final List<TextEditingController> _controllers =
       List.generate(6, (_) => TextEditingController());
-       final TextEditingController userIdController = TextEditingController();
+  final TextEditingController userIdController = TextEditingController();
   final TextEditingController otpController = TextEditingController();
   final AuthService authService = AuthService();
   String message = "";
@@ -88,7 +90,8 @@ class _Vierfy_codeState extends State<Vierfy_code> {
     _controllers.forEach((controller) => controller.dispose());
     super.dispose();
   }
-    void verifyOTP() async {
+
+  void verifyOTP() async {
     final userId = userIdController.text.trim();
     final otp = otpController.text.trim();
 
@@ -181,8 +184,8 @@ class _Vierfy_codeState extends State<Vierfy_code> {
           CommonButton(
             text: 'Verify',
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Restpassword()));
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Location()));
             },
             width: MediaQuery.of(context).size.width,
           )

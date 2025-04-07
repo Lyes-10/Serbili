@@ -2,15 +2,19 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
+
 import 'package:serbili/ui/auth/view_model/Authservice.dart';
-import 'package:serbili/ui/auth/view_model/user.dart';
 import 'package:serbili/ui/auth/widgets/SnackbarHelper.dart';
 import 'package:serbili/ui/auth/widgets/vierfycode.dart';
+
 import 'package:serbili/ui/core/ui/Button.dart';
 import 'package:serbili/ui/core/ui/TextField.dart';
 import 'package:serbili/ui/core/ui/Text_style.dart';
 import 'package:serbili/ui/core/ui/dilago.dart';
-import 'package:serbili/ui/home/ui/widgets/home.dart';
+
+import '../view_model/user.dart';
+
 
 class Verfiyuser extends StatefulWidget {
   final String fullName;
@@ -152,6 +156,7 @@ class _Virfy_userState extends State<Virfy_user> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => Vierfycode()));
       SnackbarHelper.show(
+          // ignore: use_build_context_synchronously
           context, 'Welcome Mr  ' + widget.fullname + " " + widget.familyname);
     } else {
       showCustomDialog(
