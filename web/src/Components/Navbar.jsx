@@ -7,11 +7,11 @@ import revenu from "../assets/icons/rev.svg"
 import cart from "../assets/icons/cart.svg"
 import down from "../assets/icons/down.svg"
 
-const Navbar = () => {
+const Navbar = ({sidebarToggle,setSidebarToggle}) => {
   return (
     <div className='flex justify-between items-center mx-4 py-[6px] nav'>
      <div className='flex items-center gap-4 ' >
-      <button>
+      <button onClick={()=> setSidebarToggle(!sidebarToggle)}>
                 <img src={menu} alt="" />
               </button>
               <img src={logo} alt="" className='w-12' />
@@ -22,9 +22,9 @@ const Navbar = () => {
                       </div>
      </div>
     
-     <div className='flex flex-1 mx-6  justify-between items-center  bg-[#F7F8F9] rounded-lg'>
-               <input className=' bg-inherit  outline-none caret-transparent ml-8 py-3 w-full rounded-lg' type="search" placeholder='search...'  id="search" />
-               <img className='w-5 h-5 mr-3 ' src={search} alt="" />
+     <div className='flex flex-1 mx-2  justify-between items-center  bg-[#F7F8F9] rounded-lg'>
+               <input className=' bg-inherit  outline-none caret-transparent md:ml-8 py-3 w-full rounded-lg' type="search" placeholder='search...'  id="search" />
+               <img className='w-5 h-5 md:mr-3 mr-1 ' src={search} alt="" />
              </div>
               <div className='flex items-center gap-2'> 
                      <img src={revenu} alt="" />

@@ -67,7 +67,7 @@ export default function Login() {
 
   return (
     <div className="container flex gap-20 2xl:gap-0  w-screen ">
-      <div className="flex  justify-center lg:justify-start items-center 2xl:justify-between lg:gap-24 lg:ml-16 lg:mr-16 2xl:mr-0  lg:w-1/2 w-full">
+      <div className="flex  justify-center  items-center 2xl:justify-between lg:gap-24 lg:ml-16 lg:mr-16 2xl:mr-0  lg:w-1/2 w-full">
         <div className="">
           <div className="flex flex-col lg:w-[350px]  w-[375px]  ">
             <div className="flex flex-col  lg:mt-12 mt-16 mb-6 ">
@@ -200,7 +200,7 @@ export default function Login() {
         </div>
       </div>
       <div className="lg:flex justify-center items-center w-1/2 hidden">
-        <img src={image} className="lg:w-[500px] " alt="" />
+        <img src={image} className="w-[500px] " alt="" />
       </div>
     </div>
   );
