@@ -28,9 +28,6 @@ const dashboardStats = asyncWrapper(async (req, res) => {
         where: { userId, status: 'DELIVERED' }
     });
 
-    // if (!delivredOrders) {
-    //     throw new NotFoundError('No delivered orders found');
-    // }
 
     const nOrders = await db.Order.count({
         where: { userId }
@@ -64,9 +61,39 @@ const dashboardStats = asyncWrapper(async (req, res) => {
         nCustomers,
         salesTrends
     });
-})
+});
+
+const uploadProfileImage = asyncWrapper(async (req, res) => {
+    const { id: userId } = req.user;
+    const imagePath = req.file.path;
+
+    const user = await db.Users.findByPk(userId);
+    if (!user) {
+        throw new NotFoundError('User not found');
+    }
+
+    await user.update({ profileImage: imagePath });
+
+    return res.status(StatusCodes.OK).json({ message: 'Profile image updated successfully' });
+});
+
+const updateProfile = asyncWrapper(async (req, res) => {
+    const { id: userId } = req.user;
+    const { firstname, lastname, email, phoneNumber, address, emergencyContact } = req.body;
+
+    const user = await db.Users.findByPk(userId);
+    if (!user) {
+        throw new NotFoundError('User not found');
+    }
+
+    await user.update({ firstname, lastname, email, phoneNumber, address, emergencyContact });
+
+    return res.status(StatusCodes.OK).json({ message: 'Profile updated successfully' });
+});
 
 module.exports = {
+    uploadProfileImage,
+    updateProfile,
     getProfile,
     dashboardStats
 }

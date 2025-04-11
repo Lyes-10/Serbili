@@ -9,6 +9,7 @@ const asyncWrapper = require("../middlewares/async");
 const bcrypt = require('bcrypt');
 const { sendOTP } = require("../utils/OtpVerification");
 const { StatusCodes } = require("http-status-codes");
+const upload = require('../utils/upload')
 require("dotenv").config();
 
 
@@ -46,8 +47,17 @@ const refreshToken = asyncWrapper(async (req, res) => {
   });
 });
 const register = asyncWrapper(async (req, res) => {
+  //upload image
+  // await new Promise((resolve, reject) => {
+  //   upload(req, res, (err) => {
+  //     if (err) {
+  //       return reject(err);  // Reject the promise if an error occurs
+  //     }
+  //     resolve();  // Resolve the promise if no error occurs
+  //   });
+  // });
   const { firstname, lastname, email, password, userType, phoneNumber } =
-    req.body;
+  req.body;
   if (
     !firstname ||
     !lastname ||
@@ -58,6 +68,8 @@ const register = asyncWrapper(async (req, res) => {
   ) {
     throw new BadRequestError("Please fill all fields");
   }
+  //image path
+  const imagePath = req.file ? req.file.path : null;
 
   const user = await db.Users.create({
     firstname,
@@ -67,11 +79,12 @@ const register = asyncWrapper(async (req, res) => {
     password,
     userType,
     isVerified: false,
+    paper: imagePath,
   });
 
   await sendOTP(user);
 
-  return res.status(201).json({
+  return res.status(StatusCodes.CREATED).json({
     message: "User created successfully",
     user,
   });

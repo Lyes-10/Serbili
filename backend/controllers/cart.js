@@ -28,7 +28,7 @@ const getCart = asyncWrapper(async (req, res) => {
 
 const addToCart = asyncWrapper(async (req, res) => {
     const { id: userId } = req.user;
-    const { productId, quantity } = req.body;
+    const { productId, quantity, size, color } = req.body;
     const product = await db.Product.findByPk(productId);
     if (!product) {
         throw new NotFoundError('Product not found');
@@ -48,7 +48,7 @@ const addToCart = asyncWrapper(async (req, res) => {
     }
 
     const [cartItem, created] = await db.CartItem.findOrCreate({
-        where: { cartId: cart.id, productId },
+        where: { cartId: cart.id, productId, size, color },
         defaults: { quantity },
     });
 
