@@ -75,18 +75,6 @@ const Home = () => {
         <div className="h-56  sm:h-64 xl:h-full ">
           <Carousel slide={false}>
             <img
-              src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
-              alt="..."
-            />
-            <img
-              src="https://flowbite.com/docs/images/carousel/carousel-2.svg"
-              alt="..."
-            />
-            <img
-              src="https://flowbite.com/docs/images/carousel/carousel-3.svg"
-              alt="..."
-            />
-            <img
               src="https://flowbite.com/docs/images/carousel/carousel-4.svg"
               alt="..."
             />
@@ -102,12 +90,12 @@ const Home = () => {
           search what you need
         </p>
         <div className="box grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 place-items-center lg:gap-3">
-          <div className="flex flex-col justify-center gap-6 items-center bg-[#04D3D1] h-[200px] w-[300px] rounded-3xl ">
+          <div className="flex flex-col justify-center gap-6 items-center  bg-[#04D3D1] h-[200px] w-[300px] rounded-3xl ">
             <div className="mt-6 ">
               <img src={tech} alt="" />
             </div>
             <div className="bg-white h-full  w-full">
-              <p className="text-center ">Technologie</p>
+              <p className="text-center">Technologie</p>
             </div>
           </div>
           <div className="flex flex-col justify-center gap-6 items-center bg-[#717171] h-[200px] w-[300px] rounded-3xl">
@@ -208,7 +196,7 @@ const Home = () => {
       </div>
       <div className="flex  justify-center items-center lg:mt-0 mt-6">
         <div className=" flex flex-col gap-2 mt-16 md:mt-6 md:ml-10 ">
-          <p className="font-bold lg:text-[40px] md:text-3xl text-2xl  lg:leading-10 sm:leading-8 lg:text-nowrap text-center">
+          <p className="font-bold lg:text-[40px] md:text-3xl text-2xl  lg:leading-10 sm:leading-8 lg:text-nowrap max-lg:text-center">
             We Make Sure That Your <br /> Products Will Reach You <br />
             Safely
           </p>
