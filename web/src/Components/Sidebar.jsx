@@ -3,7 +3,7 @@ import logo from "../assets/icons/logo.svg";
 import dz from "../assets/icons/dz.svg"
 const Sidebar = ({sidebarToggle,setSidebarToggle}) => {
   return (
-    <div className={`${sidebarToggle ? "hidden" : "block"} w-64  h-screen `}>
+    <div className={`${sidebarToggle ? "hidden" : "block"} fixed  top-0 left-0 w-64 h-full bg-white z-50  `}>
       <div className="flex justify-between items-center ml-3 mr-6 py-[7px]">
         <div className="flex items-center gap-1">
           <img src={logo} alt="" />
@@ -37,7 +37,7 @@ const Sidebar = ({sidebarToggle,setSidebarToggle}) => {
       </ul>
       </div>
       <span className="h-[1px] w-full bg-[#ccc] block mt-16"></span>
-      <div className=" flex items-center gap-3 m-2">
+      <div className=" flex items-center gap-5 m-4">
        <img src={dz} className="h-[32px] w-[32px] drop-shadow-lg" alt="" />
        <p className="text-[#2E2C36] text-[16px] font-bold ">Algeria</p>
       </div>

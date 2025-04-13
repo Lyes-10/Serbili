@@ -7,7 +7,7 @@ import whatsapp from "../assets/images/Link - whatapp.svg"
 const Footer = () => {
   return (
     <div className='max-sm:container bg-[#E8E8E8]  w-screen  footer  '>
-      <div className='grid md:grid-cols-[1fr,1fr,1fr,2fr] mx-8  md:mx-24 '>
+      <div className='grid md:grid-cols-[1fr,1fr,1fr,2fr] mx-8  md:mx-24  '>
         <div className='mt-4' >
             <ul className='text-[14px] text-[#757575] leading-6'>
                 <b className='leading-7 text-[16px] text-[#191919]'>Customer sevice</b>
@@ -56,10 +56,13 @@ const Footer = () => {
        </div>
        <div>
        <b className='leading-7 text-[16px] text-[#191919]'>Stay connected</b>
-        <div className='flex items-center gap-6 md:gap-3 mt-4'>
+        <div className='flex items-center  max-md:justify-evenly md:gap-3 mt-4'>
             <img src={facebook} alt="" />
+            <div className='flex gap-2 mr-2'>
             <img src={whatsapp} alt="" />
             <span className='number text-[15px] leading-7  '>0656769534</span>
+            </div>
+           
         </div>
        </div>
       </div>
