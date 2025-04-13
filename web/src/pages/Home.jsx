@@ -234,7 +234,7 @@ const Home = () => {
       </div>
       <div className="container flex flex-col items-center mt-36 mb-44 ">
         <img src={privacy} alt="" />
-        <p className="text-4xl leading-10 mt-8 sm:text-center lg:text-nowrap">
+        <p className="text-4xl leading-10 mt-8 text-center">
           Your privacy is our responsibility
         </p>
         <p className="text-[15px] text-[#333333] leading-7 mt-6 ">
