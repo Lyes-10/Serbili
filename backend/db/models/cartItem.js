@@ -25,6 +25,14 @@ module.exports = (sequelize) => {
         orderId:{
             type: DataTypes.INTEGER,
             allowNull: true
+        },
+        size: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        color: {
+            type: DataTypes.STRING,
+            allowNull: true
         }
     },
         {

@@ -30,7 +30,8 @@ app.use('/auth', authRouter);
 app.use('/order',authentication, orderRouter);
 app.use('/dashboard',authentication, dashboardRouter);
 
-
+//image access 
+app.use('/uploads', express.static('uploads'));
 app.get('/', (req, res) => {
   res.send('Hello World');
   

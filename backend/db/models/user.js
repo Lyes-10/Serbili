@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     userType: {
-      type: DataTypes.ENUM('admin', 'worker', 'costumer'),
+      type: DataTypes.ENUM('shop', 'warehouse'),
       allowNull: false,
     },
     phoneNumber: {
@@ -77,6 +77,10 @@ module.exports = (sequelize, DataTypes) => {
     emergencyContact:{
       type: DataTypes.STRING,
       allowNull:true,
+    },
+    paper:{
+      type: DataTypes.STRING,
+      allowNull:false,
     }
     
   }, {

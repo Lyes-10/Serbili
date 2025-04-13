@@ -30,19 +30,15 @@ const Home = () => {
   
   
   return (
-    <div className="h-screen w-screen flex ">
-      <div className="h-screen">
-        <Sidebar sidebarToggle={sidebarToggle}
+    <div className="h-screen w-screen overflow-x-hidden">
+      <Sidebar sidebarToggle={sidebarToggle}
         setSidebarToggle={setSidebarToggle}
         />
-      </div>
-      <div 
-      
-      >
-      <Navbar 
+    <Navbar 
       sidebarToggle={sidebarToggle}
       setSidebarToggle={setSidebarToggle} />
-      <div className="bg-[#FF6F00] h-[375px] w-full flex flex-col justify-center items-center">
+      <div>
+      <div className="bg-[#FF6F00]  h-[375px] w-full flex flex-col justify-center items-center">
         <div className="flex flex-col  gap-6 items-center">
           <p className="text-[#FFFFFF] lg:text-5xl md:text-4xl text-[24px] text-center ">with <b className="text-[#FFFFFF] lg:text-5xl md:text-4xl text-[24px] text-center">serbili</b> you have what you need</p>
           <div className="flex bg-white rounded-sm sm:w-[670px] max-w-[620px] min-w-[300px] position">
@@ -75,8 +71,8 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="mx-10 md:h-[270px] h-[250px]  mt-8 rounded-xl">
-        <div className="h-56 sm:h-64 xl:h-full 2xl:h-96 ">
+      <div className="mx-10 md:h-[270px] h-[250px]  mt-8 rounded-xl ">
+        <div className="h-56  sm:h-64 xl:h-full ">
           <Carousel slide={false}>
             <img
               src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
@@ -210,13 +206,13 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="flex md:justify-between justify-center items-center ">
-        <div className=" flex flex-col gap-6 ml-2 mt-16 md:mt-6 md:ml-4 lg:ml-20">
-          <p className="font-bold lg:text-[40px] md:text-3xl text-2xl  lg:leading-10 sm:leading-8 max-md:text-center">
+      <div className="flex  justify-center items-center lg:mt-0 mt-6">
+        <div className=" flex flex-col gap-2 mt-16 md:mt-6 md:ml-10 ">
+          <p className="font-bold lg:text-[40px] md:text-3xl text-2xl  lg:leading-10 sm:leading-8 lg:text-nowrap text-center">
             We Make Sure That Your <br /> Products Will Reach You <br />
             Safely
           </p>
-          <p className="text-xs lg:leading-7 sm:leading-5  max-md:mt-8 max-md:text-center">
+          <p className="text-xs lg:leading-7 sm:leading-5  mt-8 lg:mt-0 max-lg:text-center lg:text-nowrap">
             We make sure your product reaches you safely and securely. Our team
             handles <br className="max-md:hidden" /> ever package with care and
             precision.With reliable delivery services,we{" "}
@@ -225,12 +221,12 @@ const Home = () => {
             experience!"
           </p>
         </div>
-        <div className="md:grid  gap-4 mt-4 lg:mt-32 mr-4 rounded-xl hidden ">
-          <div className="grid grid-cols-2 lg:ml-32  place-items-end ">
+        <div className="lg:grid  gap-6 mt-4 lg:mt-32  rounded-xl hidden ">
+          <div className="grid grid-cols-2 lg:ml-24 gap-4 ">
             <img src={image1} alt="" />
             <img src={image2} className="" alt="" />
           </div>
-          <div className="grid grid-cols-2 place-items-end">
+          <div className="grid grid-cols-2 ">
             <img src={image3} alt="" />
             <img src={image4} alt="" />
           </div>
@@ -238,7 +234,7 @@ const Home = () => {
       </div>
       <div className="container flex flex-col items-center mt-36 mb-44 ">
         <img src={privacy} alt="" />
-        <p className="text-4xl leading-10 mt-8 max-md:text-center">
+        <p className="text-4xl leading-10 mt-8 sm:text-center lg:text-nowrap">
           Your privacy is our responsibility
         </p>
         <p className="text-[15px] text-[#333333] leading-7 mt-6 ">

@@ -37,7 +37,7 @@ const Sidebar = ({sidebarToggle,setSidebarToggle}) => {
       </ul>
       </div>
       <span className="h-[1px] w-full bg-[#ccc] block mt-16"></span>
-      <div className=" flex items-center gap-3 m-2">
+      <div className=" flex items-center gap-5 m-4">
        <img src={dz} className="h-[32px] w-[32px] drop-shadow-lg" alt="" />
        <p className="text-[#2E2C36] text-[16px] font-bold ">Algeria</p>
       </div>
