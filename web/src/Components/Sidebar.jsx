@@ -3,7 +3,7 @@ import logo from "../assets/icons/logo.svg";
 import dz from "../assets/icons/dz.svg"
 const Sidebar = ({sidebarToggle,setSidebarToggle}) => {
   return (
-    <div className={`${sidebarToggle ? "hidden" : "block"} w-64  h-screen `}>
+    <div className={`${sidebarToggle ? "hidden" : "block"} fixed  top-0 left-0 w-64 h-full bg-white z-50  `}>
       <div className="flex justify-between items-center ml-3 mr-6 py-[7px]">
         <div className="flex items-center gap-1">
           <img src={logo} alt="" />

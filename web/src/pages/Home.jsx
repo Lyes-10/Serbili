@@ -27,9 +27,11 @@ import Sidebar from "../Components/Sidebar";
 const Home = () => {
   const navigate = useNavigate()
   const [sidebarToggle,setSidebarToggle] = useState(true)
+  
+  
   return (
     <div className="h-screen w-screen flex ">
-      <div>
+      <div className="h-screen">
         <Sidebar sidebarToggle={sidebarToggle}
         setSidebarToggle={setSidebarToggle}
         />

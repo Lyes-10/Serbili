@@ -21,7 +21,7 @@ const Settings = () => {
       </div>
       <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 md:mt-24 mt-8 max-md:mb-6'>
       <Link to="/dashboard/userinformation">
-      <div className='bg-[#ffffff] flex flex-col px-4 gap-4 py-4 rounded-lg shadow-lg '>
+      <div className='bg-[#ffffff] flex flex-col px-4 gap-4 py-6 rounded-lg shadow-lg '>
         <div>
         <img src={pinfo} alt=""  />
         </div>

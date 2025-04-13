@@ -30,7 +30,7 @@ const MenuDashbord = ({ activeItem }) => {
     setClick(false); // Reset User button
     setClicked(false); // Reset Dashboard button
   };
-
+  
   return (
     <div className="h-full flex flex-col pt-2 border-2 border-r-2 border-[#E2E2E2]  ">
       <div className="flex gap-2 items-center py-2 pl-2 mx-2">
