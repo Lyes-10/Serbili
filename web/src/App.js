@@ -15,6 +15,8 @@ import Store from "./pages/Dashbord/Store.jsx"
 import Main from "./pages/Dashbord/Main.jsx";
 import Revenue from "./pages/Revenue.jsx";
 import Cart from "./pages/Cart.jsx";
+import Checkout from "./pages/Checkout.jsx";
+import Order from "./pages/Order.jsx";
 
 
 function App() {
@@ -25,8 +27,10 @@ function App() {
         <Route path='/signup' element={<SignUp />}  />
         <Route path = '/forgetpassword' element = {<ForgetPassword />} />
         <Route path='/verifycode' element={<VerifyCode/>}/>
+        <Route path='/order' element={<Order/>}/>
         <Route path='/newpassword' element={<CreateNewCode/>}/>
         <Route path='/' element={<Home/>}/>
+        <Route path='/checkout' element={<Checkout/>}/>
         <Route path='/revenue' element={<Revenue/>}/>
         <Route path="/cart" element={<Cart/>}/>
         <Route path="/dashboard" element={<Main/>}/>
@@ -35,6 +39,7 @@ function App() {
         <Route path="/dashboard/users" element={<ManageUsers/>}/>
         <Route path="/dashboard/store" element={<Store/>}/>
         <Route path="/dashboard/settings" element={<Settings/>}/>
+
         <Route path="*" element={<Notfound />} />
       </Routes>
     </div>

@@ -47,6 +47,7 @@ const refreshToken = asyncWrapper(async (req, res) => {
   });
 });
 const register = asyncWrapper(async (req, res) => {
+
   //upload image
   // await new Promise((resolve, reject) => {
   //   upload(req, res, (err) => {
@@ -56,8 +57,9 @@ const register = asyncWrapper(async (req, res) => {
   //     resolve();  // Resolve the promise if no error occurs
   //   });
   // });
-  const { firstname, lastname, email, password, userType, phoneNumber } =
-  req.body;
+  console.log(req.body);
+ 
+  const { firstname, lastname, email, password, userType, phoneNumber } = req.body;
   if (
     !firstname ||
     !lastname ||
@@ -70,7 +72,7 @@ const register = asyncWrapper(async (req, res) => {
   }
   //image path
   const imagePath = req.file ? req.file.path : null;
-
+try{
   const user = await db.Users.create({
     firstname,
     lastname,
@@ -79,8 +81,12 @@ const register = asyncWrapper(async (req, res) => {
     password,
     userType,
     isVerified: false,
-    paper: imagePath,
+    paper: imagePath ,
   });
+}catch(err){
+  console.log(err, "error in creating user");
+}
+  
 
   await sendOTP(user);
 
@@ -89,6 +95,7 @@ const register = asyncWrapper(async (req, res) => {
     user,
   });
 });
+
 
 const login = asyncWrapper(async (req, res) => {
   const { identifier, password } = req.body;

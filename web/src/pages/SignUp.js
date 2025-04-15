@@ -20,7 +20,7 @@ function SignUp(props) {
       password: "",
       cPassword: "",
       userType: "",
-      // file: "",
+      
     },
     validationSchema: Yup.object({
       firstname: Yup.string().required("both name and family name are required"),
