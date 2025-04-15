@@ -60,6 +60,7 @@ const register = asyncWrapper(async (req, res) => {
   // });
   const { firstname, lastname, email, password, userType, phoneNumber } =
     req.body;
+  console.log(req.body);
   if (
     !firstname ||
     !lastname ||
