@@ -5,12 +5,16 @@ const fs = require('fs');
 // Make sure the uploads directories exist
 const uploadsDirPaper = path.join(__dirname, '../uploads/paper');
 const uploadsDirProfile = path.join(__dirname, '../uploads/profile');
+const uploadDirProductImage = path.join(__dirname, '../uploads/product')
 
 if (!fs.existsSync(uploadsDirPaper)) {
   fs.mkdirSync(uploadsDirPaper, { recursive: true });
 }
 if (!fs.existsSync(uploadsDirProfile)) {
   fs.mkdirSync(uploadsDirProfile, { recursive: true });
+}
+if (!fs.existsSync(uploadDirProductImage)) {
+  fs.mkdirSync(uploadDirProductImage, { recursive: true });
 }
 
 // ===== Storage for Paper =====
@@ -36,6 +40,17 @@ const storageProfile = multer.diskStorage({
     cb(null, `${originalName}-${Date.now()}${extension}`);
   },
 });
+// storage for the product Image
+const storageProduct = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadDirProductImage);
+  },
+  filename: (req, file, cb) => {
+    const originalName = path.parse(file.originalname).name.replace(/\s+/g, '-');
+    const extension = path.extname(file.originalname);
+    cb(null, `${originalName}-${Date.now()}${extension}`);
+  }
+})
 
 // ===== File type checking function =====
 function checkFileType(file, cb) {
@@ -79,8 +94,17 @@ const uploadProfile = multer({
   },
 }).single('profileImage'); // name of the field when uploading profile images
 
+//upload image product
+const uploadProduct = multer({
+  storage: storageProduct,
+  limits: { fileSize:10000000 },
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb);
+  },
+}).single('image');
 // ===== Export both uploaders =====
 module.exports = {
   uploadPaper,
   uploadProfile,
+  uploadProduct   
 };
