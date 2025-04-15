@@ -13,6 +13,9 @@ import Orders from "./pages/Dashbord/Orders"
 import ManageUsers from "./pages/Dashbord/ManageUsers.jsx"
 import Store from "./pages/Dashbord/Store.jsx"
 import Main from "./pages/Dashbord/Main.jsx";
+import Revenue from "./pages/Revenue.jsx";
+import Cart from "./pages/Cart.jsx";
+
 
 function App() {
   return (
@@ -24,6 +27,8 @@ function App() {
         <Route path='/verifycode' element={<VerifyCode/>}/>
         <Route path='/newpassword' element={<CreateNewCode/>}/>
         <Route path='/' element={<Home/>}/>
+        <Route path='/revenue' element={<Revenue/>}/>
+        <Route path="/cart" element={<Cart/>}/>
         <Route path="/dashboard" element={<Main/>}/>
         <Route path="/dashboard/userinformation" element={<User/>}/>
         <Route path="/dashboard/orders" element={<Orders/>} />

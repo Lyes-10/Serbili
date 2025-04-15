@@ -32,6 +32,22 @@ const User = () => {
     const handleChange = (event, field) => {
       setFormData({ ...formData, [field]: event.target.value });
     };
+    const [image, setImage] = useState(null);
+
+    const handleFileChange = (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setImage(reader.result); // Update the image preview
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+  
+    const handleClick = () => {
+      document.getElementById("fileInput").click(); // Trigger file input click
+    };
 
   return (
     <div className='grid md:grid-cols-[260px,1fr] grid-cols-[100px,1fr]'>
@@ -39,10 +55,33 @@ const User = () => {
       <div className=' bg-gray-50  '>
         <div className='flex lg:gap-60 lg:justify-normal justify-between  items-center py-4'>
          <p className='md:text-2xl text-xl text-[#484848] font-bold md:ml-8 ml-6'>My information</p>
-         <div className=' flex max-lg:flex-col max-lg:gap-2 max-lg:mr-2 justify-between items-center'>
-         <img src={user} alt="" />
-         <button className='font-medium md:ml-4  text-xs'>Change picture</button>
-         </div>
+         <div className="flex  items-center">
+      <div
+        className="w-[65px] h-[65px] rounded-full border-2 border-orange-500 flex items-center  overflow-hidden"
+        onClick={handleClick}
+      >
+        {image ? (
+          <img
+            src={image}
+            alt="Profile"
+            className="w-full h-full object-cover"
+          />
+        ) : ""}
+      </div>
+      <button
+        className="px-4 py-2 font-semibold text-[15px] "
+        onClick={handleClick}
+      >
+        Change Picture
+      </button>
+      <input
+        type="file"
+        id="fileInput"
+        className="hidden"
+        accept="image/*"
+        onChange={handleFileChange}
+      />
+    </div>
         </div>
         <div className='grid lg:grid-cols-2  mt-6 md:ml-8 ml-6 lg:mr-0 mr-4'>
         <div className="bg-inherit">
