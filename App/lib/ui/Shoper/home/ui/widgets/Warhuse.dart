@@ -8,12 +8,12 @@ import 'package:serbili/ui/Shoper/profile/widget/detile.dart';
 import 'package:serbili/ui/Shoper/profile/widget/profile.dart';
 import 'package:serbili/ui/core/ui/Text_style.dart';
 
-class Home extends StatefulWidget {
+class Warhuse extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _WarhuseState createState() => _WarhuseState();
 }
 
-class _HomeState extends State<Home> {
+class _WarhuseState extends State<Warhuse> {
   void _updateSearchQuery(String query) {
     String _searchQuery = '';
     setState(() {
@@ -225,75 +225,197 @@ class _HomeState extends State<Home> {
               SizedBox(
                 height: 20,
               ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Text('Categories',
+              //         style: TextStyle(
+              //           fontSize: 21,
+              //           color: Color(0xffFF6F00),
+              //           fontWeight: FontWeight.w700,
+              //         )),
+              //     SizedBox(
+              //       width: 10,
+              //     ),
+              //   ],
+              // ),
+              // Expanded(
+              //   child: ListView.builder(
+              //     itemCount: categories.length,
+              //     itemBuilder: (context, index) {
+              //       final category = categories[index];
+              //       return Container(
+              //         margin:
+              //             EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              //         child: Stack(
+              //           children: [
+              //             Container(
+              //               decoration: BoxDecoration(
+              //                 borderRadius: BorderRadius.circular(10),
+              //                 color: Colors.grey[200],
+              //               ),
+              //               child: Image.asset(
+              //                 category['image'],
+              //                 width: 300,
+              //                 fit: BoxFit.contain,
+              //               ),
+              //             ),
+              //             SizedBox(height: 8),
+              //             Positioned(
+              //               bottom: 0,
+              //               child: Container(
+              //                 padding: EdgeInsets.only(
+              //                   left: 10,
+              //                 ),
+              //                 height: 20,
+              //                 width: 300,
+              //                 decoration: BoxDecoration(
+              //                   color: Colors.black.withOpacity(
+              //                       0.6), // Background for shadow effect
+              //                   borderRadius: BorderRadius.only(
+              //                     bottomLeft: Radius.circular(10),
+              //                     bottomRight: Radius.circular(10),
+              //                   ),
+              //                 ),
+              //                 child: Text(
+              //                   category['label'],
+              //                   style: TextStyle(
+              //                     fontSize: 17,
+              //                     color: Colors.white,
+              //                     fontWeight: FontWeight.w700,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       );
+              //     },
+              //   ),
+              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Categories',
+                  Text('Suppliers of the day',
                       style: TextStyle(
-                        fontSize: 21,
+                        fontSize: 18,
                         color: Color(0xffFF6F00),
                         fontWeight: FontWeight.w700,
                       )),
-                  SizedBox(
-                    width: 10,
-                  ),
                 ],
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: categories.length,
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, // Number of items per row
+                    crossAxisSpacing: 10, // Horizontal space between items
+                    mainAxisSpacing: 10, // Vertical space between items
+                    childAspectRatio: 0.8, // Width-to-height ratio of items
+                  ),
+                  itemCount: products.length, // Number of items in the grid
                   itemBuilder: (context, index) {
-                    final category = categories[index];
-                    return Container(
-                      margin:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                      child: Stack(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey[200],
-                            ),
-                            child: Image.asset(
-                              category['image'],
-                              width: 300,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Positioned(
-                            bottom: 0,
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                left: 10,
+                    final product = products[index];
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) =>
+                                      WarhouseProduct(
+                                name: product['name'],
                               ),
-                              height: 20,
-                              width: 300,
-                              decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(
-                                    0.6), // Background for shadow effect
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                const begin =
+                                    Offset(1.0, 0.0); // Start from right side
+                                const end = Offset.zero;
+                                const curve = Curves.easeInOut;
+
+                                var tween = Tween(begin: begin, end: end)
+                                    .chain(CurveTween(curve: curve));
+                                var offsetAnimation = animation.drive(tween);
+
+                                return SlideTransition(
+                                    position: offsetAnimation,
+                                    child: WarhouseProduct(
+                                      name: product['name'],
+                                    ));
+                              },
+                            ));
+                      },
+                      child: Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: ClipOval(
+                                child: Image.asset(
+                                  product['image'] ??
+                                      'assets/images/default.png', // Provide a default image
+                                  fit: BoxFit
+                                      .cover, // Resize image to fit container
                                 ),
                               ),
-                              child: Text(
-                                category['label'],
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      product['name'] ??
+                                          'Unknown', // Provide a default name
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          '4.5', // Static rating (can be dynamic if needed)
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.star,
+                                          color: const Color.fromARGB(
+                                              255, 59, 255, 118),
+                                          size: 20,
+                                        ),
+                                      ],
+                                    ),
+                                  ]),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: 8.0, left: 8),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  product['phone'] ??
+                                      'Unknown phone', // Provide a default zone
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey[700],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
                 ),
               ),
- 
             ],
           ),
         ),

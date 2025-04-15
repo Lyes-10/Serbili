@@ -40,6 +40,8 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   font_awesome_flutter: ^10.1.0
   flutter_svg: ^2.0.17
+  flutter_rating_bar: ^4.0.0
+  
 
 
 dev_dependencies:
@@ -92,6 +94,17 @@ flutter:
      - asset\vector\Icon4.svg
      - asset\vector\7d17a0e7f85305ae68d940c13ef8152a 1.svg
      - asset\images\7d17a0e7f85305ae68d940c13ef8152a 1.png
+     - asset\images\unsplash_NoVnXXmDNi01.png
+     - asset\images\unsplash_yTBMYCcZQRs.png
+     - asset\images\unsplash_0vsk2_9dkqo1.png
+     - asset\images\unsplash_0vsk2_9dkqo.png
+     - asset\images\unsplash_yTBMYCcZQRs.png
+     - asset\images\unsplash_9U18fiowwbw.png
+     - asset\images\unsplash_0vsk2_9dkqo1.png
+     - asset\images\fujiphilm-ojZ4wJNUM5w-unsplash 1.png
+     - asset\images\domino-studio-164_6wVEHfI-unsplash 1.png
+     - asset\images\Bitmap.png
+     - asset\images\icons8-star-48.png
 
      
   #   - images/a_dot_ham.jpeg

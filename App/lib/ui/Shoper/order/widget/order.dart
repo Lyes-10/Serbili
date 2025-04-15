@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:serbili/ui/core/ui/Button.dart';
 import 'package:serbili/ui/core/ui/Text_style.dart';
 
@@ -97,10 +98,15 @@ class _HistoryState extends State<History> {
   }
 }
 
-class history extends StatelessWidget {
-  const history({
-    super.key,
-  });
+class history extends StatefulWidget {
+  const history({super.key});
+
+  @override
+  State<history> createState() => _historyState();
+}
+
+class _historyState extends State<history> {
+  double? _submittedRating; // Variable to store the submitted rating
 
   @override
   Widget build(BuildContext context) {
@@ -163,10 +169,9 @@ class history extends StatelessWidget {
                           style: AppStyles.light,
                         ),
                         Container(
-                          width:
-                              2, // Set the width of the container to make it thin
-                          height: 15, // Set the height of the container
-                          color: Colors.black, // Set the color of the container
+                          width: 2,
+                          height: 15,
+                          color: Colors.black,
                           margin: EdgeInsets.symmetric(horizontal: 10),
                         ),
                         Text(
@@ -212,11 +217,85 @@ class history extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CommonButton(
-              text: 'Rate it ',
-              onPressed: () {},
-              borderRadius: 15,
-            ),
+            if (_submittedRating ==
+                null) // Show the button if no rating is submitted
+              CommonButton(
+                text: 'Rate it',
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      double rating =
+                          0; // Variable to store the selected rating
+                      return AlertDialog(
+                        title: Text('Rate Product'),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Please rate this product:',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(height: 20),
+                            RatingBar.builder(
+                              initialRating: 0,
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemPadding:
+                                  EdgeInsets.symmetric(horizontal: 4.0),
+                              itemBuilder: (context, _) => Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                              onRatingUpdate: (value) {
+                                rating = value; // Update the rating value
+                              },
+                            ),
+                          ],
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                _submittedRating =
+                                    rating; // Save the submitted rating
+                              });
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: Text('Submit'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                borderRadius: 15,
+              )
+            else // Show the rating if it has been submitted
+              Row(
+                children: [
+                  Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  SizedBox(width: 5),
+                  Text(
+                    'Rating: $_submittedRating',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
           ],
         ),
         SizedBox(
@@ -267,6 +346,10 @@ class order_ui extends StatefulWidget {
 }
 
 class _order_uiState extends State<order_ui> {
+  Map<String, dynamic> product = {
+    'quantity': 1, // Initial quantity of the product
+  };
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -337,6 +420,57 @@ class _order_uiState extends State<order_ui> {
                         Text(
                           'Rs. 100',
                           style: AppStyles.light,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (product['quantity'] > 0) {
+                                product['quantity']--; // Decrease the quantity
+                              }
+                            });
+                          },
+                          icon: Icon(
+                            Icons.remove,
+                            color: Colors.red,
+                            size: 30,
+                          ),
+                        ),
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            product['quantity']
+                                .toString(), // Display the product's quantity
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontFamily: 'Poppins',
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              product['quantity']++; // Increase the quantity
+                            });
+                          },
+                          icon: Icon(
+                            Icons.add,
+                            color: Colors.green,
+                            size: 30,
+                          ),
                         ),
                       ],
                     ),
