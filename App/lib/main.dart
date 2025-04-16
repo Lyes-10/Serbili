@@ -5,6 +5,7 @@ import 'package:serbili/ui/Shoper/home/ui/widgets/Warhuse.dart';
 
 import 'package:serbili/ui/Shoper/home/ui/widgets/bottonnav.dart';
 import 'package:serbili/ui/Shoper/home/ui/widgets/home.dart';
+import 'package:serbili/ui/Shoper/intro/splash.dart';
 import 'package:serbili/ui/Shoper/order/widget/cart.dart';
 import 'package:serbili/ui/Shoper/order/widget/order.dart';
 import 'package:serbili/ui/Shoper/order/widget/orderRusem.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: Warhuse(),
+      home: Splash(),
     );
   }
 }

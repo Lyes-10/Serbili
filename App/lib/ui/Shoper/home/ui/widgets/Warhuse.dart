@@ -9,6 +9,8 @@ import 'package:serbili/ui/Shoper/profile/widget/profile.dart';
 import 'package:serbili/ui/core/ui/Text_style.dart';
 
 class Warhuse extends StatefulWidget {
+  const Warhuse({Key? key, required this.catigory}) : super(key: key);
+  final String catigory;
   @override
   _WarhuseState createState() => _WarhuseState();
 }
@@ -53,51 +55,63 @@ class _WarhuseState extends State<Warhuse> {
     {
       'name': 'Product 1',
       'image': 'asset/images/Bitmap.png',
-      'phone': '123-456-7890'
+      'phone': '123-456-7890',
+      'category': 'Clothes',
     },
     {
       'name': 'Product 2',
       'image': 'asset/images/Bitmap.png',
-      'phone': '234-567-8901'
+      'phone': '234-567-8901',
+      'category': 'House',
     },
     {
       'name': 'Product 3',
       'image': 'asset/images/Bitmap.png',
-      'phone': '345-678-9012'
+      'phone': '345-678-9012',
+      'category': 'Alimentation',
     },
     {
       'name': 'Product 4',
       'image': 'asset/images/Bitmap.png',
-      'phone': '456-789-0123'
+      'phone': '456-789-0123',
+      'category': 'Technology',
     },
     {
       'name': 'Product 5',
       'image': 'asset/images/Bitmap.png',
-      'phone': '567-890-1234'
+      'phone': '567-890-1234',
+      'category': 'Flight',
     },
     {
       'name': 'Product 6',
       'image': 'asset/images/Bitmap.png',
-      'phone': '678-901-2345'
+      'phone': '678-901-2345',
+      'category': 'Other',
     },
     {
       'name': 'Product 7',
       'image': 'asset/images/Bitmap.png',
-      'phone': '789-012-3456'
+      'phone': '789-012-3456',
+      'category': 'Clothes',
     },
     {
       'name': 'Product 8',
       'image': 'asset/images/Bitmap.png',
-      'phone': '890-123-4567'
+      'phone': '890-123-4567',
+      'category': 'House',
     },
     {
       'name': 'Product 9',
       'image': 'asset/images/Bitmap.png',
-      'phone': '901-234-5678'
+      'phone': '901-234-5678',
+      'category': 'Technology',
     },
   ];
   @override
   Widget build(BuildContext context) {
+    final filteredProducts = products
+        .where((product) => product['category'] == widget.catigory)
+        .toList();
     return Scaffold(
         body: Container(
       child: Stack(children: [
@@ -312,37 +326,39 @@ class _WarhuseState extends State<Warhuse> {
                     mainAxisSpacing: 10, // Vertical space between items
                     childAspectRatio: 0.8, // Width-to-height ratio of items
                   ),
-                  itemCount: products.length, // Number of items in the grid
+                  itemCount:
+                      filteredProducts.length, // Use filteredProducts here
                   itemBuilder: (context, index) {
-                    final product = products[index];
+                    final product =
+                        filteredProducts[index]; // Use filteredProducts here
                     return InkWell(
                       onTap: () {
                         Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder:
-                                  (context, animation, secondaryAnimation) =>
-                                      WarhouseProduct(
-                                name: product['name'],
-                              ),
-                              transitionsBuilder: (context, animation,
-                                  secondaryAnimation, child) {
-                                const begin =
-                                    Offset(1.0, 0.0); // Start from right side
-                                const end = Offset.zero;
-                                const curve = Curves.easeInOut;
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    WarhouseProduct(
+                              name: product['name'],
+                            ),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              const begin =
+                                  Offset(1.0, 0.0); // Start from right side
+                              const end = Offset.zero;
+                              const curve = Curves.easeInOut;
 
-                                var tween = Tween(begin: begin, end: end)
-                                    .chain(CurveTween(curve: curve));
-                                var offsetAnimation = animation.drive(tween);
+                              var tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
+                              var offsetAnimation = animation.drive(tween);
 
-                                return SlideTransition(
-                                    position: offsetAnimation,
-                                    child: WarhouseProduct(
-                                      name: product['name'],
-                                    ));
-                              },
-                            ));
+                              return SlideTransition(
+                                position: offsetAnimation,
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
                       },
                       child: Card(
                         elevation: 4,
@@ -364,35 +380,36 @@ class _WarhuseState extends State<Warhuse> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      product['name'] ??
-                                          'Unknown', // Provide a default name
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    product['name'] ??
+                                        'Unknown', // Provide a default name
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '4.5', // Static rating (can be dynamic if needed)
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          '4.5', // Static rating (can be dynamic if needed)
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Icon(
-                                          Icons.star,
-                                          color: const Color.fromARGB(
-                                              255, 59, 255, 118),
-                                          size: 20,
-                                        ),
-                                      ],
-                                    ),
-                                  ]),
+                                      Icon(
+                                        Icons.star,
+                                        color: const Color.fromARGB(
+                                            255, 59, 255, 118),
+                                        size: 20,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                             Padding(
                               padding:
@@ -401,7 +418,7 @@ class _WarhuseState extends State<Warhuse> {
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   product['phone'] ??
-                                      'Unknown phone', // Provide a default zone
+                                      'Unknown phone', // Provide a default phone
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.grey[700],

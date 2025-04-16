@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:serbili/ui/Shoper/buy/widget/product.dart';
 import 'package:serbili/ui/Shoper/buy/widget/warhouseproduct.dart';
+import 'package:serbili/ui/Shoper/home/ui/widgets/Warhuse.dart';
 import 'package:serbili/ui/Shoper/home/ui/widgets/notifction.dart';
 import 'package:serbili/ui/Shoper/order/widget/cart.dart';
 import 'package:serbili/ui/Shoper/profile/widget/detile.dart';
@@ -49,53 +50,7 @@ class _HomeState extends State<Home> {
       'label': 'Other'
     },
   ];
-  final List<Map<String, dynamic>> products = [
-    {
-      'name': 'Product 1',
-      'image': 'asset/images/Bitmap.png',
-      'phone': '123-456-7890'
-    },
-    {
-      'name': 'Product 2',
-      'image': 'asset/images/Bitmap.png',
-      'phone': '234-567-8901'
-    },
-    {
-      'name': 'Product 3',
-      'image': 'asset/images/Bitmap.png',
-      'phone': '345-678-9012'
-    },
-    {
-      'name': 'Product 4',
-      'image': 'asset/images/Bitmap.png',
-      'phone': '456-789-0123'
-    },
-    {
-      'name': 'Product 5',
-      'image': 'asset/images/Bitmap.png',
-      'phone': '567-890-1234'
-    },
-    {
-      'name': 'Product 6',
-      'image': 'asset/images/Bitmap.png',
-      'phone': '678-901-2345'
-    },
-    {
-      'name': 'Product 7',
-      'image': 'asset/images/Bitmap.png',
-      'phone': '789-012-3456'
-    },
-    {
-      'name': 'Product 8',
-      'image': 'asset/images/Bitmap.png',
-      'phone': '890-123-4567'
-    },
-    {
-      'name': 'Product 9',
-      'image': 'asset/images/Bitmap.png',
-      'phone': '901-234-5678'
-    },
-  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -244,56 +199,86 @@ class _HomeState extends State<Home> {
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
                     final category = categories[index];
-                    return Container(
-                      margin:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                      child: Stack(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey[200],
-                            ),
-                            child: Image.asset(
-                              category['image'],
-                              width: 300,
-                              fit: BoxFit.contain,
-                            ),
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    Warhuse(
+                                        catigory: category['label'],
+                                        // Pass the selected category
+                                        ),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              const begin =
+                                  Offset(1.0, 0.0); // Start from the right
+                              const end = Offset.zero;
+                              const curve = Curves.easeInOut;
+
+                              var tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
+                              var offsetAnimation = animation.drive(tween);
+
+                              return SlideTransition(
+                                position: offsetAnimation,
+                                child: child,
+                              );
+                            },
                           ),
-                          SizedBox(height: 8),
-                          Positioned(
-                            bottom: 0,
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                left: 10,
-                              ),
-                              height: 20,
-                              width: 300,
+                        );
+                      },
+                      child: Container(
+                        margin:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        child: Stack(
+                          children: [
+                            Container(
                               decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(
-                                    0.6), // Background for shadow effect
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                ),
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.grey[200],
                               ),
-                              child: Text(
-                                category['label'],
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
+                              child: Image.asset(
+                                category['image'],
+                                width: 300,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Positioned(
+                              bottom: 0,
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                  left: 10,
+                                ),
+                                height: 20,
+                                width: 300,
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(
+                                      0.6), // Background for shadow effect
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10),
+                                  ),
+                                ),
+                                child: Text(
+                                  category['label'],
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
                 ),
               ),
- 
             ],
           ),
         ),
