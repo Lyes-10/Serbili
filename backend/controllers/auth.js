@@ -9,7 +9,8 @@ const asyncWrapper = require("../middlewares/async");
 const bcrypt = require('bcrypt');
 const { sendOTP } = require("../utils/OtpVerification");
 const { StatusCodes } = require("http-status-codes");
-const upload = require('../utils/upload')
+const upload = require('../utils/upload');
+const fs = require('fs');
 require("dotenv").config();
 
 
@@ -18,7 +19,7 @@ const refreshToken = asyncWrapper(async (req, res) => {
   if (!tokenRefresh) {
     return res.status(403).json({ msg: "Refresh token is invalid" });
   }
-``
+
   //verify token ( DB and JWT)
   const storedToken = await db.refreshToken.verifyToken(tokenRefresh);
   if (!storedToken) {
@@ -49,6 +50,7 @@ const refreshToken = asyncWrapper(async (req, res) => {
 // Adjust the path to your db file
 
 const register = asyncWrapper(async (req, res) => {
+
   //upload image
   // await new Promise((resolve, reject) => {
   //   upload(req, res, (err) => {
@@ -61,6 +63,10 @@ const register = asyncWrapper(async (req, res) => {
   const { firstname, lastname, email, password, userType, phoneNumber } =
     req.body;
   console.log(req.body);
+ 
+  
+  const { firstname, lastname, email, password, userType, phoneNumber, paper, category } = req.body;
+  console.log({firstname, lastname, email, password, userType, phoneNumber});
   if (
     !firstname ||
     !lastname ||
@@ -71,9 +77,17 @@ const register = asyncWrapper(async (req, res) => {
   ) {
     throw new BadRequestError("Please fill all fields");
   }
-  //image path
-  const imagePath = req.file ? req.file.path : null;
 
+  
+  //image path
+  //const imagePath = req.file ? req.file.path : null;
+try{
+  if (paper) {
+    const base64Data = paper.replace(/^data:.*;base64,/, ""); // Remove the Base64 header
+    const filePath = `uploads/${Date.now()}-file.png`; // Define the file path
+    fs.writeFileSync(filePath, base64Data, "base64"); // Save the file
+    console.log("File saved at:", filePath);
+  }
   const user = await db.Users.create({
     firstname,
     lastname,
@@ -82,8 +96,12 @@ const register = asyncWrapper(async (req, res) => {
     password,
     userType,
     isVerified: false,
-    paper: imagePath,
+    paper,
+    category
+    
   });
+
+  
 
   await sendOTP(user);
 
@@ -91,6 +109,9 @@ const register = asyncWrapper(async (req, res) => {
     message: "User created successfully",
     user,
   });
+}catch(err){
+  console.log(err, "error in creating user");
+}
 });
 
 const login = async (req, res) => {

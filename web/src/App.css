@@ -79,3 +79,9 @@ div :focus-visible {
     border-width: 2px;
     box-shadow: none !important;
 }
+
+
+.swiper-button-next {
+    position: absolute;
+    top: 0;
+}
