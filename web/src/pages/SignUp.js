@@ -20,6 +20,7 @@ function SignUp(props) {
       password: "",
       cPassword: "",
       userType: "",
+      file: null,
       
     },
     validationSchema: Yup.object({
@@ -53,7 +54,8 @@ function SignUp(props) {
         email: values.email,
         password: values.password,
         userType: values.userType,
-        
+        paper: values.file,
+        category: "shop"
       };
 
       try {
@@ -65,7 +67,7 @@ function SignUp(props) {
         console.log("Form submitted successfully:", response.data.user.id);
 
         localStorage.setItem("id", response.data.user.id );
-        navigate('/login');
+        navigate('/');
         
         
       } catch (error) {
@@ -76,8 +78,17 @@ function SignUp(props) {
   });
 
   const handleFileChange = (event) => {
-    formik.setFieldValue("file", event.currentTarget.files[0]);
+    const file = event.currentTarget.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      formik.setFieldValue("file", reader.result); // Set the Base64 string
+      formik.setFieldValue("fileName", file.name); // Set the file name
+    };
+    reader.readAsDataURL(file); // Convert the file to Base64
+  }
   };
+  console.log(formik.values.file);
 
  
 
@@ -236,8 +247,8 @@ function SignUp(props) {
                 value={formik.values.userType}
               >
                 <option value="">Select Your Profile Type</option>
-                <option value="worker">I'm a Worker</option>
-                <option value="customer">I'm a Customer</option>
+                <option value="shop">I'm a Worker</option>
+                <option value="warehouse">I'm a Customer</option>
               </select>
               {formik.errors.userType && formik.touched.userType ? (
                 <p className="text-red-700 text-[10px]">
@@ -245,6 +256,7 @@ function SignUp(props) {
                 </p>
               ) : null}
             </div>
+            { !formik.values.file  ?
             <div>
               <h3 className="mt-[4px] font-medium">Upload Your File</h3>
               <p className="text-[12px] text-gray-600 mb-2">
@@ -266,6 +278,11 @@ function SignUp(props) {
                 onBlur={formik.handleBlur}
               /> 
             </div>
+            :
+            <h3>
+              {formik.values.fileName}
+            </h3>
+}
 
             <button
               type="submit"
