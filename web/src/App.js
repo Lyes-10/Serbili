@@ -10,11 +10,15 @@ import Notfound from "./pages/Notfound";
 import User from "./pages/Dashbord/User";
 import Settings from "./pages/Dashbord/Settings";
 import Orders from "./pages/Dashbord/Orders"
-import ManageUsers from "./pages/Dashbord/ManageUsers.jsx"
+
 import Store from "./pages/Dashbord/Store.jsx"
 import Main from "./pages/Dashbord/Main.jsx";
 import Revenue from "./pages/Revenue.jsx";
 import Cart from "./pages/Cart.jsx";
+import Supliers from "./pages/Supliers.jsx";
+import OrdersRev from "./pages/OrdersRev.jsx";
+import Notfications from "./pages/Notfications.jsx";
+import ManageProducts from "./pages/Dashbord/ManageProducts.jsx";
 
 
 function App() {
@@ -27,12 +31,15 @@ function App() {
         <Route path='/verifycode' element={<VerifyCode/>}/>
         <Route path='/newpassword' element={<CreateNewCode/>}/>
         <Route path='/' element={<Home/>}/>
+        <Route path="/supliers" element={<Supliers/>}/>
         <Route path='/revenue' element={<Revenue/>}/>
+        <Route path="/revenue/orders" element={<OrdersRev/>}/>
+        <Route path="/revenue/notificatiion" element={<Notfications/>}/>
         <Route path="/cart" element={<Cart/>}/>
         <Route path="/dashboard" element={<Main/>}/>
         <Route path="/dashboard/userinformation" element={<User/>}/>
         <Route path="/dashboard/orders" element={<Orders/>} />
-        <Route path="/dashboard/users" element={<ManageUsers/>}/>
+        <Route path="/dashboard/products" element={<ManageProducts/>}/>
         <Route path="/dashboard/store" element={<Store/>}/>
         <Route path="/dashboard/settings" element={<Settings/>}/>
         <Route path="*" element={<Notfound />} />

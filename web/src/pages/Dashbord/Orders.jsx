@@ -15,21 +15,7 @@ const Orders = () => {
     <div className='grid md:grid-cols-[260px,1fr] grid-cols-[100px,1fr]'>
     <div><MenuDashbord activeItem={"Orders"}  />
     </div>
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-8">Product Settings</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {products.map((product, index) => (
-          <div key={index} className="p-4 border rounded-lg shadow-lg bg-white">
-            <h3 className="text-lg font-bold">{product.name}</h3>
-            <p>Quantity: {product.quantity}</p>
-            <p>Price: ${product.price}</p>
-          </div>
-        ))}
-      </div>
-      <div className="mt-8">
-        <AddProduct onAddProduct={addProductHandler} />
-      </div>
-    </div>
+  
   </div>
   )
 }
