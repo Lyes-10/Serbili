@@ -5,7 +5,7 @@ const {verifyOTP} = require('../controllers/otpController');
 const {uploadPaper,
     uploadProfile, }= require('../utils/upload')
 
-router.post('/register',uploadPaper, register);
+router.post('/register', register);
 router.post('/refresh-token', refreshToken);
 router.post('/login', login);
 router.post('/logout', logout);

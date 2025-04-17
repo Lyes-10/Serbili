@@ -4,7 +4,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     queryInterface.addColumn('Users', 'paper', {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: false,
     })
   },
