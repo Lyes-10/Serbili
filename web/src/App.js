@@ -15,16 +15,12 @@ import Store from "./pages/Dashbord/Store.jsx"
 import Main from "./pages/Dashbord/Main.jsx";
 import Revenue from "./pages/Revenue.jsx";
 import Cart from "./pages/Cart.jsx";
-<<<<<<< HEAD
 import Supliers from "./pages/Supliers.jsx";
 import OrdersRev from "./pages/OrdersRev.jsx";
 import Notfications from "./pages/Notfications.jsx";
 import ManageProducts from "./pages/Dashbord/ManageProducts.jsx";
-=======
 import Checkout from "./pages/Checkout.jsx";
 import Order from "./pages/Order.jsx";
->>>>>>> e8cb8060d5e353e88d3bb94277f3907f6a9f03a7
-
 
 function App() {
   return (
@@ -34,14 +30,11 @@ function App() {
         <Route path='/signup' element={<SignUp />}  />
         <Route path = '/forgetpassword' element = {<ForgetPassword />} />
         <Route path='/verifycode' element={<VerifyCode/>}/>
-        <Route path='/order' element={<Order/>}/>
+        <Route path="/checkout" element={<Checkout/>}/>
+        <Route path="/order" element={<Order/>}/>
         <Route path='/newpassword' element={<CreateNewCode/>}/>
         <Route path='/' element={<Home/>}/>
-<<<<<<< HEAD
         <Route path="/supliers" element={<Supliers/>}/>
-=======
-        <Route path='/checkout' element={<Checkout/>}/>
->>>>>>> e8cb8060d5e353e88d3bb94277f3907f6a9f03a7
         <Route path='/revenue' element={<Revenue/>}/>
         <Route path="/revenue/orders" element={<OrdersRev/>}/>
         <Route path="/revenue/notificatiion" element={<Notfications/>}/>
