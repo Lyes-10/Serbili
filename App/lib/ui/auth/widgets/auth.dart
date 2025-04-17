@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:serbili/ui/Shoper/home/ui/widgets/bottonnav.dart';
 
 import 'package:serbili/ui/Shoper/home/ui/widgets/home.dart';
 import 'package:serbili/ui/auth/view_model/olduser.dart';
@@ -13,7 +14,7 @@ import 'package:serbili/ui/core/ui/Button.dart';
 import 'package:serbili/ui/core/ui/TextField.dart';
 import 'package:serbili/ui/core/ui/Text_style.dart';
 import 'package:serbili/ui/core/ui/dilago.dart';
-
+import 'package:serbili/ui/core/ui/transction.dart';
 
 import '../view_model/Authservice.dart';
 
@@ -231,11 +232,12 @@ class _LoginState extends State<Login> {
 
   final TextEditingController password = TextEditingController();
   bool isLoading = false;
+  final storage = FlutterSecureStorage();
+  void login(BuildContext context) async {
+    final identifier = phonenumber.text.trim(); // Email or phone number
+    final password2 = password.text.trim(); // Password
 
-  login(BuildContext context) async {
-    final password2 = password.text.trim();
-    final idefate = phonenumber.text.trim();
-    if (phonenumber.text.isEmpty || password2.isEmpty) {
+    if (identifier.isEmpty || password2.isEmpty) {
       showCustomDialog(
         context,
         'Error',
@@ -244,21 +246,76 @@ class _LoginState extends State<Login> {
       );
       return;
     }
-    if (phonenumber.text.length == 10 && phonenumber.text.startsWith('05') ||
-        phonenumber.text.startsWith('06') ||
-        phonenumber.text.startsWith('07')) {
-      Olduser olduser =
-          Olduser(identifier: 'john.doe@example.com', password: 'password123');
 
-      await AuthService().login(olduser);
-      print(olduser.toJson());
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-      SnackbarHelper.show(context, 'Welcome back Mr  ' + idefate);
+    if ((identifier.length == 10 &&
+            (identifier.startsWith('05') ||
+                identifier.startsWith('06') ||
+                identifier.startsWith('07'))) ||
+        identifier.contains('@')) {
+      try {
+        final dio = Dio();
+        final response = await dio.post(
+          'http://192.168.104.46:3000/auth/login', // Replace with your backend URL
+          data: {
+            'identifier': identifier,
+            'password': password2,
+          },
+          options: Options(
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          ),
+        );
+
+        if (response.statusCode == 200) {
+          // Handle successful login
+          final user = response.data['user'];
+          final message = response.data['message'] ?? 'Login successful';
+          final accessToken = response.data['accessToken'];
+          final refreshToken = response.data['refreshToken'];
+
+          // Store tokens securely
+          await storage.write(key: 'accessToken', value: accessToken);
+          await storage.write(key: 'refreshToken', value: refreshToken);
+          // Navigate to the home screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => BottomNavExample()),
+          );
+
+          // Show success message
+          SnackbarHelper.show(context, message);
+        } else {
+          // Handle unexpected response
+          showCustomDialog(
+            context,
+            'Error',
+            response.data['message'] ?? 'Failed to log in',
+            DialogType.error,
+          );
+        }
+      } catch (e) {
+        if (e is DioError && e.response?.statusCode == 401) {
+          showCustomDialog(
+            context,
+            'Error',
+            'Invalid credentials. Please try again.',
+            DialogType.error,
+          );
+        } else {
+          showCustomDialog(
+            context,
+            'Error',
+            'An error occurred: ${e.toString()}',
+            DialogType.error,
+          );
+        }
+      }
     } else {
       showCustomDialog(
         context,
         'Error',
-        'Invalid phone number, please enter a valid one',
+        'Invalid phone number or email. Please enter a valid identifier.',
         DialogType.error,
       );
     }
@@ -300,10 +357,9 @@ class _LoginState extends State<Login> {
                 alignment: Alignment.centerLeft,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Restpassword()));
+                    // Example usage
+                    navigateWithFadeTransition(context, Restpassword(),
+                        curve: Curves.fastOutSlowIn);
                   },
                   child: Text(
                     'Forget password?',

@@ -1,7 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:serbili/ui/auth/widgets/auth.dart';
 import 'package:serbili/ui/core/ui/Button.dart';
 import 'package:serbili/ui/core/ui/TextField.dart';
 import 'package:serbili/ui/core/ui/Text_style.dart';
+import 'package:serbili/ui/core/ui/transction.dart';
 
 class Newpassword extends StatefulWidget {
   @override
@@ -66,10 +69,91 @@ class _NewpasswordState extends State<Newpassword> {
 }
 
 class New_password extends StatelessWidget {
-  final TextEditingController newpassword = new TextEditingController();
   New_password({
     super.key,
   });
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController otpController = TextEditingController();
+  final TextEditingController newPasswordController = TextEditingController();
+  void resetPassword(BuildContext context) async {
+    final email = emailController.text.trim();
+    final otp = otpController.text.trim();
+    final newPassword = newPasswordController.text.trim();
+
+    if (email.isEmpty || otp.isEmpty || newPassword.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please fill in all fields')),
+      );
+      return;
+    }
+    try {
+      final dio = Dio();
+      final response = await dio.post(
+        'http://192.168.104.46:3000/auth/reset-password', // Replace with your backend URL
+        data: {
+          'email': email,
+          'otp': otp,
+          'newPassword': newPassword,
+        },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              response.data['message'] ?? 'Password reset successfully!',
+              style: TextStyle(
+                color: Colors.white, // Text color
+                fontSize: 16, // Font size
+                fontWeight: FontWeight.bold, // Font weight
+              ),
+            ),
+            backgroundColor: Colors.green, // Background color for success
+            behavior: SnackBarBehavior.floating, // Makes the SnackBar float
+            margin: EdgeInsets.all(16), // Adds margin around the SnackBar
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12), // Rounded corners
+            ),
+            duration: Duration(seconds: 3), // Duration the SnackBar is visible
+          ),
+        );
+
+        // Navigate to the login page or another screen
+     // Example usage
+navigateWithSlideTransition(context, Auth());
+
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              response.data['message'] ?? 'Failed to reset password',
+              style: TextStyle(
+                color: Colors.white, // Text color
+                fontSize: 16, // Font size
+                fontWeight: FontWeight.bold, // Font weight
+              ),
+            ),
+            backgroundColor: Colors.red, // Background color for error
+            behavior: SnackBarBehavior.floating, // Makes the SnackBar float
+            margin: EdgeInsets.all(16), // Adds margin around the SnackBar
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12), // Rounded corners
+            ),
+            duration: Duration(seconds: 4), // Duration the SnackBar is visible
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An error occurred: ${e.toString()}')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,8 +211,8 @@ class New_password extends StatelessWidget {
             height: 20,
           ),
           CommonTextField(
-            hintText: 'New password',
-            controller: newpassword,
+            hintText: 'otp',
+            controller: otpController,
             width: MediaQuery.of(context).size.width,
             borderRadius: 12,
           ),
@@ -136,20 +220,26 @@ class New_password extends StatelessWidget {
             height: 20,
           ),
           CommonTextField(
-            hintText: 'Confirm password',
-            controller: newpassword,
+            hintText: 'Email address',
+            controller: emailController,
             width: MediaQuery.of(context).size.width,
             borderRadius: 12,
           ),
           SizedBox(
             height: 20,
           ),
+          CommonTextField(
+            hintText: 'password',
+            controller: newPasswordController,
+            width: MediaQuery.of(context).size.width,
+            borderRadius: 12,
+          ),
           SizedBox(
             height: 20,
           ),
           CommonButton(
             text: 'Send Reset Password Link',
-            onPressed: () {},
+            onPressed: () => resetPassword(context),
             width: MediaQuery.of(context).size.width,
           )
         ],

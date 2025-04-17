@@ -1,11 +1,14 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:serbili/ui/Shoper/profile/widget/detile.dart';
 import 'package:serbili/ui/Shoper/profile/widget/pyment.dart';
 import 'package:serbili/ui/Shoper/profile/widget/sttings.dart';
+import 'package:serbili/ui/auth/widgets/auth.dart';
 import 'package:serbili/ui/core/ui/Button.dart';
 
 class Profile extends StatefulWidget {
@@ -20,6 +23,60 @@ class _ProfileState extends State<Profile> {
     'Pyement': Icons.payment_rounded,
     'Help': Icons.help_outline,
   };
+  void logout(BuildContext context) async {
+  try {
+    final dio = Dio();
+    final refreshToken = await FlutterSecureStorage().read(key: 'refreshToken'); // Retrieve the refresh token
+
+    if (refreshToken == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('No refresh token found. Please log in again.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    final response = await dio.post(
+      'http://192.168.104.46:3000/auth/logout', // Replace with your backend URL
+      data: {
+        'tokenRefresh': refreshToken,
+      },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      // Clear tokens from secure storage
+      await FlutterSecureStorage().delete(key: 'accessToken');
+      await FlutterSecureStorage().delete(key: 'refreshToken');
+
+      // Navigate to the login screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Auth()),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Logged out successfully'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('An error occurred: ${e.toString()}'),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +186,7 @@ class _ProfileState extends State<Profile> {
                               ),
                               borderColor: Color(0xffD6D6D6),
                               color: Color(0xffF14141),
-                              onPressed: () {},
+                              onPressed: () => logout(context),
                               width: MediaQuery.of(context).size.width,
                               borderRadius: 30,
                               background:

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -140,33 +141,75 @@ class _Virfy_userState extends State<Virfy_user> {
   final List<String> userTypes = ['Shopper', 'Warehouse'];
 
   register(BuildContext context) async {
-    final password = passwordController.text.trim();
-    final userType = userTypeController.text.trim();
-    if (password.isNotEmpty && userType.isNotEmpty) {
-      final user = User(
-        firstname: widget.fullname,
-        email: widget.email,
-        phoneNumber: widget.phoneNumber,
-        password: password,
-        userType: 'Worker',
-        lastname: widget.familyname,
-      );
-      await AuthService().register(user);
+  final password = passwordController.text.trim();
+  final userType = userTypeController.text.trim();
+  final confirmPasswordText = confirmPassword.text.trim();
 
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Vierfycode()));
-      SnackbarHelper.show(
-          // ignore: use_build_context_synchronously
-          context, 'Welcome Mr  ' + widget.fullname + " " + widget.familyname);
-    } else {
-      showCustomDialog(
-        context,
-        'Error',
-        'Please fill all fields with your information',
-        DialogType.error,
-      );
-    }
+  // Validate input fields
+  if (password.isEmpty || userType.isEmpty) {
+    showCustomDialog(
+      context,
+      'Error',
+      'Please fill all fields with your information',
+      DialogType.error,
+    );
+    return;
   }
+
+  // Check if passwords match
+  if (password != confirmPasswordText) {
+    showCustomDialog(
+      context,
+      'Error',
+      'Passwords do not match',
+      DialogType.error,
+    );
+    return;
+  }
+
+  // Convert the uploaded image to Base64 if it exists
+  String? paperBase64;
+  if (_image != null) {
+    final bytes = await _image!.readAsBytes();
+    paperBase64 = base64Encode(bytes);
+  }
+
+  // Create the user object
+  final user = User(
+    firstname: widget.fullname,
+    lastname: widget.familyname,
+    email: widget.email,
+    phoneNumber: widget.phoneNumber,
+    password: password,
+    userType: 'shop',
+    paper: paperBase64, // Include the uploaded file as Base64
+  );
+
+  try {
+    // Call the AuthService to register the user
+    await AuthService().register(user);
+
+    // Navigate to the verification code page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Vierfycode(email: widget.email.toString(),)),
+    );
+
+    // Show a success message
+    SnackbarHelper.show(
+      context,
+      'Welcome Mr ${widget.fullname} ${widget.familyname}',
+    );
+  } catch (e) {
+    // Handle errors during registration
+    showCustomDialog(
+      context,
+      'Error',
+      'Registration failed: ${e.toString()}',
+      DialogType.error,
+    );
+  }
+}
 
   @override
   Widget build(BuildContext context) {

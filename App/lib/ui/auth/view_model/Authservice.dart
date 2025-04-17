@@ -43,7 +43,7 @@ class AuthService {
       ));
 
       final response = await dio.post(
-        'http://192.168.100.8:5000/auth/register',
+        'http://192.168.104.46:3000/auth/register',
         data: user.toJson(),
         options: Options(
           headers: {

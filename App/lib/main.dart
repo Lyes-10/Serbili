@@ -10,7 +10,9 @@ import 'package:serbili/ui/Shoper/order/widget/cart.dart';
 import 'package:serbili/ui/Shoper/order/widget/order.dart';
 import 'package:serbili/ui/Shoper/order/widget/orderRusem.dart';
 import 'package:serbili/ui/Shoper/profile/widget/profile.dart';
+import 'package:serbili/ui/auth/widgets/auth.dart';
 import 'package:serbili/ui/auth/widgets/location.dart';
+import 'package:serbili/ui/auth/widgets/vierfycode.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: Splash(),
+      home: Auth(),
     );
   }
 }
