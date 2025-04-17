@@ -19,9 +19,10 @@ const User = () => {
        })
      },[])*/
      const [formData, setFormData] = useState({
-      legalName: "QQ",
-      email: "h***o@gmail.com",
+      FirstName: "FirstName",
+      LastName:"LastName",
       phone: "9999999999999",
+      category:"",
       id: "",
       address: "",
       emergencyContact: "",

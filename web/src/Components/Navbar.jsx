@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Import useLocation
+import { Link, useLocation } from 'react-router-dom'; 
 import menu from "../assets/icons/menu.svg";
 import logo from "../assets/icons/logo.svg";
 import loc from "../assets/icons/loc.svg";
@@ -11,7 +11,7 @@ import revnueactive from "../assets/icons/revenuactive.svg";
 import cartactive from "../assets/icons/cartactive.svg";
 
 const Navbar = ({ sidebarToggle, setSidebarToggle }) => {
-  const location = useLocation(); // Get the current path
+  const location = useLocation(); 
 
   return (
     <div className="flex justify-between items-center mx-4 py-[6px] nav">

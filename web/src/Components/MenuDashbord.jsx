@@ -17,7 +17,7 @@ const MenuDashbord = ({ activeItem }) => {
     { name: "Dashboard", icon: dashbord, href: "/dashboard" },
     { name: "Orders", icon: orders, href: "/dashboard/orders" },
     { name: "Store Availability", icon: store, href: "/dashboard/store" },
-    { name: "Manage Users", icon: manage, href: "/dashboard/users" },
+    { name: "Manage Products", icon: manage, href: "/dashboard/products" },
     { name: "Settings", icon: settings, href: "/dashboard/settings" },
   ];
 
