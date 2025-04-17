@@ -17,6 +17,7 @@ import Revenue from "./pages/Revenue.jsx";
 import Cart from "./pages/Cart.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import Order from "./pages/Order.jsx";
+import Product from "./pages/Product.jsx";
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/dashboard/users" element={<ManageUsers/>}/>
         <Route path="/dashboard/store" element={<Store/>}/>
         <Route path="/dashboard/settings" element={<Settings/>}/>
+        <Route path="/product/:id" element={<Product/>}/>
 
         <Route path="*" element={<Notfound />} />
       </Routes>
