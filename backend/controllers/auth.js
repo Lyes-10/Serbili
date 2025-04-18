@@ -9,6 +9,7 @@ const asyncWrapper = require("../middlewares/async");
 const bcrypt = require('bcrypt');
 const { sendOTP } = require("../utils/OtpVerification");
 const { StatusCodes } = require("http-status-codes");
+const { encrypt, decrypt } = require("../utils/encryption");
 require("dotenv").config();
 
 
@@ -62,7 +63,7 @@ const register = asyncWrapper(async (req, res) => {
   }
   //image path
   const imagePath = req.file ? req.file.path : null;
-
+  const encryptedImagePath = encrypt(imagePath);
   const user = await db.Users.create({
     firstname,
     lastname,
@@ -72,7 +73,7 @@ const register = asyncWrapper(async (req, res) => {
     userType,
     category,
     isVerified: false,
-    paper: imagePath,
+    paper: encryptedImagePath,
   });
 
   await sendOTP(user);
