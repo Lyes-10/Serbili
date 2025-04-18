@@ -47,6 +47,7 @@ function App() {
         <Route path="/dashboard/store" element={<Store/>}/>
         <Route path="/dashboard/settings" element={<Settings/>}/>
         <Route path="/product/:id" element={<Product/>}/>
+      
 
         <Route path="*" element={<Notfound />} />
       </Routes>
