@@ -90,7 +90,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:true,
     },
     paper:{
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull:false,
     },
     category:{
