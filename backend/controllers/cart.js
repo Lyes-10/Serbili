@@ -32,7 +32,8 @@ const addToCart = asyncWrapper(async (req, res) => {
     const product = await db.Product.findByPk(productId);
     if (!product) {
         throw new NotFoundError('Product not found');
-    }
+    };
+    
     let cart = await db.Cart.findOne({
         where: { userId },
         include: [
@@ -48,7 +49,7 @@ const addToCart = asyncWrapper(async (req, res) => {
     }
 
     const [cartItem, created] = await db.CartItem.findOrCreate({
-        where: { cartId: cart.id, productId, size, color },
+        where: { cartId: cart.id, productId, size: size ?? null, color : color ?? null },
         defaults: { quantity },
     });
 

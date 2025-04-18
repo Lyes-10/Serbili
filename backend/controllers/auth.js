@@ -9,7 +9,6 @@ const asyncWrapper = require("../middlewares/async");
 const bcrypt = require('bcrypt');
 const { sendOTP } = require("../utils/OtpVerification");
 const { StatusCodes } = require("http-status-codes");
-const upload = require('../utils/upload')
 require("dotenv").config();
 
 
@@ -47,16 +46,8 @@ const refreshToken = asyncWrapper(async (req, res) => {
   });
 });
 const register = asyncWrapper(async (req, res) => {
-  //upload image
-  // await new Promise((resolve, reject) => {
-  //   upload(req, res, (err) => {
-  //     if (err) {
-  //       return reject(err);  // Reject the promise if an error occurs
-  //     }
-  //     resolve();  // Resolve the promise if no error occurs
-  //   });
-  // });
-  const { firstname, lastname, email, password, userType, phoneNumber } =
+  
+  const { firstname, lastname, email, password, userType, phoneNumber, category } =
   req.body;
   if (
     !firstname ||
@@ -64,7 +55,8 @@ const register = asyncWrapper(async (req, res) => {
     !email ||
     !password ||
     !userType ||
-    !phoneNumber
+    !phoneNumber ||
+    !category
   ) {
     throw new BadRequestError("Please fill all fields");
   }
@@ -78,6 +70,7 @@ const register = asyncWrapper(async (req, res) => {
     phoneNumber,
     password,
     userType,
+    category,
     isVerified: false,
     paper: imagePath,
   });

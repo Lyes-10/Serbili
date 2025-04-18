@@ -4,7 +4,6 @@ module.exports = (sequelize) => {
     class CartItem extends Model {
         static associate(models) {
             CartItem.belongsTo(models.Cart, { foreignKey: 'cartId', as: 'cart' });
-            CartItem.belongsTo(models.Order, { foreignKey: 'orderId', as: 'order' }); 
             CartItem.belongsTo(models.Product, { foreignKey: 'productId', as: 'product' });
         }
     }
@@ -22,23 +21,24 @@ module.exports = (sequelize) => {
             allowNull: false,
             defaultValue: 1,
         },
-        orderId:{
-            type: DataTypes.INTEGER,
-            allowNull: true
-        },
+
         size: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
+            defaultValue: null,
         },
         color: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
+            defaultValue: null,
         }
     },
         {
             sequelize,
             modelName: 'CartItem',
             tableName: 'CartItems',
-        });
+        },
+        
+    );
     return CartItem;
 }

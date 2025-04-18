@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasMany(models.refreshToken, { foreignKey: 'userId', as: 'refreshTokens' });
+      User.hasMany(models.WarehouseReview, { foreignKey: 'shopId', as: 'givenWarehouseReviews' });
+      User.hasMany(models.WarehouseReview, { foreignKey: 'warehouseId', as: 'receivedWarehouseReviews' });
+      User.hasMany(models.ReviewProduct, { foreignKey: 'shopId', as: 'givenProductReviews' });
+      User.hasMany(models.Product, { foreignKey: 'warehouseId', as: 'products' });
+
     }
   }
   User.init({
@@ -45,13 +50,19 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     userType: {
-      type: DataTypes.ENUM('shop', 'warehouse'),
+      type: DataTypes.ENUM('admin', 'shop', 'warehouse'),
       allowNull: false,
     },
     phoneNumber: {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: '0000000000',
+      validate:{
+        len:{
+          args:10,
+          msg:'Phone number must be 10 digits'
+        }
+      },
       unique:true
     },
     otpCode: {
@@ -81,7 +92,17 @@ module.exports = (sequelize, DataTypes) => {
     paper:{
       type: DataTypes.STRING,
       allowNull:false,
-    }
+    },
+    category:{
+      type: DataTypes.STRING,
+      allowNull:false,
+    },
+    rating:{
+      type: DataTypes.FLOAT,
+      allowNull:true,
+
+    },
+
     
   }, {
     sequelize,

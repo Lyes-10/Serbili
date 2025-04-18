@@ -13,7 +13,7 @@ module.exports = {
 
     // 3. Change the column type to new ENUM
     return queryInterface.changeColumn('Users', 'userType', {
-      type: Sequelize.ENUM('shop', 'warehouse'),
+      type: Sequelize.ENUM('admin', 'shop', 'warehouse'),
       allowNull: false,
     });
   },

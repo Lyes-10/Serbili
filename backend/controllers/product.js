@@ -23,12 +23,13 @@ const getProduct = asyncWrapper(async (req, res) => {
 })
 
 const createProduct = asyncWrapper(async (req, res) => {
-  const { name, price, stock, description,rating,category } = req.body;
+  const { name, price, stock, description,category } = req.body;
+  const { id :warehouseId } = req.user;
   const imagePath = req.file.path;
-  if (!name || !price || !stock || !description || !rating || !category || !imagePath) {
+  if (!name || !price || !stock || !description || !category || !imagePath ) {
     throw new BadRequestError("Please fill all fields");
   }
-  const product = await db.Product.create({ name, price, stock,description, rating, category, image:imagePath });
+  const product = await db.Product.create({ name, price, stock,description, category, image:imagePath , warehouseId});
   return res.status(StatusCodes.CREATED).json({ product });
 });
 

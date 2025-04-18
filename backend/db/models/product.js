@@ -4,6 +4,10 @@ module.exports = (sequelize) => {
     class Product extends Model {
         static associate(models) {
             Product.hasMany(models.CartItem, { foreignKey: 'productId', as: 'cartItems' });
+            Product.hasMany(models.ReviewProduct, { foreignKey: 'productId', as: 'productReviews' });
+            Product.hasMany(models.OrderItem, { foreignKey: 'productId', as: 'orderItems' });
+            Product.belongsTo(models.Users, { foreignKey: 'warehouseId', as: 'warehouse' });
+
         }
     }
     Product.init({
@@ -37,16 +41,27 @@ module.exports = (sequelize) => {
         },
         rating:{
             type: DataTypes.FLOAT,
-            allowNull:false
+            allowNull:true,
+            validate:{
+                min: 1,
+                max: 5,
+            }
         },
         color:{
             type: DataTypes.STRING,
-            allowNull:true
+            allowNull:true,
+            defaultValue: null,
         },
         size:{
             type: DataTypes.STRING,
-            allowNull:true
+            allowNull:true,
+            defaultValue: null,
         },
+        warehouseId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+
+        }
         
     },
     {

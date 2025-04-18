@@ -37,7 +37,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
-        defaultValue: '0000000000'
+        defaultValue: '0000000000',
+        validate:{
+          len:{
+            args:10,
+            msg:'Phone number must be 10 digits'
+          }
+        },
       },
       otpCode: {
         type: Sequelize.STRING,
