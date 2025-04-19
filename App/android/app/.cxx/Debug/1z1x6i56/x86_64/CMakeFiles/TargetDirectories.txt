@@ -1,0 +1,2 @@
+C:/Users/A/Desktop/projet 2cp/serbili/App/android/app/.cxx/Debug/1z1x6i56/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/A/Desktop/projet 2cp/serbili/App/android/app/.cxx/Debug/1z1x6i56/x86_64/CMakeFiles/rebuild_cache.dir
