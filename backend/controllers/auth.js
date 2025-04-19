@@ -9,7 +9,7 @@ const asyncWrapper = require("../middlewares/async");
 const bcrypt = require('bcrypt');
 const { sendOTP } = require("../utils/OtpVerification");
 const { StatusCodes } = require("http-status-codes");
-const saveBase64Image = require("../utils/saveBase64Image");
+const {saveBase64Image} = require("../utils/saveBase64Image");
 require("dotenv").config();
 
 

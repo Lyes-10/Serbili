@@ -2,7 +2,7 @@ const asyncWrapper = require('../middlewares/async');
 const db = require('../db/models');
 const { StatusCodes } = require('http-status-codes');
 const { NotFoundError } = require('../errors');
-
+const {saveBase64Image} = require("../utils/saveBase64Image");
 const getProfile = asyncWrapper(async (req, res)=> {
     const user = await db.Users.findOne({
         where: {

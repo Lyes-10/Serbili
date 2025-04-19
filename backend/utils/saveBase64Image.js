@@ -31,4 +31,12 @@ const saveBase64Image = (base64String, folderName, filenamePrefix = "image") => 
   });
 };
 
-module.exports = saveBase64Image;
+// utils/getPublicUrl.js
+const getPublicUrl = (relativePath) => {
+    const baseUrl = process.env.URL || "http://localhost:5000";
+    return `${baseUrl}/${relativePath.replace(/\\/g, "/")}`;
+};
+  
+
+  
+module.exports = {saveBase64Image, getPublicUrl};

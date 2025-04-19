@@ -3,7 +3,7 @@ const { BadRequestError, UnauthenticatedError,ForbiddenError , NotFoundError} = 
 require('dotenv').config();
 const asyncWrapper = require("../middlewares/async");
 const { StatusCodes } = require('http-status-codes');
-const saveBase64Image = require("../utils/saveBase64Image");
+const {saveBase64Image} = require("../utils/saveBase64Image");
 const getAllProducts = asyncWrapper(async (req, res) => {
     const products = await db.Product.findAll();
     
