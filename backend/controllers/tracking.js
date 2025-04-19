@@ -48,7 +48,52 @@ const updateOrderStatus = asyncWrapper(async (req, res) => {
     .status(StatusCodes.OK)
     .json({ msg: "Order status updated", order });
 });
+const notifyWarehouseOrderReceived = asyncWrapper(async (req, res) => {
+  const { id: orderId } = req.params;
+
+  const order = await db.Order.findOne({
+    where: { id: orderId },
+    include: [
+      { model: db.Users, as: "warehouse", attributes: ["id"] }, // if you set this alias
+    ],
+  });
+
+  if (!order) throw new NotFoundError("Order not found");
+
+  if (order.status !== "SHIPPED") {
+    throw new BadRequestError("Order must be SHIPPED to confirm receipt");
+  }
+
+  const io = req.app.get("io");
+
+  // Notify warehouse
+  if (order.warehouse) {
+    io.to(`user_${order.warehouse.id}`).emit("order-received-by-shop", {
+      orderId: order.id,
+      updatedAt: new Date(),
+      message: `Shop has confirmed receipt of order #${order.id}`,
+    });
+  }
+
+  // Optional: Auto-mark as DELIVERED by system
+  order.status = "DELIVERED";
+  order.deliveredAt = new Date();
+  await order.save();
+
+  io.to(`user_${order.userId}`).emit("order-status-updated", {
+    orderId: order.id,
+    status: "DELIVERED",
+    updatedAt: new Date(),
+    message: `Your order #${order.id} has been marked as DELIVERED`,
+  });
+
+  return res.status(StatusCodes.OK).json({
+    msg: "Warehouse notified and order marked as DELIVERED",
+  });
+});
+
 
 module.exports = {
   updateOrderStatus,
+  notifyWarehouseOrderReceived
 };

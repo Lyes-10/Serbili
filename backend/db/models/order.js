@@ -5,6 +5,8 @@ module.exports = (sequelize) => {
         static associate(models) {
             Order.belongsTo(models.Users, { foreignKey: 'userId', as: 'user' });
             Order.hasMany(models.OrderItem, { foreignKey: 'orderId', as: 'orderItems' });
+            Order.belongsTo(models.Users, { as: 'warehouse', foreignKey: 'warehouseId' });
+
         }
     }
 
@@ -34,6 +36,20 @@ module.exports = (sequelize) => {
             type: DataTypes.DATE,
             allowNull: true,
         },
+        warehouseId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        isPaid: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false,
+        },
+        paymentMethod: {
+            type: DataTypes.ENUM('credit_card', 'cash_on_delivery'),
+            allowNull: false,
+            defaultValue: 'cash_on_delivery',
+        }
     }, {
         sequelize,
         modelName: 'Order',

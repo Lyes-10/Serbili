@@ -7,9 +7,11 @@ const {
     deleteCartItem,
     clearCart
 } = require('../controllers/cart');
-
-router.route('/').get(getCart).post(addToCart);
-router.route('/:cartItemId').patch(updateCartItem).delete(deleteCartItem);
-router.route('/clear/:cardId').delete(clearCart);
+const authentication = require("../middlewares/authentication");
+const authorizeRoles = require("../middlewares/authorizeRoles");
+const auths = [authentication, authorizeRoles("shop")];
+router.route('/').get(...auths, getCart).post(...auths, addToCart);
+router.route('/:cartItemId').patch(...auths, updateCartItem).delete(...auths, deleteCartItem);
+router.route('/clear/:cardId').delete(...auths, clearCart);
 
 module.exports = router;

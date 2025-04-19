@@ -10,7 +10,7 @@
     <script>
       const socket = io('http://localhost:5000'); // change port if different
 
-      const shopId = 37; // set this to match the emitted shopId
+      const shopId = 42; // set this to match the emitted shopId
       socket.on('connect', () => {
         console.log('Connected as warehouse:', socket.id);
 
@@ -21,7 +21,7 @@
       socket.onAny((event, ...args) => {
         console.log(`📥 Incoming event: ${event}`, args);
       });
-      socket.on('order-status-updated', (data) => {
+      socket.on('order-received-by-shop', (data) => {
         console.log(`New Order received: ${JSON.stringify(data, null, 2)}`);
         alert(`🛒 New Order!\nOrder ID: ${data.orderId}\nTotal: ${data.totalAmount} DA`);
         document.getElementById('message').innerText = JSON.stringify(data, null, 2);

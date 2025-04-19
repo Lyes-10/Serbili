@@ -52,14 +52,14 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.use('/webhook', chargilyRoutes);
+app.use('/webhook', authentication, chargilyRoutes);
 app.use(express.json());
 //routes
 app.use('/products', productsRouter);
-app.use('/cart', authentication, cartRouter);
+app.use('/cart', cartRouter);
 app.use('/auth', authRouter);
-app.use('/order',authentication, orderRouter);
-app.use('/dashboard',authentication, dashboardRouter);
+app.use('/order', orderRouter);
+app.use('/dashboard', dashboardRouter);
 //already authenticated
 app.use('/productReviews', productReviewsRouter);
 app.use('/warehouseReviews', warehouseReviewsRouter);
@@ -78,7 +78,7 @@ app.get('/test-socket', (req, res) => {
     createdAt: new Date(),
     message: '🧪 Test Order Notification',
   };
-  io.to('user_37').emit('order-status-updated', testData);
+  io.to('user_42').emit('order-received-by-shop', testData);
   console.log('📤 Test order emitted to user_37');
   res.send('Test order emitted!');
 });

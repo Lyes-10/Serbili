@@ -3,6 +3,7 @@ const db = require('../db/models');
 const { StatusCodes } = require('http-status-codes');
 const { NotFoundError } = require('../errors');
 const {saveBase64Image} = require("../utils/saveBase64Image");
+const { Op } = require('sequelize');
 const getProfile = asyncWrapper(async (req, res)=> {
     const user = await db.Users.findOne({
         where: {
@@ -20,7 +21,7 @@ const getProfile = asyncWrapper(async (req, res)=> {
 const dashboardStats = asyncWrapper(async (req, res) => {
     const { id: userId } = req.user;
     const netSales = await db.Order.sum('totalAmount', {
-        where: { userId }
+        where: { userId , isPaid: true}
     });
     
     const delivredOrders = await db.Order.count({
@@ -29,7 +30,8 @@ const dashboardStats = asyncWrapper(async (req, res) => {
 
 
     const nOrders = await db.Order.count({
-        where: { userId }
+        where: { userId, status: { [Op.ne]: 'CANCELED' } },
+        
     });
 
     const nCustomers = await db.Order.count({
@@ -93,9 +95,57 @@ const updateProfile = asyncWrapper(async (req, res) => {
     return res.status(StatusCodes.OK).json({ message: 'Profile updated successfully' });
 });
 
+const getWarehouseProductStats = asyncWrapper(async (req, res) => {
+    const warehouseId = req.user.id;
+  
+    const products = await db.Product.findAll({
+      where: { warehouseId },
+      include: [
+        {
+          model: db.OrderItem,
+          as: "orderItems",
+          include: [
+            {
+              model: db.Order,
+              as: "order",
+              attributes: ["isPaid"],
+              where: { isPaid: true }, // Only include paid orders
+            },
+          ],
+          attributes: ["quantity", "price"],
+        },
+      ],
+    });
+  
+    const result = products.map((product) => {
+      const numberOfSells = product.orderItems.reduce(
+        (sum, item) => sum + item.quantity,
+        0
+      );
+  
+      const netProfitValue = product.orderItems.reduce(
+        (sum, item) => sum + item.quantity * parseFloat(item.price),
+        0
+      );
+      
+  
+      return {
+        id: product.id,
+        name: product.name,
+        image: product.image,
+        remainingNumber: product.stock,
+        numberOfSells,
+        netProfit: netProfitValue,
+      };
+    });
+  
+    res.status(200).json(result);
+  });
+  
 module.exports = {
     uploadProfileImage,
     updateProfile,
     getProfile,
-    dashboardStats
+    dashboardStats,
+    getWarehouseProductStats
 }
