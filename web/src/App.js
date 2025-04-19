@@ -22,6 +22,7 @@ import Notfications from "./pages/Notfications.jsx";
 import ManageProducts from "./pages/Dashbord/ManageProducts.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import Order from "./pages/Order.jsx";
+import Product from "./pages/Product.jsx";
 
 function App() {
   return (
@@ -47,6 +48,8 @@ function App() {
         <Route path="/dashboard/products" element={<ManageProducts/>}/>
         <Route path="/dashboard/store" element={<Store/>}/>
         <Route path="/dashboard/settings" element={<Settings/>}/>
+        <Route path="/product/:id" element={<Product/>}/>
+      
         <Route path="/product/:id" element={<Product/>}/>
 
         <Route path="*" element={<Notfound />} />
