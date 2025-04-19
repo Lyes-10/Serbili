@@ -85,3 +85,15 @@ div :focus-visible {
     position: absolute;
     top: 0;
 }
+
+.shop p {
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    animation: typing 2s steps(40) infinite alternate-reverse;
+}
+@keyframes typing {
+    from{
+     width: 0%;
+    }
+}

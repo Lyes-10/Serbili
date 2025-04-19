@@ -22,13 +22,13 @@ const SidebarRev = ({ active }) => {
 
     return (
         <div className='bg-gray-50 h-fit mt-10 rounded-xl'>
-            <div className='flex items-center mx-4 gap-4 mt-2 mb-8'>
+            <div className='flex max-md:flex-col  items-center mx-4 gap-4 mt-2 mb-8'>
                 <Avatar size='md' rounded />
-                <p className='text-[15px] font-medium'>Abd el aziz</p>
+                <p className='md:text-[15px] text-xs font-medium'>Abd el aziz</p>
             </div>
             {sidebar_items.map((item) => (
                 <Link key={item.href} to={item.href}>
-                    <div className="mt-4 flex items-center text-nowrap">
+                    <div className="mt-4 flex md:justify-normal justify-center items-center text-nowrap">
                         <button className={`mx-3 flex gap-3 px-2 py-1 rounded-xl`}>
                             <img 
                               src={active === item.name ? item.iconactive : item.icon} 
@@ -36,7 +36,7 @@ const SidebarRev = ({ active }) => {
                               style={{ width: '24px', height: '24px' }} 
                             />
                             <div className="flex flex-col">
-                                <p className={`block text-[15px] ${active === item.name ? 'text-orange-500' : 'text-[#9C939D]'}`}>
+                                <p className={`md:block hidden text-[15px] ${active === item.name ? 'text-orange-500' : 'text-[#9C939D]'}`}>
                                     {item.name}
                                 </p>
                             </div>
@@ -44,18 +44,18 @@ const SidebarRev = ({ active }) => {
                     </div>
                 </Link>
             ))}
-            <span className='h-[1px] bg-[#ccc] block mx-6 w-[80%] mt-16'></span>
-            <div className='flex gap-3 mx-5 items-center mt-16'>
+            <span className='h-[1px] bg-[#ccc] block mx-6 md:w-[80%] mt-16'></span>
+            <div className='flex md:justify-normal justify-center gap-3 mx-5 items-center mt-16'>
                 <img src={settings} alt="" style={{ width: '24px', height: '24px' }} />
-                <p className='text-[15px] text-[#9C939D]'>Settings</p>
+                <p className='text-[15px] md:block hidden text-[#9C939D]'>Settings</p>
             </div>
-            <div className='flex gap-3 mx-5 items-center mt-4'>
+            <div className='flex md:justify-normal justify-center gap-3 mx-5 items-center mt-4'>
                 <img src={help} alt="" style={{ width: '24px', height: '24px' }} />
-                <p className='text-[15px] text-[#9C939D]'>Help</p>
+                <p className='text-[15px] md:block hidden text-[#9C939D]'>Help</p>
             </div>
-            <button className='flex gap-3 border border-gray-300 rounded-lg py-2 px-6 mx-4 mt-32 mb-6' onClick={() => navigate("/login")}>
+            <button className='flex gap-3 border border-gray-300 rounded-lg py-2 px-6 mx-4 mt-32 mb-4' onClick={() => navigate("/login")}>
                 <img src={logout} alt="" style={{ width: '24px', height: '24px' }} />
-                <p className='text-[14px] font-medium'>Logout</p>
+                <p className='text-[14px] md:block hidden font-medium'>Logout</p>
             </button>
         </div>
     );

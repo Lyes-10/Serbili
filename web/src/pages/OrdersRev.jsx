@@ -13,7 +13,7 @@ const OrdersRev = () => {
     <Navbar 
       sidebarToggle={sidebarToggle}
       setSidebarToggle={setSidebarToggle} />
-      <div className='grid grid-cols-[260px,1fr] gap-6 mx-10'>
+      <div className='grid md:grid-cols-[260px,1fr] grid-cols-[100px,1fr] gap-6 mx-10'>
        <SidebarRev active={"My Orders"}/>
        <div>
         

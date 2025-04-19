@@ -10,7 +10,8 @@ import Notfound from "./pages/Notfound";
 import User from "./pages/Dashbord/User";
 import Settings from "./pages/Dashbord/Settings";
 import Orders from "./pages/Dashbord/Orders"
-
+import Product from "./pages/Product.jsx";
+import Products from "./pages/Products.jsx";
 import Store from "./pages/Dashbord/Store.jsx"
 import Main from "./pages/Dashbord/Main.jsx";
 import Revenue from "./pages/Revenue.jsx";
@@ -39,12 +40,14 @@ function App() {
         <Route path="/revenue/orders" element={<OrdersRev/>}/>
         <Route path="/revenue/notificatiion" element={<Notfications/>}/>
         <Route path="/cart" element={<Cart/>}/>
+        <Route path="/products" element={<Products/>}/>
         <Route path="/dashboard" element={<Main/>}/>
         <Route path="/dashboard/userinformation" element={<User/>}/>
         <Route path="/dashboard/orders" element={<Orders/>} />
         <Route path="/dashboard/products" element={<ManageProducts/>}/>
         <Route path="/dashboard/store" element={<Store/>}/>
         <Route path="/dashboard/settings" element={<Settings/>}/>
+        <Route path="/product/:id" element={<Product/>}/>
 
         <Route path="*" element={<Notfound />} />
       </Routes>

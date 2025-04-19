@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/icons/logodash.svg";
 import dashbord from "../assets/icons/dashbord.svg";
 import orders from "../assets/icons/order.svg";
@@ -8,12 +8,13 @@ import manage from "../assets/icons/user-03.svg";
 import settings from "../assets/icons/settings.svg";
 import help from "../assets/icons/help-circle.svg";
 import access from "../assets/icons/accessbility.svg";
-import lastlogo from "../assets/icons/usered.svg";
+import lastlogo from "../assets/icons/logout.svg";
 import dash from "../assets/icons/Ellipse 1.svg";
+import user from "../assets/icons/user-03.svg"
 
 const MenuDashbord = ({ activeItem }) => {
   const SIDEBAR_ITEMS = [
-    { name: "User", icon: dash, href: "/dashboard/userinformation" },
+    { name: "User", icon: user, href: "/dashboard/userinformation" },
     { name: "Dashboard", icon: dashbord, href: "/dashboard" },
     { name: "Orders", icon: orders, href: "/dashboard/orders" },
     { name: "Store Availability", icon: store, href: "/dashboard/store" },
@@ -30,6 +31,8 @@ const MenuDashbord = ({ activeItem }) => {
     setClick(false); // Reset User button
     setClicked(false); // Reset Dashboard button
   };
+
+  const navigate =useNavigate()
   
   return (
     <div className="h-full flex flex-col pt-2 border-2 border-r-2 border-[#E2E2E2]  ">
@@ -44,10 +47,10 @@ const MenuDashbord = ({ activeItem }) => {
             className=" mt-6 max-md:flex justify-center items-center"
           >
             <button
-              className={`mx-3 flex gap-3 px-2 py-1 rounded-xl ${
+              className={`mx-3 flex gap-3 md:px-2 px-[15px]  py-1 rounded-xl ${
                 item.name === "User"
                   ? activeItem === item.name
-                    ? " bg-orange-500 text-white font-semibold  py-2 flex  w-[60%] items-center border-2 border-gray-900 border-b-[6px]" // Active state for User
+                    ? "  bg-orange-500 text-white font-semibold  py-2  w-[60%]  border-2 border-gray-900 border-b-[6px]" // Active state for User
                     : "px-2 py-2 text-[18px] ml-5 font-semibold" // Non-active state for User
                   : item.name === "Dashboard"
                   ? activeItem === item.name
@@ -93,13 +96,13 @@ const MenuDashbord = ({ activeItem }) => {
       </button>
      </div>
 
-      <hr className="bg-[#E2E2E2] h-[2px]   " />
+      <hr className="bg-[#E2E2E2] h-[2px] md:block hidden  " />
 
       {/* User Info */}
-      <div className="flex  justify-center items-center max-md:mt-6"> 
-      <button className=" flex  md:flex-1 md:my-6 my-16 mx-3 border-2 border-[#E2E2E2]  gap-3 md:px-8 px-2 py-2 rounded-lg ">
+      <div className="flex justify-center items-center mb-8 lg:mt-6 md:mt-8 mt-auto  my-auto "> 
+      <button className=" flex   mx-3 border-2 border-[#E2E2E2]  gap-3 md:px-8 px-2 py-2 rounded-lg " onClick={()=>navigate('/login')}>
         <img src={lastlogo} alt="User"  />
-        <p className="font-medium max-md:hidden">User</p>
+        <p className="font-medium max-md:hidden">Logout</p>
       </button>
       </div>
       

@@ -33,7 +33,7 @@ const Revenue = () => {
         sidebarToggle={sidebarToggle}
         setSidebarToggle={setSidebarToggle}
       />
-      <div className="grid grid-cols-[260px,1fr] gap-6 mx-10">
+      <div className="grid md:grid-cols-[260px,1fr] grid-cols-[100px,1fr] gap-6 mx-10">
         <SidebarRev active={"Account"} />
         <div className="bg-[#FBFBFE] container px-4 pt-6 mt-10 h-fit rounded-lg">
           <p className="text-[22px] font-semibold">Account Details</p>

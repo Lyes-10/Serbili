@@ -67,7 +67,7 @@ const Supliers = () => {
     },
   ];
   return (
-    <div className="h-screen w-screen overflow-x-hidden">
+    <div className="h-screen w-screen overflow-x-hidden ">
       <Sidebar
         sidebarToggle={sidebarToggle}
         setSidebarToggle={setSidebarToggle}
@@ -76,7 +76,7 @@ const Supliers = () => {
         sidebarToggle={sidebarToggle}
         setSidebarToggle={setSidebarToggle}
       />
-      <div className="container">
+      <div className="container mt-2">
         <div className="flex justify-between items-center">
           <h2 className="font-bold text-3xl">Supliers</h2>
           <div className="flex gap-2">
