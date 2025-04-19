@@ -2,7 +2,6 @@ const asyncWrapper = require('../middlewares/async');
 const db = require('../db/models');
 const { StatusCodes } = require('http-status-codes');
 const { NotFoundError } = require('../errors');
-const { where, col } = require('sequelize');
 
 const getProfile = asyncWrapper(async (req, res)=> {
     const user = await db.Users.findOne({
@@ -65,8 +64,11 @@ const dashboardStats = asyncWrapper(async (req, res) => {
 
 const uploadProfileImage = asyncWrapper(async (req, res) => {
     const { id: userId } = req.user;
-    const imagePath = req.file.path;
-
+    const { imageBase64 } = req.body;
+    if (!imageBase64) {
+        throw new BadRequestError('Please provide an image');
+    }
+    const imagePath = await saveBase64Image(imageBase64, 'image', 'profile_image');
     const user = await db.Users.findByPk(userId);
     if (!user) {
         throw new NotFoundError('User not found');
@@ -74,7 +76,7 @@ const uploadProfileImage = asyncWrapper(async (req, res) => {
 
     await user.update({ profileImage: imagePath });
 
-    return res.status(StatusCodes.OK).json({ message: 'Profile image updated successfully' });
+    return res.status(StatusCodes.OK).json({ message: 'Profile image updated successfully', imagePath });
 });
 
 const updateProfile = asyncWrapper(async (req, res) => {

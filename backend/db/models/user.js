@@ -82,7 +82,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:true,
     },
     profileImage:{
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull:true,
     },
     emergencyContact:{

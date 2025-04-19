@@ -3,7 +3,7 @@ const { BadRequestError, UnauthenticatedError,ForbiddenError , NotFoundError} = 
 require('dotenv').config();
 const asyncWrapper = require("../middlewares/async");
 const { StatusCodes } = require('http-status-codes');
-
+const saveBase64Image = require("../utils/saveBase64Image");
 const getAllProducts = asyncWrapper(async (req, res) => {
     const products = await db.Product.findAll();
     
@@ -23,12 +23,12 @@ const getProduct = asyncWrapper(async (req, res) => {
 })
 
 const createProduct = asyncWrapper(async (req, res) => {
-  const { name, price, stock, description,category } = req.body;
+  const { name, price, stock, description,category, imageBase64  } = req.body;
   const { id :warehouseId } = req.user;
-  const imagePath = req.file.path;
-  if (!name || !price || !stock || !description || !category || !imagePath ) {
+  if (!name || !price || !stock || !description || !category || !imageBase64  ) {
     throw new BadRequestError("Please fill all fields");
   }
+  const imagePath = await saveBase64Image(imageBase64, "image", "product_image");
   const product = await db.Product.create({ name, price, stock,description, category, image:imagePath , warehouseId});
   return res.status(StatusCodes.CREATED).json({ product });
 });

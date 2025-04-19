@@ -9,7 +9,7 @@ const asyncWrapper = require("../middlewares/async");
 const bcrypt = require('bcrypt');
 const { sendOTP } = require("../utils/OtpVerification");
 const { StatusCodes } = require("http-status-codes");
-const { encrypt, decrypt } = require("../utils/encryption");
+const saveBase64Image = require("../utils/saveBase64Image");
 require("dotenv").config();
 
 
@@ -48,7 +48,7 @@ const refreshToken = asyncWrapper(async (req, res) => {
 });
 const register = asyncWrapper(async (req, res) => {
   
-  const { firstname, lastname, email, password, userType, phoneNumber, category } =
+  const { firstname, lastname, email, password, userType, phoneNumber, category, paperBase64 } =
   req.body;
   if (
     !firstname ||
@@ -57,13 +57,13 @@ const register = asyncWrapper(async (req, res) => {
     !password ||
     !userType ||
     !phoneNumber ||
-    !category
+    !category ||
+    !paperBase64
   ) {
     throw new BadRequestError("Please fill all fields");
   }
   //image path
-  const imagePath = req.file ? req.file.path : null;
-  const encryptedImagePath = encrypt(imagePath);
+  const imagePath = await saveBase64Image(paperBase64 , "paper", "user_paper");
   const user = await db.Users.create({
     firstname,
     lastname,
@@ -73,7 +73,7 @@ const register = asyncWrapper(async (req, res) => {
     userType,
     category,
     isVerified: false,
-    paper: encryptedImagePath,
+    paper: imagePath,
   });
 
   await sendOTP(user);

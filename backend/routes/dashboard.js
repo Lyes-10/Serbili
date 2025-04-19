@@ -7,12 +7,9 @@ const {
   dashboardStats,
 } = require("../controllers/profile");
 
-const {uploadPaper,
-    uploadProfile, }= require('../utils/upload')
-
 
 router.route("/profile").get(getProfile).patch(updateProfile);
 router.route("/dashboard-stats").get(dashboardStats);
-router.route("/upload-profile-image").post( uploadProfile, uploadProfileImage);
+router.route("/upload-profile-image").post(uploadProfileImage);
 
 module.exports = router;
